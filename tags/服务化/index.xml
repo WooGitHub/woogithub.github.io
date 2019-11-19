@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>服务化 on Justin写字的地方</title>
+    <link>http://sharecore.net/tags/%E6%9C%8D%E5%8A%A1%E5%8C%96/</link>
+    <description>Recent content in 服务化 on Justin写字的地方</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 Aug 2014 23:54:42 +0000</lastBuildDate>
+    
+	<atom:link href="http://sharecore.net/tags/%E6%9C%8D%E5%8A%A1%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>浅谈服务化架构</title>
+      <link>http://sharecore.net/post/%E6%B5%85%E8%B0%88%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Sat, 02 Aug 2014 23:54:42 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E6%B5%85%E8%B0%88%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84/</guid>
+      <description>这两年来，在服务化架构设计上的实践比较多，在此对关于服务化设计一些经验稍作总结，知识经验水平有限，如有欠缺和不准确的地方，还请指出修正！ 我在</description>
+    </item>
+    
+  </channel>
+</rss>

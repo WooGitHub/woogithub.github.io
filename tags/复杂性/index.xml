@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>复杂性 on Justin写字的地方</title>
+    <link>http://sharecore.net/tags/%E5%A4%8D%E6%9D%82%E6%80%A7/</link>
+    <description>Recent content in 复杂性 on Justin写字的地方</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 13 Jul 2014 23:59:25 +0000</lastBuildDate>
+    
+	<atom:link href="http://sharecore.net/tags/%E5%A4%8D%E6%9D%82%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>不确定性与马尔科夫链</title>
+      <link>http://sharecore.net/post/%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E4%B8%8E%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E9%93%BE/</link>
+      <pubDate>Sun, 13 Jul 2014 23:59:25 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E4%B8%8E%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E9%93%BE/</guid>
+      <description>这个月玩公司的世界杯竞猜游戏，期间经历了各种跌宕起伏，有过竞猜游戏币被清零的记录（后来贷款翻身），也有过“一夜暴富”荣登榜首的时候（多亏了乌</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>架构 on Justin写字的地方</title>
+    <link>http://sharecore.net/tags/%E6%9E%B6%E6%9E%84/</link>
+    <description>Recent content in 架构 on Justin写字的地方</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 09 Mar 2017 10:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://sharecore.net/tags/%E6%9E%B6%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RPC服务追踪的原理与实践</title>
+      <link>http://sharecore.net/post/rpc%E6%9C%8D%E5%8A%A1%E8%BF%BD%E8%B8%AA%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Thu, 09 Mar 2017 10:00:00 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/rpc%E6%9C%8D%E5%8A%A1%E8%BF%BD%E8%B8%AA%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>在分布式服务化架构下，由于分布式服务间存在相互依赖，彼此协同来完成各类业务场景。下图是一个典型的业务场景，从前端发起一个请求，到最后的业务完</description>
+    </item>
+    
+    <item>
+      <title>分布式锁进阶-设计概要</title>
+      <link>http://sharecore.net/post/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E8%BF%9B%E9%98%B6-%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%A6%81/</link>
+      <pubDate>Tue, 01 Nov 2016 23:42:14 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E8%BF%9B%E9%98%B6-%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%A6%81/</guid>
+      <description>锁在并发编程领域很为常见，当有资源竞争时就会有锁，在单进程的程序里，由于编程语言一般均提供了相应的原语，只需要简单的一个函数调用或声明，及可</description>
+    </item>
+    
+    <item>
+      <title>I/O模型基本介绍</title>
+      <link>http://sharecore.net/post/i-o%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Mon, 13 Jun 2016 19:24:36 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/i-o%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/</guid>
+      <description>作为后台开发，高并发和高性能问题，是最常需要面对的。而解决高并发和高性能问题，选择合适的I/O模型是必由之路。本文将对各种I/O模型作基本介</description>
+    </item>
+    
+    <item>
+      <title>浅谈服务化架构</title>
+      <link>http://sharecore.net/post/%E6%B5%85%E8%B0%88%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Sat, 02 Aug 2014 23:54:42 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E6%B5%85%E8%B0%88%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%9E%B6%E6%9E%84/</guid>
+      <description>这两年来，在服务化架构设计上的实践比较多，在此对关于服务化设计一些经验稍作总结，知识经验水平有限，如有欠缺和不准确的地方，还请指出修正！ 我在</description>
+    </item>
+    
+    <item>
+      <title>可扩展架构设计的三个维度</title>
+      <link>http://sharecore.net/post/%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%89%E4%B8%AA%E7%BB%B4%E5%BA%A6/</link>
+      <pubDate>Sat, 05 Jul 2014 00:00:01 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%89%E4%B8%AA%E7%BB%B4%E5%BA%A6/</guid>
+      <description>业界对于可扩展的系统架构设计有一个朴素的理念,就是：通过加机器就可以解决容量和可用性问题。 这一理念在“云计算”概念疯狂流行的今天，得到了广泛</description>
+    </item>
+    
+    <item>
+      <title>过载保护算法浅析</title>
+      <link>http://sharecore.net/post/%E8%BF%87%E8%BD%BD%E4%BF%9D%E6%8A%A4%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/</link>
+      <pubDate>Sat, 21 Jun 2014 00:01:40 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E8%BF%87%E8%BD%BD%E4%BF%9D%E6%8A%A4%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/</guid>
+      <description>何为过载保护？所谓“过载”，即需求超过了负载能力;而“保护”则是指当“过载”发生了，采取必要的措施保护自己不受“伤害”。在计算机领域，尤其是</description>
+    </item>
+    
+  </channel>
+</rss>

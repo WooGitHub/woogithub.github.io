@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>测试 on Justin写字的地方</title>
+    <link>http://sharecore.net/tags/%E6%B5%8B%E8%AF%95/</link>
+    <description>Recent content in 测试 on Justin写字的地方</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 29 Jun 2014 00:01:03 +0000</lastBuildDate>
+    
+	<atom:link href="http://sharecore.net/tags/%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>值得借鉴的Google测试经验</title>
+      <link>http://sharecore.net/post/%E5%80%BC%E5%BE%97%E5%80%9F%E9%89%B4%E7%9A%84google%E6%B5%8B%E8%AF%95%E7%BB%8F%E9%AA%8C/</link>
+      <pubDate>Sun, 29 Jun 2014 00:01:03 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E5%80%BC%E5%BE%97%E5%80%9F%E9%89%B4%E7%9A%84google%E6%B5%8B%E8%AF%95%E7%BB%8F%E9%AA%8C/</guid>
+      <description>近来读了《Google软件测试之道》一书，以下是我从书里得来的两点经验： 一.紧密结合开发过程与测试 测试之难，保证产品开发质量之难，每个公司每</description>
+    </item>
+    
+  </channel>
+</rss>

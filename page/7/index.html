@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Justin写字的地方</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="justin huang" />
+  <meta name="description" content="Justin写字的地方" />
+  <meta name="keywords" content="Justin, JustinHuang, ShareCore" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0" />
+
+
+<link rel="canonical" href="http://sharecore.net/" />
+<link href="http://sharecore.net/index.xml" rel="alternate" type="application/rss+xml" title="Justin写字的地方" />
+  <link href="http://sharecore.net/index.xml" rel="feed" type="application/rss+xml" title="Justin写字的地方" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Justin写字的地方" />
+<meta property="og:description" content="Justin写字的地方" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://sharecore.net/" />
+
+<meta property="og:updated_time" content="2014-06-21T00:01:40&#43;00:00"/>
+
+<meta itemprop="name" content="Justin写字的地方">
+<meta itemprop="description" content="Justin写字的地方">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Justin写字的地方"/>
+<meta name="twitter:description" content="Justin写字的地方"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Justin&#39;s Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Justin&#39;s Notes</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          
+  <section id="posts" class="posts">
+    
+    
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/%E8%BF%87%E8%BD%BD%E4%BF%9D%E6%8A%A4%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/">过载保护算法浅析</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-06-21 </span>
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      何为过载保护？所谓“过载”，即需求超过了负载能力;而“保护”则是指当“过载”发生了，采取必要的措施保护自己不受“伤害”。在计算机领域，尤其是
+    </div>
+    <div class="read-more">
+      <a href="/post/%E8%BF%87%E8%BD%BD%E4%BF%9D%E6%8A%A4%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%81%93/">程序员持续学习之道</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-06-15 </span>
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      我其实是一个悲观主义者，从开始成为一名程序员的那一天开始，我就对自己的职业充满着担忧。早期，我担忧的是我刚进入这一行，落后身边从事这一行多年
+    </div>
+    <div class="read-more">
+      <a href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%81%93/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/%E7%B2%97%E7%95%A5%E4%BC%B0%E7%AE%97/">粗略估算</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-06-08 </span>
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      今天我们以两道可能看起来有点“惨无人道”的题目开始 1.一个长方体的卡车车厢能装下多少个高尔夫球？ 2.密西西比河一天流出多少水？ 第一个题目据说
+    </div>
+    <div class="read-more">
+      <a href="/post/%E7%B2%97%E7%95%A5%E4%BC%B0%E7%AE%97/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%89%AF%E5%BF%83/">程序员的良心</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-05-31 </span>
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      前几日，深圳暴雨，官方说是“xx年一遇”。当大家听到“xx年一遇”这一说时，你肯定猜到了后果就是城市成了一片汪洋，整个城市陷入瘫痪，所有的房
+    </div>
+    <div class="read-more">
+      <a href="/post/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%89%AF%E5%BF%83/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/%E6%AD%A6%E6%9B%8C%E7%9A%87%E5%B8%9D%E4%B9%8B%E8%B7%AF/">武曌皇帝之路</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-05-17 </span>
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      这周有两个妹子反馈说，上次写的齐桓公的故事，很精彩，她们第一次完整看完了一篇历史文字，甚感欣慰！其中一个妹子还希望我能讲讲她们女人中的“神”
+    </div>
+    <div class="read-more">
+      <a href="/post/%E6%AD%A6%E6%9B%8C%E7%9A%87%E5%B8%9D%E4%B9%8B%E8%B7%AF/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+  </section>
+  
+  <nav class="pagination">
+    
+      <a class="prev" href="/page/6/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    
+      <a class="next" href="/page/8/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+  </nav>
+
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/justinhuang917" class="iconfont icon-github" title="github"></a>
+      <a href="http://weibo.com/justinhuang917" class="iconfont icon-weibo" title="weibo"></a>
+  <a href="http://sharecore.net/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2013 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">justin huang</span>
+  </span>
+</div>
+<script>renderMathInElement(document.body);</script>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37230829-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

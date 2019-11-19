@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ajax的GET和POST请求 - Woo_home Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="Ajax 是什么? Asynchronous Javascript And XML”（异步JavaScript和XML）， 并不是新的技术，只是把原有的技术，整合到一起而已。 1.使用CSS和XHTML来" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/ajax%E7%9A%84get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Ajax的GET和POST请求" />
+<meta property="og:description" content="Ajax 是什么? Asynchronous Javascript And XML”（异步JavaScript和XML）， 并不是新的技术，只是把原有的技术，整合到一起而已。 1.使用CSS和XHTML来" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/ajax%E7%9A%84get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" />
+<meta property="article:published_time" content="2019-08-10T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-08-10T00:14:19+08:00" />
+<meta itemprop="name" content="Ajax的GET和POST请求">
+<meta itemprop="description" content="Ajax 是什么? Asynchronous Javascript And XML”（异步JavaScript和XML）， 并不是新的技术，只是把原有的技术，整合到一起而已。 1.使用CSS和XHTML来">
+
+
+<meta itemprop="datePublished" content="2019-08-10T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-10T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="1042">
+
+
+
+<meta itemprop="keywords" content="Ajax," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ajax的GET和POST请求"/>
+<meta name="twitter:description" content="Ajax 是什么? Asynchronous Javascript And XML”（异步JavaScript和XML）， 并不是新的技术，只是把原有的技术，整合到一起而已。 1.使用CSS和XHTML来"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Ajax的GET和POST请求</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-10 </span>
+        
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#ajax">Ajax</a></li>
+<li><a href="#数据请求-get">数据请求 Get</a></li>
+<li><a href="#数据请求-post">数据请求 Post</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="ajax">Ajax</h2>
+
+<ul>
+<li>是什么?</li>
+</ul>
+
+<blockquote>
+<p>Asynchronous Javascript And XML”（异步JavaScript和XML），</p>
+
+<p>并不是新的技术，只是把原有的技术，整合到一起而已。</p>
+</blockquote>
+
+<p>1.使用CSS和XHTML来表示。
+   2. 使用DOM模型来交互和动态显示。
+   3.使用XMLHttpRequest来和服务器进行异步通信。
+   4.使用javascript来绑定和调用。</p>
+
+<ul>
+<li>有什么用?</li>
+</ul>
+
+<blockquote>
+<p>如果想要网页刷新局部内容。 那么需要重新载入整个网页。用户体验不是很好。  就是为了解决局部刷新的问题。 保持其他部分不动，只刷新某些地方。</p>
+</blockquote>
+
+<h2 id="数据请求-get">数据请求 Get</h2>
+
+<p>1.创建对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span>  <span class="nx">ajaxFunction</span><span class="p">(){</span>
+   <span class="kd">var</span> <span class="nx">xmlHttp</span><span class="p">;</span>
+   <span class="k">try</span><span class="p">{</span> <span class="c1">// Firefox, Opera 8.0+, Safari
+</span><span class="c1"></span>        <span class="nx">xmlHttp</span><span class="o">=</span><span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+	   <span class="k">try</span><span class="p">{</span><span class="c1">// Internet Explorer
+</span><span class="c1"></span>	         <span class="nx">xmlHttp</span><span class="o">=</span><span class="k">new</span> <span class="nx">ActiveXObject</span><span class="p">(</span><span class="s2">&#34;Msxml2.XMLHTTP&#34;</span><span class="p">);</span>
+	      <span class="p">}</span>
+	    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+	      <span class="k">try</span><span class="p">{</span>
+	         <span class="nx">xmlHttp</span><span class="o">=</span><span class="k">new</span> <span class="nx">ActiveXObject</span><span class="p">(</span><span class="s2">&#34;Microsoft.XMLHTTP&#34;</span><span class="p">);</span>
+	      <span class="p">}</span>
+	      <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){}</span>
+	      <span class="p">}</span>
+    <span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">xmlHttp</span><span class="p">;</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><p>发送请求</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//执行get请求
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">get</span><span class="p">()</span> <span class="p">{</span>
+	
+	<span class="c1">//1. 创建xmlhttprequest 对象
+</span><span class="c1"></span>	<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">ajaxFunction</span><span class="p">();</span>
+	
+	<span class="c1">//2. 发送请求。
+</span><span class="c1"></span>	<span class="c1">// http://localhost:8080/day16/demo01.jsp
+</span><span class="c1"></span>	<span class="c1">//http://localhost:8080/day16/DemoServlet01
+</span><span class="c1"></span>	
+	<span class="cm">/*	
+</span><span class="cm">		参数一： 请求类型  GET or  POST
+</span><span class="cm">		参数二： 请求的路径
+</span><span class="cm">		参数三： 是否异步， true  or false
+</span><span class="cm">	*/</span>
+	<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&#34;GET&#34;</span> <span class="p">,</span><span class="s2">&#34;/day16/DemoServlet01&#34;</span> <span class="p">,</span><span class="kc">true</span> <span class="p">);</span>
+	<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+
+
+
+<span class="nx">如果发送请求的同时</span><span class="err">，</span><span class="nx">还想获取数据</span><span class="err">，</span><span class="nx">那么代码如下</span>
+
+<span class="c1">//执行get请求
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">get</span><span class="p">()</span> <span class="p">{</span>
+	
+	<span class="c1">//1. 创建xmlhttprequest 对象
+</span><span class="c1"></span>	<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">ajaxFunction</span><span class="p">();</span>
+	
+	<span class="c1">//2. 发送请求
+</span><span class="c1"></span>	<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&#34;GET&#34;</span> <span class="p">,</span><span class="s2">&#34;/day16/DemoServlet01?name=aa&amp;age=18&#34;</span> <span class="p">,</span><span class="kc">true</span> <span class="p">);</span>
+	
+	<span class="c1">//3. 获取响应数据 注册监听的意思。  一会准备的状态发生了改变，那么就执行 = 号右边的方法
+</span><span class="c1"></span>	<span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		
+		<span class="c1">//前半段表示 已经能够正常处理。  再判断状态码是否是200
+</span><span class="c1"></span>		<span class="k">if</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">){</span>
+			<span class="c1">//弹出响应的信息
+</span><span class="c1"></span>			<span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h2 id="数据请求-post">数据请求 Post</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&#34;text/javascript&#34;</span><span class="o">&gt;</span>
+
+	<span class="c1">//1. 创建对象
+</span><span class="c1"></span>	<span class="kd">function</span>  <span class="nx">ajaxFunction</span><span class="p">(){</span>
+	   <span class="kd">var</span> <span class="nx">xmlHttp</span><span class="p">;</span>
+	   <span class="k">try</span><span class="p">{</span> <span class="c1">// Firefox, Opera 8.0+, Safari
+</span><span class="c1"></span>	        <span class="nx">xmlHttp</span><span class="o">=</span><span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+	    <span class="p">}</span>
+	    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+		   <span class="k">try</span><span class="p">{</span><span class="c1">// Internet Explorer
+</span><span class="c1"></span>		         <span class="nx">xmlHttp</span><span class="o">=</span><span class="k">new</span> <span class="nx">ActiveXObject</span><span class="p">(</span><span class="s2">&#34;Msxml2.XMLHTTP&#34;</span><span class="p">);</span>
+		      <span class="p">}</span>
+		    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+		      <span class="k">try</span><span class="p">{</span>
+		         <span class="nx">xmlHttp</span><span class="o">=</span><span class="k">new</span> <span class="nx">ActiveXObject</span><span class="p">(</span><span class="s2">&#34;Microsoft.XMLHTTP&#34;</span><span class="p">);</span>
+		      <span class="p">}</span>
+		      <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){}</span>
+		      <span class="p">}</span>
+	    <span class="p">}</span>
+	
+		<span class="k">return</span> <span class="nx">xmlHttp</span><span class="p">;</span>
+	 <span class="p">}</span>
+	
+	<span class="kd">function</span> <span class="nx">post</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c1">//1. 创建对象
+</span><span class="c1"></span>		<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">ajaxFunction</span><span class="p">();</span>
+		
+		<span class="c1">//2. 发送请求
+</span><span class="c1"></span>		<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span> <span class="s2">&#34;POST&#34;</span><span class="p">,</span> <span class="s2">&#34;/day16/DemoServlet01&#34;</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+	
+		<span class="c1">//如果不带数据，写这行就可以了
+</span><span class="c1"></span>		<span class="c1">//request.send();
+</span><span class="c1"></span>		
+		<span class="c1">//如果想带数据，就写下面的两行
+</span><span class="c1"></span>		
+		<span class="c1">//如果使用的是post方式带数据，那么 这里要添加头， 说明提交的数据类型是一个经过url编码的form表单数据
+</span><span class="c1"></span>		<span class="nx">request</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&#34;Content-type&#34;</span><span class="p">,</span><span class="s2">&#34;application/x-www-form-urlencoded&#34;</span><span class="p">);</span>
+		
+		<span class="c1">//带数据过去  ， 在send方法里面写表单数据。 
+</span><span class="c1"></span>		<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&#34;name=aobama&amp;age=19&#34;</span><span class="p">);</span>
+	<span class="p">}</span>
+
+
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+
+
+	<span class="nx">需要获取数据</span>
+
+
+<span class="kd">function</span> <span class="nx">post</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//1. 创建对象
+</span><span class="c1"></span>	<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">ajaxFunction</span><span class="p">();</span>
+	
+	<span class="c1">//2. 发送请求
+</span><span class="c1"></span>	<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span> <span class="s2">&#34;POST&#34;</span><span class="p">,</span> <span class="s2">&#34;/day16/DemoServlet01&#34;</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+	
+	<span class="c1">//想获取服务器传送过来的数据， 加一个状态的监听。 
+</span><span class="c1"></span>	<span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">readyState</span><span class="o">==</span><span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">){</span>
+			
+			<span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;post：&#34;</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="c1">//如果使用的是post方式带数据，那么 这里要添加头， 说明提交的数据类型是一个经过url编码的form表单数据
+</span><span class="c1"></span>	<span class="nx">request</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&#34;Content-type&#34;</span><span class="p">,</span><span class="s2">&#34;application/x-www-form-urlencoded&#34;</span><span class="p">);</span>
+	
+	<span class="c1">//带数据过去  ， 在send方法里面写表单数据。 
+</span><span class="c1"></span>	<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&#34;name=aobama&amp;age=19&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>正在尝试写博客，把会的分享给你们，如有写的不好的地方，希望指点一下，谢谢！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-08-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ajax/">Ajax</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/springboot&#43;mybatis&#43;thymeleaf-%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B%E8%B6%85%E8%AF%A6%E7%BB%86/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">SpringBoot&#43;MyBatis&#43;thymeleaf实现增删改查（超详细）</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/jquery%E7%9A%84get%E6%96%B9%E6%B3%95%E5%92%8Cpost%E6%96%B9%E6%B3%95/">
+            <span class="next-text nav-default">jQuery的GET和POST方法</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://localhost:1313" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

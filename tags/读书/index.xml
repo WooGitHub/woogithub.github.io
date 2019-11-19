@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>读书 on Justin写字的地方</title>
+    <link>http://sharecore.net/tags/%E8%AF%BB%E4%B9%A6/</link>
+    <description>Recent content in 读书 on Justin写字的地方</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 10 May 2014 00:05:32 +0000</lastBuildDate>
+    
+	<atom:link href="http://sharecore.net/tags/%E8%AF%BB%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何阅读一本书</title>
+      <link>http://sharecore.net/post/%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/</link>
+      <pubDate>Sat, 10 May 2014 00:05:32 +0000</pubDate>
+      
+      <guid>http://sharecore.net/post/%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/</guid>
+      <description>我好读书，读的很繁杂，从计算机技术到历史到国学和哲学，系统方法论等都是我爱好读的。 但平时工作忙，尽管每天都坚持挤出一到两个小时的读书时间（牺</description>
+    </item>
+    
+  </channel>
+</rss>

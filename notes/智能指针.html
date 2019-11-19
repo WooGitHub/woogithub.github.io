@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>智能指针</title>
+
+
+<style type="text/css">
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+ol,
+ul,
+li,
+img {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+html * {
+  font-family: "ff-din-web-pro-1", "ff-din-web-pro-2", sans-serif;
+  font-size: 16px;
+  line-height: 19.2px;
+  color-profile: sRGB;
+}
+body {
+  margin: 40px 70px;
+}
+p {
+  font-weight: lighter;
+  margin-bottom: 20px;
+}
+strong {
+  font-weight: bold;
+}
+ol,
+ul {
+  margin-left: 2em;
+  margin-bottom: 20px;
+}
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  margin-top: 10px;
+}
+li {
+  margin-bottom: 10px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: lighter;
+  text-transform: capitalize;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+h1 {
+  font-size: 24.624px;
+  line-height: 29.548799999999996px;
+}
+h2 {
+  font-size: 24.624px;
+  line-height: 29.548799999999996px;
+}
+h3 {
+  font-size: 23.44px;
+  line-height: 28.128px;
+}
+h4 {
+  font-size: 22.16px;
+  line-height: 26.592px;
+}
+h5 {
+  font-size: 22.16px;
+  line-height: 26.592px;
+}
+h6 {
+  font-size: 22.16px;
+  line-height: 26.592px;
+}
+img {
+  margin-bottom: 20px;
+}
+h1 img,
+h2 img,
+h3 img,
+h4 img,
+h5 img,
+h6 img,
+p img {
+  margin-bottom: 0;
+}
+pre {
+  margin-bottom: 20px;
+}
+pre,
+code {
+  font-family: monospace;
+}
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 15px;
+}
+blockquote {
+  border-left: 4px solid;
+  padding: 0 15px;
+}
+blockquote > :first-child {
+  margin-top: 0;
+}
+blockquote > :last-child {
+  margin-bottom: 15px;
+}
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 1px solid;
+}
+h2 {
+  border-bottom: 1px solid;
+}
+h3,
+h4,
+h5,
+h6 {
+  border-bottom: none;
+}
+html * {
+  color: #657b83;
+}
+html body {
+  background-color: #fdf6e3;
+}
+html h1,
+html h2,
+html h3,
+html h4,
+html h5,
+html h6 {
+  color: #586e75;
+  border-color: #657b83;
+}
+html a,
+html a:active,
+html a:visited {
+  color: #586e75;
+}
+html a:hover {
+  background-color: #eee8d5;
+}
+html pre {
+  color: #586e75;
+  background-color: #eee8d5;
+}
+html a,
+html a:active,
+html a:visited,
+html code.url {
+  color: #b58900;
+}
+html h1 {
+  color: #b58900;
+}
+html h2,
+html h3,
+html h4,
+html h5,
+html h6 {
+  color: #b58900;
+}
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+@media print {
+  body {
+    margin: 0;
+  }
+  * {
+    color: #000 !important;
+  }
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">智能指针</h1>
+
+<p>指针是一个存储计算机内存地址的变量。从指针指向的内存读取数据称作指针的取值，指针可以指向某些具体类型的变量地址，例如int、long和double，也可以是void类型、NULL指针和未初始化指针，关于指针的更多内容可以参考 <a href="C++_Pointer.md">C++ Pointer</a>。</p>
+
+<h1 id="toc_1">普通指针的问题</h1>
+
+<p>利用指针变量可以表示各种数据结构；能很方便地使用数组和字符串；并能像汇编语言一样处理内存地址，从而编出精练而高效的程序，可以说指针极大地丰富了C/C++的功能。</p>
+
+<p>但是由于C、C++没有自动内存回收机制，关于内存的操作的安全性依赖于程序员的自觉。程序员每次new出来的内存块都需要自己使用delete进行释放，复杂的流程可能会导致忘记释放内存而造成<code>内存泄漏</code>。</p>
+
+<p>此外，当有多个指针指向同一个对象时，如果某个指针delete了该对象，对这个指针来说明确了它所指的对象被释放掉了，所以不会再对所指对象进行操作，但是对于剩下的其他指针来说还指向已经被删除的对象。于是悬垂指针就形成了，再次访问已经释放的内存空间，可能会导致程序崩溃。来看下面的代码：</p>
+
+<div><pre><code class="language-cpp">int * ptr1 = new int (1);
+int * ptr2 = ptr1;
+int * ptr3 = ptr2;
+  
+cout &lt;&lt; *ptr1 &lt;&lt; endl;
+cout &lt;&lt; *ptr2 &lt;&lt; endl;
+cout &lt;&lt; *ptr3 &lt;&lt; endl;
+    
+delete ptr1;
+    
+cout &lt;&lt; *ptr2 &lt;&lt; endl;</code></pre></div>
+
+<p>输出ptr2时可能并不是期待的1，因为1已经被删除了。这个过程是这样的：</p>
+
+<p><img src="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_1.png" alt=""><br>
+<img src="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_2.png" alt=""><br>
+<img src="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_3.png" alt=""></p>
+
+<p>从图可以看出，错误的产生来自于ptr1的&quot;无知&quot;：它并不知道还有其他指针共享着它指向的对象。如果有个办法让ptr1知道，除了它自己外还有两个指针指向基础对象，而它不应该删除基础对象，那么悬垂指针的问题就得以解决了。如下图：</p>
+
+<p><img src="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_4.png" alt=""><br>
+<img src="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_5.png" alt=""></p>
+
+<p>那么何时才可以删除基础对象呢？当然是只有一个指针指向基础对象的时候，这时通过该指针就可以把基础对象删除了。如何让指针知道还有其他指针的存在呢，加入<code>引用计数</code>即可。</p>
+
+<h1 id="toc_2">智能指针</h1>
+
+<p>为了避免普通指针可能带来的各种问题，C++标准库中引入了智能指针，先来看下面的这段程序：</p>
+
+<div><pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    unique_ptr&lt;int&gt; up1(new int(10)); // 不能复制的unique_ptr
+    // unique_ptr&lt;int&gt; up2 = up1; // 这样是错的
+    cout&lt;&lt;*up1&lt;&lt;endl;
+
+    unique_ptr&lt;int&gt; up3 = move(up1); // 现在up3是数据唯一的unique_ptr智能指针
+    cout&lt;&lt;*up3&lt;&lt;endl;
+    // cout&lt;&lt;*up1&lt;&lt;endl; // 运行时错误
+
+    up3.reset(); // 显式释放内存
+    up1.reset(); // 即使up1没有拥有任何内存，但是这样调用也没有问题
+    // cout&lt;&lt;*up3&lt;&lt;endl; // 已经释放掉up3了，这样会运行时错误
+
+    shared_ptr&lt;int&gt; sp1(new int(20));
+    shared_ptr&lt;int&gt; sp2 = sp1; // 这是完全可以的，增加引用计数
+
+    cout&lt;&lt;*sp1&lt;&lt;endl;
+    cout&lt;&lt;*sp2&lt;&lt;endl;
+
+    sp1.reset(); // 减少引用计数
+    cout&lt;&lt;*sp2&lt;&lt;endl;
+
+    return 0;
+}</code></pre></div>
+
+<p>C++11 中主要提供了unique<em>ptr、shared</em>ptr和weak_ptr这三个智能指针来自动回收堆分配的对象。</p>
+
+<h2 id="toc_3">unique_ptr</h2>
+
+<p>C++11中的unique<em>ptr是auto</em>ptr的替代品，它与auto<em>ptr一样拥有唯一拥有权的特性，与auto</em>ptr不一样的是，unique_ptr是没有复制构造函数的，这就防止了一些“悄悄地”丢失所有权的问题发生，如果需要将所有权进行转移，可以这样操作：</p>
+
+<div><pre><code class="language-cpp">unique_ptr&lt;int&gt; up3 = move(up1); // 现在up3是数据唯一的unique_ptr智能指针
+// 或者
+unique_ptr&lt;int&gt; up4(move(up1));</code></pre></div>
+
+<p>只有在使用者显示的调用std::move之后，才会发生所有权的转移，这样就让使用者知道自己在干什么。再来一段代码，看看将unique_ptr作为函数参数和返回值的使用情况：</p>
+
+<div><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+using namespace std;
+
+unique_ptr&lt;int&gt; Func(unique_ptr&lt;int&gt; a)
+{
+    cout&lt;&lt;*a&lt;&lt;endl;
+    return a;
+}
+
+int main()
+{
+    unique_ptr&lt;int&gt; up1(new int(10));
+
+    up1 = Func(move(up1));
+    cout&lt;&lt;*up1&lt;&lt;endl;
+
+    return 0;
+}</code></pre></div>
+
+<p>由于在unique_ptr中是没有复制构造函数的，所以在直接传参时，进行值传递时，建立临时变量时，就会出错了，所以需要显示的调用move，转移所有权；而函数的返回值已经进行了move操作，而不用显示的进行调用。</p>
+
+<h2 id="toc_4">shared_ptr</h2>
+
+<p>shared<em>ptr名如其名，它允许多个该智能指针共享地“拥有”同一堆分配对象的内存；由于它的资源是可以共用的，所以也就可以透过operator=等方法，来分享shared</em>ptr所使用的资源。</p>
+
+<p>由于shared<em>ptr内部实现上使用的是<code>引用计数</code>这种方法，所以一旦一个shared</em>ptr指针放弃了“所有权”，其它的shared<em>ptr对对象的引用并不会发生变化；只有在引用计数归零的时候，shared</em>ptr才会真正的释放所占有的堆内存空间的。</p>
+
+<p>下面是一段简单的使用示例：<a href="https://gist.github.com/xuelangZF/eaf00ecca8a1053a6da5ca85018cc839">gist</a>。</p>
+
+<h3 id="toc_5">shared_ptr 指向数组</h3>
+
+<p> 在默认情况下，shared<em>ptr将调用delete进行内存的释放；当分配内存时使用new[]时，我们需要对应的调用delete[]来释放内存；为了能正确的使用shared</em>ptr指向一个数组，我们需要定制一个删除函数，例如：</p>
+
+<div><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+using namespace std;
+
+class A
+{
+public:
+    A() { cout&lt;&lt;&quot;constructor&quot;&lt;&lt;endl; }
+    ~A() { cout&lt;&lt;&quot;destructor&quot;&lt;&lt;endl; }
+};
+
+int main()
+{
+    shared_ptr&lt;A&gt; arrayObj(new A[5], [](A *p){delete[] p;});
+    // shared_ptr&lt;A&gt; arrayObj(new A[5]);
+    return 0;
+}</code></pre></div>
+
+<p>如果确实需要共享地托管一个对象，使用unique_ptr也许会更简单一些，比如：</p>
+
+<div><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+using namespace std;
+
+class A
+{
+public:
+    A() { cout&lt;&lt;&quot;constructor&quot;&lt;&lt;endl; }
+    ~A() { cout&lt;&lt;&quot;destructor&quot;&lt;&lt;endl; }
+};
+
+int main()
+{
+    unique_ptr&lt;A[]&gt; arrayObj(new A[5]);
+    return 0;
+}</code></pre></div>
+
+<h3 id="toc_6">环形引用</h3>
+
+<p> 对于使用引用计数实现的智能指针，总是避免不了这个问题的。如果出现类似下面的代码，那就出现了环形引用的问题了。</p>
+
+<div><pre><code class="language-cpp">class Parent
+{
+public:
+    shared_ptr&lt;Child&gt; child;
+};
+
+class Child
+{
+public:
+    shared_ptr&lt;Parent&gt; parent;
+};
+
+shared_ptr&lt;Parent&gt; pA(new Parent);
+shared_ptr&lt;Child&gt; pB(new Child);
+pA-&gt;child = pB;
+pB-&gt;parent = pA;</code></pre></div>
+
+<p>要解决环形引用的问题，没有特别好的办法，一般都是在可能出现环形引用的地方使用weak<em>ptr来代替shared</em>ptr。</p>
+
+<h2 id="toc_7"><a href="http://en.cppreference.com/w/cpp/memory/weak_ptr">weak_ptr</a></h2>
+
+<p>weak<em>ptr一般和shared</em>ptr配合使用，它可以指向shared<em>ptr所指向的对象，但是却不增加对象的引用计数。这样就有可能出现weak</em>ptr所指向的对象实际上已经被释放了的情况。因此，weak<em>ptr有一个lock函数，尝试取回一个指向对象的shared</em>ptr。</p>
+
+<blockquote>
+<p>std::weak<em>ptr is a smart pointer that holds a non-owning (&quot;weak&quot;) reference to an object that is managed by std::shared</em>ptr. It must be converted to std::shared_ptr in order to access the referenced object.</p>
+</blockquote>
+
+<p>下面是一个简单的例子：</p>
+
+<div><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+std::weak_ptr&lt;int&gt; gw;
+void f() {
+    if (auto spt = gw.lock()) { // Has to be copied into a shared_ptr before usage
+        std::cout &lt;&lt; *spt &lt;&lt; &quot;\n&quot;;
+    }
+    else {
+        std::cout &lt;&lt; &quot;gw is expired\n&quot;;
+    }
+}
+
+int main() {
+    {
+        auto sp = std::make_shared&lt;int&gt;(42);
+        gw = sp;
+        f();
+    }
+    f();
+}</code></pre></div>
+
+<p>这里的 lock() 用来取得 weak<em>ptr 对应的 shared</em>ptr。</p>
+
+<blockquote>
+<p>Creates a new std::shared<em>ptr that shares ownership of the managed object. If there is no managed object, i.e. *this is empty, then the returned shared</em>ptr also is empty.</p>
+</blockquote>
+
+<h1 id="toc_8">智能指针实现</h1>
+
+<p>智能指针(smart pointer)是存储指向动态分配（堆）对象指针的类，用于生存期控制，能够确保自动正确的销毁动态分配的对象，防止内存泄露。</p>
+
+<h2 id="toc_9">引用计数</h2>
+
+<p>智能指针的一种通用实现技术是使用<code>引用计数(reference count)</code>。引用计数是这样一个技巧，它允许有多个相同值的对象共享这个值的实现。引用计数的使用常有两个目的：</p>
+
+<ul>
+<li><strong>简化跟踪堆中的对象的过程</strong>。一旦一个对象通过调用new被分配出来，记录谁拥有这个对象是很重要的，因为其所有者要负责对它进行delete。但是对象所有者可以有多个，且所有权能够被传递，这就使得内存跟踪变得困难。引用计数可以跟踪对象所有权，并能够自动销毁对象，可以说引用计数是个简单的垃圾回收体系。。</li>
+<li><strong>节省内存，提高程序运行效率</strong>。如何很多对象有相同的值，为这多个相同的值存储多个副本是很浪费空间的，所以最好做法是让所有对象都共享同一个值的实现。C++标准库中string类采取一种称为“写时复制”的技术，使得只有当字符串被修改的时候才创建各自的拷贝，否则可能（标准库允许使用但没强制要求）采用引用计数技术来管理共享对象的多个对象。</li>
+</ul>
+
+<h2 id="toc_10">具体实现</h2>
+
+<p>智能指针的实现策略有两种：辅助类与句柄类。这里介绍辅助类的实现方法。首先，我们来定义一个基础对象类Point类，为了方便后面我们验证智能指针是否有效，我们为Point类创建如下接口：</p>
+
+<div><pre><code class="language-cpp">class Point
+{
+public:
+    Point(int xVal = 0, int yVal = 0) :x(xVal), y(yVal) { }
+    int getX() const { return x; }
+    int getY() const { return y; }
+    void setX(int xVal) { x = xVal; }
+    void setY(int yVal) { y = yVal; }
+
+private:
+    int x, y;
+};</code></pre></div>
+
+<p>在创建智能指针类之前，先创建一个<code>辅助类</code>。这个类的所有成员皆为私有类型，因为它不被普通用户所使用。为了只为智能指针使用，还需要把智能指针类声明为辅助类的友元。这个辅助类含有两个数据成员：计数count与基础对象指针。也即辅助类用以封装使用计数与基础对象指针。</p>
+
+<div><pre><code class="language-cpp">class U_Ptr
+{
+private:
+    friend class SmartPtr;
+    U_Ptr(Point *ptr) :p(ptr), count(1) { }
+    ~U_Ptr() { delete p; }
+
+    int count;
+    Point *p;
+};</code></pre></div>
+
+<p>智能指针将一个计数器与类指向的对象相关联，引用计数跟踪共有多少个类对象共享同一指针。它的具体做法如下：</p>
+
+<ul>
+<li>当创建类的新对象时，初始化指针，并将引用计数设置为1</li>
+<li>当对象作为另一个对象的副本时，复制构造函数复制副本指针，并增加与指针相应的引用计数（加1）</li>
+<li>使用赋值操作符对一个对象进行赋值时，处理复杂一点：先使左操作数的指针的引用计数减1（为何减1：因为指针已经指向别的地方），如果减1后引用计数为0，则释放指针所指对象内存。然后增加右操作数所指对象的引用计数（为何增加：因为此时做操作数指向对象即右操作数指向对象）。</li>
+<li>析构函数：调用析构函数时，析构函数先使引用计数减1，如果减至0则delete对象。</li>
+</ul>
+
+<p>接下来可以为基础对象类Point书写一个智能指针类了。根据引用计数实现关键点，可以写出我们的智能指针类如下：</p>
+
+<div><pre><code class="language-cpp">class SmartPtr
+{
+public:
+    SmartPtr(Point *ptr) :rp(new U_Ptr(ptr)) { }
+    SmartPtr(const SmartPtr &amp;sp) :rp(sp.rp) { ++rp-&gt;count; }
+
+    SmartPtr&amp; operator=(const SmartPtr&amp; rhs) {
+        ++rhs.rp-&gt;count;
+        if (--rp-&gt;count == 0)
+            delete rp;
+        rp = rhs.rp;
+        return *this;
+    }
+
+    ~SmartPtr() {
+        if (--rp-&gt;count == 0)
+            delete rp;
+        else
+            cout &lt;&lt; &quot;Remain &quot; &lt;&lt; rp-&gt;count &lt;&lt; &quot; pointers point to Point object.&quot; &lt;&lt; endl;
+    }
+
+private:
+    U_Ptr *rp;
+};</code></pre></div>
+
+<p>至此，一个简单的智能指针类就完成了，我们可以来看看如何使用</p>
+
+<div><pre><code class="language-cpp">int main()
+{
+    //定义一个基础对象类指针
+    Point *pa = new Point(10, 20);
+    cout &lt;&lt; pa-&gt;getX ()&lt;&lt; endl;
+
+    //定义三个智能指针类对象，对象都指向基础类对象pa
+    //使用花括号控制三个指针指针的生命期，观察计数的变化
+    {
+        SmartPtr sptr1(pa);//此时计数count=1
+        {
+            SmartPtr sptr2(sptr1); //调用复制构造函数，此时计数为count=2
+            {
+                SmartPtr sptr3=sptr1; //调用赋值操作符，此时计数为count=3
+            }
+            //此时count=2
+        }
+        //此时count=1；
+    }
+    //此时count=0；pa对象被delete掉,取不到原来的值
+    cout &lt;&lt; pa-&gt;getX ()&lt;&lt; endl;
+    return 0;
+}</code></pre></div>
+
+<p>在离开大括号后，共享基础对象的指针从3-&gt;2-&gt;1-&gt;0变换，最后计数为0时，pa对象被delete，此时使用getX（）已经获取不到原来的值。到现在为止，虽然SmartPtr类称为智能指针，但它目前并不能像真正的指针那样有-&gt;、*等操作符，为了使它看起来更像一个指针，可以为它重载这些操作符。</p>
+
+<p>完整的代码在 <a href="../Coding/C++_Smart_Pointer.cpp">C++<em>Smart</em>Pointer.cpp</a>。</p>
+
+<p>目前这个智能指针智能用于管理Point类的基础对象，如果此时定义了个矩阵的基础对象类，那不是还得重新写一个属于矩阵类的智能指针类吗？但是矩阵类的智能指针类设计思想和Point类一样啊，就不能借用吗？答案当然是能，那就是使用模板技术。为了使我们的智能指针适用于更多的基础对象类，我们有必要把智能指针类通过模板来实现，具体实现在 <a href="../Coding/C++_Smart_Pointer_t.cpp">C++<em>Smart</em>Pointer_t</a></p>
+
+<h1 id="toc_11">更多阅读</h1>
+
+<p><a href="http://www.acodersjourney.com/2016/05/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">Top 10 dumb mistakes to avoid with C++ 11 smart pointers</a><br><br>
+<a href="http://www.cnblogs.com/QG-whz/p/4777312.html">C++ 引用计数技术及智能指针的简单实现</a><br><br>
+<a href="http://www.jellythink.com/archives/673">从auto_ptr说起</a><br><br>
+<a href="http://www.jellythink.com/archives/684">到C++11中的智能指针</a><br><br>
+<a href="http://blog.jobbole.com/104569/">C++11 新特性之智能指针</a><br><br>
+<a href="http://stackoverflow.com/questions/12030650/when-is-stdweak-ptr-useful">When is std::weak_ptr useful?</a>   </p>
+
+<p><a href="http://beamnote.com/2014/is-shared_ptr-thread-safe.html">shared_ptr 是否线程安全？</a><br><br>
+<a href="http://www.boost.org/doc/libs/1_55_0/libs/smart_ptr/shared_ptr.htm#ThreadSafety">boost::shared_ptr class template</a>  </p>
+
+<hr>
+
+<h1 id="toc_12">shared_ptr 是否线程安全?</h1>
+
+<p>在上周参加的一场面试中, 面试官和我聊到了智能指针的问题, 问我常用哪些智能指针, 我说出了 shared<em>ptr、unique</em>ptr, 脑子一抽风把 scoped<em>ptr 也说出来了, 但是把 weak</em>ptr 和 intrusive_ptr 忘在了脑后</p>
+
+<p>他问我了一个问题, 对于 shared<em>ptr 的操作是否为线程安全的, 当时庆幸这个问题之前有做过了解, 就按照某个博客的说法来回答: 尽管使用计数提供了原子性修改操作, 但 shared</em>ptr 的赋值操作由复制对象指针和修改使用计数两个操作复合而成, 因此仍不是线程安全的, 具体理由如下.</p>
+
+<p>设有两个线程与三个智能指针:</p>
+
+<div><pre><code class="language-c">thread thread1;
+thread thread2;
+shared_ptr&lt;Object&gt; spObject1;
+shared_ptr&lt;Object&gt; spObject2;
+shared_ptr&lt;Object&gt; spObject3;</code></pre></div>
+
+<p>在某时刻, spObject1 与 spObject2 的状态是这样的:</p>
+
+<p>两个线程同时进行了 shared_ptr 的赋值操作:</p>
+
+<div><pre><code class="language-c">// thread1
+spObject1 = spObject2;
+// thread2
+spObject2 = spObject3;</code></pre></div>
+
+<p>观察 spObject1 与 spObject2 的操作, 首先 thread1 执行, spObject1 的对象指针指向了 spObject2 指向的位置:</p>
+
+<p>接着 thread2 执行, spObject2 的指针指向了 spObject3 指向的的位置, 并且修改使用计数, 导致 object2 与相应的使用计数被销毁, spObject1 指向了一个被销毁的对象:</p>
+
+<p>thread1 执行时, spObject1 修改使用计数, 错误的指向了原本 spObject3 的使用计数.<br>
+据此原博得出结论, 多线程无保护读写 shared<em>ptr 是不安全的, 必须加锁. 当我把这个过程呈现给面试官的时候, 他表示了疑惑: 既然 shared</em>ptr 的读写不是线程安全的, 那么使用计数操作的原子性意义何在? 我当时就囧了, 但仍然坚持原来的主张, 于是面试官便让我回去查查.</p>
+
+<p>首先我阅读了 VC 2013 的 STL 库, 对于赋值部分看起来是线程安全的, 这里是赋值的源码:</p>
+
+<div><pre><code class="language-c">_Myt&amp;amp; operator=(const _Myt&amp;amp; _Right) _NOEXCEPT
+  {  // assign shared ownership of resource owned by _Right
+  shared_ptr(_Right).swap(*this);
+  return (*this);
+  }
+void swap(_Myt&amp;amp; _Other) _NOEXCEPT
+  {  // swap pointers
+  this-&gt;_Swap(_Other);
+  }</code></pre></div>
+
+<p>swap 交换是实现异常安全的惯用手法, 不难理解. _Swap 声明在基类 <em>Ptr</em>base&lt;_Ty&gt; 中, 具体如下:</p>
+
+<div><pre><code class="language-c">void _Swap(_Ptr_base&amp;amp; _Right)
+  {  // swap pointers
+  _STD swap(_Rep, _Right._Rep);
+  _STD swap(_Ptr, _Right._Ptr);
+  }</code></pre></div>
+
+<p>此处注意首先交换了使用计数, 然后是对象指针. 我们再看 shared_ptr 的复制构造函数, 因为赋值语句的第一行用到了它:</p>
+
+<div><pre><code class="language-c">shared_ptr(const _Myt&amp;amp; _Other) _NOEXCEPT
+  {  // construct shared_ptr object that owns same resource as _Other
+  this-&gt;_Reset(_Other);
+  }
+template&lt;class _Ty2&gt;
+  void _Reset(const _Ptr_base&lt;_Ty2&gt;&amp;amp; _Other)
+  {  // release resource and take ownership of _Other._Ptr
+  _Reset(_Other._Ptr, _Other._Rep);
+  }
+void _Reset(_Ty *_Other_ptr, _Ref_count_base *_Other_rep)
+  {  // release resource and take _Other_ptr through _Other_rep
+  if (_Other_rep)
+    _Other_rep-&gt;_Incref();
+  _Reset0(_Other_ptr, _Other_rep);
+  }
+  ```
+可以注意到, 在泛型函数的 _Reset 中, 已经取得了一份 _Other 的拷贝, 也就是说争用情况不会发生在此之后, 只会在泛型版本 _Reset 调用 非泛型版本 _Reset 时发生.
+
+下面做一个简单的实验证明上面的结论:
+
+```c
+shared_ptr&lt;int&gt; sp1(new int);
+shared_ptr&lt;int&gt; sp2(new int);
+shared_ptr&lt;int&gt; sp3(new int);
+thread t1([&amp;amp;](){
+    while (true)
+    {
+        sp1 = sp2;
+        sp1.reset(new int);
+    }
+});
+thread t2([&amp;amp;](){
+    while (true)
+    {
+        sp2 = sp3;
+        sp3.reset(new int);
+    }
+});
+t1.join();
+t2.join();</code></pre></div>
+
+<p>此程序在 Debug 模式下运行不久就会出现错误, 因为尝试越界访问 (可能是写入一个已经销毁的堆上对象).</p>
+
+<p>令人疑惑的是, cppreference.com 指出, 对不同的 shared_ptr 实例操作时是不需要额外同步的, 即使那些实例共享了同一个对象. 在上面的实验中, 两个线程只进行以下操作:</p>
+
+<p>对不同的实例调用成员方法 operator=;<br>
+对不同的实例调用成员方法 reset.<br>
+对于 VC 2013 的 STL 库, 以下的执行顺序是可能的:</p>
+
+<p>线程 t1 中, 泛型 <em>Reset 取得了 &lt;sp2.</em>Rep;<br>
+线程 t2 中, 完成了 sp2 = sp3, sp2.<em>Rep 与 sp2.</em>Ptr 被销毁;<br>
+线程 t1 中, 泛型 <em>Reset 取得了 sp2.</em>Ptr (实际上已经是 sp3._Ptr), 调用非泛型 <em>Reset, 对已销毁的 sp2.</em>Rep 进行操作, 发生错误.<br>
+在 gcc 中测试, 也会发生类似的问题.</p>
+
+<p>至此, 我仍然坚持 shared_ptr 并非线程安全这一观点, 起码对于现在的库来说是不安全的.</p>
+
+<hr>
+
+<h1 id="toc_13">C++ 引用计数技术及智能指针的简单实现</h1>
+
+<ol>
+<li>智能指针是什么</li>
+<li>普通指针存在的问题</li>
+<li>什么是引用计数</li>
+<li><p>智能指针实现<br>
+4.1. 基础对象类<br>
+4.2. 辅助类<br>
+4.3. 为基础对象类实现智能指针类<br>
+4.4. 智能指针类的使用与测试</p></li>
+<li><p>智能指针类的改进一</p></li>
+<li><p>智能指针改进二</p></li>
+</ol>
+
+<p>一直以来都对智能指针一知半解，看C++Primer中也讲的不够清晰明白（大概是我功力不够吧）。最近花了点时间认真看了智能指针，特地来写这篇文章。</p>
+
+<h2 id="toc_14">1.智能指针是什么</h2>
+
+<p>简单来说，智能指针是一个类，它对普通指针进行封装，使智能指针类对象具有普通指针类型一样的操作。具体而言，复制对象时，副本和原对象都指向同一存储区域，如果通过一个副本改变其所指的值，则通过另一对象访问的值也会改变.所不同的是，智能指针能够对内存进行进行自动管理，避免出现悬垂指针等情况。</p>
+
+<h2 id="toc_15">2.普通指针存在的问题</h2>
+
+<p>C语言、C++语言没有自动内存回收机制，关于内存的操作的安全性依赖于程序员的自觉。程序员每次new出来的内存块都需要自己使用delete进行释放，流程复杂可能会导致忘记释放内存而造成内存泄漏。而智能指针也致力于解决这种问题，使程序员专注于指针的使用而把内存管理交给智能指针。</p>
+
+<p>我们先来看看普通指针的悬垂指针问题。当有多个指针指向同一个基础对象时，如果某个指针delete了该基础对象，对这个指针来说它是明确了它所指的对象被释放掉了，所以它不会再对所指对象进行操作，但是对于剩下的其他指针来说呢？它们还傻傻地指向已经被删除的基础对象并随时准备对它进行操作。于是悬垂指针就形成了，程序崩溃也“指日可待”。我们通过代码+图来来探求悬垂指针的解决方法。</p>
+
+<div><pre><code class="language-c">        int * ptr1 = new int (1);
+        int * ptr2 = ptr1;
+        int * ptr3 = prt2;
+        
+        cout &lt;&lt; *ptr1 &lt;&lt; endl;
+        cout &lt;&lt; *ptr2 &lt;&lt; endl;
+        cout &lt;&lt; *ptr3 &lt;&lt; endl;
+
+        delete ptr1;
+
+        cout &lt;&lt; *ptr2 &lt;&lt; endl;</code></pre></div>
+
+<p>代码简单就不啰嗦解释了。运行结果是输出ptr2时并不是期待的1，因为1已经被删除了。这个过程是这样的：<br>
+<img src="https://images2015.cnblogs.com/blog/610439/201509/610439-20150901230358310-559215334.png" alt="1"></p>
+
+<p><img src="https://images2015.cnblogs.com/blog/610439/201509/610439-20150901230408981-1920400.png" alt="1"></p>
+
+<p><img src="https://images2015.cnblogs.com/blog/610439/201509/610439-20150901230419247-2039623035.png" alt="2"></p>
+
+<p>从图可以看出，错误的产生来自于ptr1的”无知“：它并不知道还有其他指针共享着它指向的对象。如果有个办法让ptr1知道，除了它自己外还有两个指针指向基础对象，而它不应该删除基础对象，那么悬垂指针的问题就得以解决了。如下图：</p>
+
+<p><img src="https://images2015.cnblogs.com/blog/610439/201509/610439-20150901230427794-1443640748.png" alt="3"></p>
+
+<p><img src="https://images2015.cnblogs.com/blog/610439/201509/610439-20150901230436466-187583397.png" alt="3"></p>
+
+<p>那么何时才可以删除基础对象呢？当然是只有一个指针指向基础对象的时候，这时通过该指针就可以大大方方地把基础对象删除了。</p>
+
+<h2 id="toc_16">3.什么是引用计数</h2>
+
+<p>如何来让指针知道还有其他指针的存在呢？这个时候我们该引入引用计数的概念了。引用计数是这样一个技巧，它允许有多个相同值的对象共享这个值的实现。引用计数的使用常有两个目的：</p>
+
+<p>简化跟踪堆中（也即C++中new出来的）的对象的过程。一旦一个对象通过调用new被分配出来，记录谁拥有这个对象是很重要的，因为其所有者要负责对它进行delete。但是对象所有者可以有多个，且所有权能够被传递，这就使得内存跟踪变得困难。引用计数可以跟踪对象所有权，并能够自动销毁对象。可以说引用计数是个简单的垃圾回收体系。这也是本文的讨论重点。<br>
+节省内存，提高程序运行效率。如何很多对象有相同的值，为这多个相同的值存储多个副本是很浪费空间的，所以最好做法是让左右对象都共享同一个值的实现。C++标准库中string类采取一种称为”写时复制“的技术，使得只有当字符串被修改的时候才创建各自的拷贝，否则可能（标准库允许使用但没强制要求）采用引用计数技术来管理共享对象的多个对象。这不是本文的讨论范围。</p>
+
+<h2 id="toc_17">4.智能指针实现</h2>
+
+<p>了解了引用计数，我们可以使用它来写我们的智能指针类了。智能指针的实现策略有两种：辅助类与句柄类。这里介绍辅助类的实现方法。</p>
+
+<h3 id="toc_18">4.1.基础对象类</h3>
+
+<p>首先，我们来定义一个基础对象类Point类，为了方便后面我们验证智能指针是否有效，我们为Point类创建如下接口：</p>
+
+<p>class Point<br><br>
+{<br>
+public:<br>
+    Point(int xVal = 0, int yVal = 0) :x(xVal), y(yVal) { }<br>
+    int getX() const { return x; }<br>
+    int getY() const { return y; }<br>
+    void setX(int xVal) { x = xVal; }<br>
+    void setY(int yVal) { y = yVal; }</p>
+
+<p>private:<br>
+    int x, y;</p>
+
+<p>};</p>
+
+<h3 id="toc_19">4.2.辅助类</h3>
+
+<p>在创建智能指针类之前，我们先创建一个辅助类。这个类的所有成员皆为私有类型，因为它不被普通用户所使用。为了只为智能指针使用，还需要把智能指针类声明为辅助类的友元。这个辅助类含有两个数据成员：计数count与基础对象指针。也即辅助类用以封装使用计数与基础对象指针。</p>
+
+<div><pre><code class="language-c">class U_Ptr                                  
+{
+private:
+    
+    friend class SmartPtr;      
+    U_Ptr(Point *ptr) :p(ptr), count(1) { }
+    ~U_Ptr() { delete p; }
+    
+    int count;   
+    Point *p;                                                      
+};</code></pre></div>
+
+<h3 id="toc_20">4.3.为基础对象类实现智能指针类</h3>
+
+<p>引用计数是实现智能指针的一种通用方法。智能指针将一个计数器与类指向的对象相关联，引用计数跟踪共有多少个类对象共享同一指针。它的具体做法如下：</p>
+
+<p>当创建类的新对象时，初始化指针，并将引用计数设置为1<br>
+当对象作为另一个对象的副本时，复制构造函数复制副本指针，并增加与指针相应的引用计数（加1）<br>
+使用赋值操作符对一个对象进行赋值时，处理复杂一点：先使左操作数的指针的引用计数减1（为何减1：因为指针已经指向别的地方），如果减1后引用计数为0，则释放指针所指对象内存。然后增加右操作数所指对象的引用计数（为何增加：因为此时做操作数指向对象即右操作数指向对象）。<br>
+析构函数：调用析构函数时，析构函数先使引用计数减1，如果减至0则delete对象。<br>
+做好前面的准备后，我们可以来为基础对象类Point书写一个智能指针类了。根据引用计数实现关键点，我们可以写出我们的智能指针类如下：</p>
+
+<div><pre><code class="language-c">class SmartPtr
+{
+public:
+    SmartPtr(Point *ptr) :rp(new U_Ptr(ptr)) { }    
+    
+    SmartPtr(const SmartPtr &amp;sp) :rp(sp.rp) { ++rp-&gt;count; }
+      
+    SmartPtr&amp; operator=(const SmartPtr&amp; rhs) {    
+        ++rhs.rp-&gt;count;    
+        if (--rp-&gt;count == 0)    
+            delete rp;
+        rp = rhs.rp;
+        return *this;
+    }
+    
+    ~SmartPtr() {       
+        if (--rp-&gt;count == 0)   
+            delete rp;
+        else 
+        cout &lt;&lt; &quot;还有&quot; &lt;&lt; rp-&gt;count &lt;&lt; &quot;个指针指向基础对象&quot; &lt;&lt; endl;
+    }
+    
+private:
+        U_Ptr *rp;  
+};
+</code></pre></div>
+
+<h3 id="toc_21">4.4.智能指针类的使用与测试</h3>
+
+<p>至此，我们的智能指针类就完成了，我们可以来看看如何使用</p>
+
+<div><pre><code class="language-c">int main()
+{
+    //定义一个基础对象类指针
+    Point *pa = new Point(10, 20);
+
+    //定义三个智能指针类对象，对象都指向基础类对象pa
+    //使用花括号控制三个指针指针的生命期，观察计数的变化
+
+    {
+        SmartPtr sptr1(pa);//此时计数count=1
+        {
+            SmartPtr sptr2(sptr1); //调用复制构造函数，此时计数为count=2
+            {
+                SmartPtr sptr3=sptr1; //调用赋值操作符，此时计数为conut=3
+            }
+            //此时count=2
+        }
+        //此时count=1；
+    }
+    //此时count=0；pa对象被delete掉
+
+    cout &lt;&lt; pa-&gt;getX ()&lt;&lt; endl;
+
+    system(&quot;pause&quot;);
+    return 0;
+}</code></pre></div>
+
+<p>来看看运行结果咯：</p>
+
+<div><pre><code class="language-none">还有2个指针指向基础对象
+还有1个指针指向基础对象
+-17891602
+请按任意键继续. . .</code></pre></div>
+
+<p>如期，在离开大括号后，共享基础对象的指针从3-&gt;2-&gt;1-&gt;0变换，最后计数为0时，pa对象被delete，此时使用getX（）已经获取不到原来的值。</p>
+
+<h2 id="toc_22">5.智能指针类的改进一</h2>
+
+<p>虽然我们的SmartPtr类称为智能指针，但它目前并不能像真正的指针那样有-&gt;、*等操作符，为了使它看起来更像一个指针，我们来为它重载这些操作符。代码如下所示：</p>
+
+<div><pre><code class="language-c">{
+public:
+    SmartPtr(Point *ptr) :rp(new U_Ptr(ptr)) { }    
+    
+    SmartPtr(const SmartPtr &amp;sp) :rp(sp.rp) { ++rp-&gt;count; }
+      
+    SmartPtr&amp; operator=(const SmartPtr&amp; rhs) {    
+        ++rhs.rp-&gt;count;    
+        if (--rp-&gt;count == 0)    
+            delete rp;
+        rp = rhs.rp;
+        return *this;
+    }
+    
+    ~SmartPtr() {       
+        if (--rp-&gt;count == 0)   
+            delete rp;
+        else 
+        cout &lt;&lt; &quot;还有&quot; &lt;&lt; rp-&gt;count &lt;&lt; &quot;个指针指向基础对象&quot; &lt;&lt; endl;
+    }
+    
+
+    Point &amp; operator *()        //重载*操作符  
+    {
+        return *(rp-&gt;p);
+    }
+    Point* operator -&gt;()       //重载-&gt;操作符  
+    {
+        return rp-&gt;p;
+    }
+    
+private:
+    U_Ptr *rp;  
+};</code></pre></div>
+
+<p>然后我们可以像指针般使用智能指针类</p>
+
+<div><pre><code class="language-c">    Point *pa = new Point(10, 20);
+    SmartPtr sptr1(pa);
+    //像指针般使用
+    cout&lt;&lt;sptr1-&gt;getX();</code></pre></div>
+
+<h2 id="toc_23">6.智能指针改进二</h2>
+
+<p>目前这个智能指针智能用于管理Point类的基础对象，如果此时定义了个矩阵的基础对象类，那不是还得重新写一个属于矩阵类的智能指针类吗？但是矩阵类的智能指针类设计思想和Point类一样啊，就不能借用吗？答案当然是能，那就是使用模板技术。为了使我们的智能指针适用于更多的基础对象类，我们有必要把智能指针类通过模板来实现。这里贴上上面的智能指针类的模板版：</p>
+
+<div><pre><code class="language-c">    //模板类作为友元时要先有声明
+    template &lt;typename T&gt;
+    class SmartPtr;
+    
+    template &lt;typename T&gt;
+    class U_Ptr     //辅助类
+    {
+    private:
+        //该类成员访问权限全部为private，因为不想让用户直接使用该类
+        friend class SmartPtr&lt;T&gt;;      //定义智能指针类为友元，因为智能指针类需要直接操纵辅助类
+    
+        //构造函数的参数为基础对象的指针
+        U_Ptr(T *ptr) :p(ptr), count(1) { }
+    
+        //析构函数
+        ~U_Ptr() { delete p; }
+        //引用计数
+        int count;   
+    
+        //基础对象指针
+        T *p;                                                      
+    };
+    
+    template &lt;typename T&gt;
+    class SmartPtr   //智能指针类
+    {
+    public:
+        SmartPtr(T *ptr) :rp(new U_Ptr&lt;T&gt;(ptr)) { }      //构造函数
+        SmartPtr(const SmartPtr&lt;T&gt; &amp;sp) :rp(sp.rp) { ++rp-&gt;count; }  //复制构造函数
+        SmartPtr&amp; operator=(const SmartPtr&lt;T&gt;&amp; rhs) {    //重载赋值操作符
+            ++rhs.rp-&gt;count;     //首先将右操作数引用计数加1，
+            if (--rp-&gt;count == 0)     //然后将引用计数减1，可以应对自赋值
+                delete rp;
+            rp = rhs.rp;
+            return *this;
+        }
+    
+        T &amp; operator *()        //重载*操作符  
+        {
+            return *(rp-&gt;p);
+        }
+        T* operator -&gt;()       //重载-&gt;操作符  
+        {
+            return rp-&gt;p;
+        }
+    
+    
+        ~SmartPtr() {        //析构函数
+            if (--rp-&gt;count == 0)    //当引用计数减为0时，删除辅助类对象指针，从而删除基础对象
+                delete rp;
+            else 
+            cout &lt;&lt; &quot;还有&quot; &lt;&lt; rp-&gt;count &lt;&lt; &quot;个指针指向基础对象&quot; &lt;&lt; endl;
+        }
+    private:
+        U_Ptr&lt;T&gt; *rp;  //辅助类对象指针
+    };</code></pre></div>
+
+<p>好啦，现在我们能够使用这个智能指针类对象来共享其他类型的基础对象啦，比如int</p>
+
+<div><pre><code class="language-c">int main()
+{
+    int *i = new int(2);
+    {
+        SmartPtr&lt;int&gt; ptr1(i);
+        {
+            SmartPtr&lt;int&gt; ptr2(ptr1);
+            {
+                SmartPtr&lt;int&gt; ptr3 = ptr2;
+
+                cout &lt;&lt; *ptr1 &lt;&lt; endl;
+                *ptr1 = 20;
+                cout &lt;&lt; *ptr2 &lt;&lt; endl;
+
+            }
+        }
+    }
+    system(&quot;pause&quot;);
+    return 0;
+}</code></pre></div>
+
+<p>运行结果如期所愿，SmartPtr类管理起int类型来了：</p>
+
+<div><pre><code class="language-none">2
+20
+还有2个指针指向基础对象
+还有1个指针指向基础对象
+请按任意键继续. . .</code></pre></div>
+
+<hr>
+
+<h1 id="toc_24">使用 C++11 智能指针时要避开的 10 大错误</h1>
+
+<p>很喜欢新的C++11的智能指针。在很多时候，对很多讨厌自己管理内存的人来说是天赐的礼物。在我看来，C++11的智能指针能使得C++新手教学更简单。</p>
+
+<p>其实，我已经使用C++11两年多了，我无意中发现多种错误使用C++11智能指针的案例，这些错误会使程序效率很低或者直接崩溃。为了方便查找，我把它们按照下文进行了归类。</p>
+
+<p>在开始之前，我们用一个简单的Aircraft类来展示一下这些错误。</p>
+
+<div><pre><code class="language-C++">class Aircraft
+{
+private:
+   string m_model;
+
+public:
+   int m_flyCount;
+   weak_ptr&lt;aircraft&gt; myWingMan;
+   void Fly()
+   {
+      cout &lt;&lt; &quot;Aircraft type&quot; &lt;&lt; m_model &lt;&lt; &quot;is flying !&quot; &lt;&lt; endl;
+   }
+
+   Aircraft(string model)
+   {
+      m_model = model;
+      cout &lt;&lt; &quot;Aircraft type &quot; &lt;&lt; model &lt;&lt; &quot; is created&quot; &lt;&lt; endl;
+   }
+
+   Aircraft()
+   {
+      m_model = &quot;Generic Model&quot;;
+      cout &lt;&lt; &quot;Generic Model Aircraft created.&quot; &lt;&lt; endl;
+   }
+
+    ~Aircraft()
+   {
+      cout &lt;&lt; &quot;Aircraft type &quot; &lt;&lt; m_model &lt;&lt; &quot; is destroyed&quot; &lt;&lt; endl;
+   }
+
+};
+
+class Aircraft
+{
+private:
+   string m_model;
+ 
+public:
+   int m_flyCount;
+   weak_ptr&lt;aircraft&gt; myWingMan;
+   void Fly()
+   {
+      cout &lt;&lt; &quot;Aircraft type&quot; &lt;&lt; m_model &lt;&lt; &quot;is flying !&quot; &lt;&lt; endl;
+   }
+ 
+   Aircraft(string model)
+   {
+      m_model = model;
+      cout &lt;&lt; &quot;Aircraft type &quot; &lt;&lt; model &lt;&lt; &quot; is created&quot; &lt;&lt; endl;
+   }
+ 
+   Aircraft()
+   {
+      m_model = &quot;Generic Model&quot;;
+      cout &lt;&lt; &quot;Generic Model Aircraft created.&quot; &lt;&lt; endl;
+   }
+ 
+    ~Aircraft()
+   {
+      cout &lt;&lt; &quot;Aircraft type &quot; &lt;&lt; m_model &lt;&lt; &quot; is destroyed&quot; &lt;&lt; endl;
+   }
+ 
+};
+</code></pre></div>
+
+<h2 id="toc_25">错误#1：当唯一指针够用时却使用了共享指针</h2>
+
+<p>我最近在一个继承的代码库项目中工作，它使用了一个shared<em>ptr（译者注：共享指针）创建和管理所有的对象。我分析了这些代码，发现在90%的案例中，被shared</em>ptr管理的资源并非是共享的。</p>
+
+<p>有两个理由可以指出这是错误的：</p>
+
+<p>1、如果你真的需要使用独有的资源（对象），使用shared<em>ptr而不是unique</em>ptr会使你的代码容易出现资源泄露和一些bug。</p>
+
+<p>不易察觉的bug：有没有想过这种情况，如果有其他程序员无意间通过赋值给另一个共享指针而修改了你共享出来的资源/对象，而你却从没有预料到这种事情！</p>
+
+<p>不必要的资源使用：即使其他的指针不会修改你的对象资源，但也可能会过长时间地占用你的内存，甚至已经超出了原始shared_ptr的作用范围。</p>
+
+<p>2、创建shared<em>ptr比创建unique</em>ptr更加资源密集。</p>
+
+<p>shared<em>ptr需要维护一个指向动态内存对象的线程安全的引用计数器以及背后的一个控制块，这使它比unique</em>ptr更加复杂。</p>
+
+<p>建议 – 默认情况下，你应该使用unique<em>ptr。如果接下来有共享这个对象所有权的需求，你依然可以把它变成一个shared</em>ptr。</p>
+
+<h2 id="toc_26">错误#2：没有保证shared_ptr共享的资源/对象的线程安全性！</h2>
+
+<p>Shared<em>ptr可以让你通过多个指针来共享资源，这些指针自然可以用于多线程。有些人想当然地认为用一个shared</em>ptr来指向一个对象就一定是线程安全的，这是错误的。你仍然有责任使用一些同步原语来保证被shared_ptr管理的共享对象是线程安全的。</p>
+
+<p>建议– 如果你没有打算在多个线程之间来共享资源的话，那么就请使用unique_ptr。</p>
+
+<h2 id="toc_27">错误#3：使用auto_ptr！</h2>
+
+<p>auto_ptr的特性非常危险，并且现在已经被弃用了。当该指针被当作参数进行值传递时会被拷贝构造函数转移所有权，那么当原始auto指针被再次引用时就会造成系统致命的崩溃。看看下面这个例子:</p>
+
+<div><pre><code class="language-C++">int main()
+{
+     auto_ptr&lt;aircraft&gt; myAutoPtr(new Aircraft(&quot;F-15&quot;));
+     SetFlightCountWithAutoPtr(myAutoPtr); // Invokes the copy constructor for the auto_ptr
+     myAutoPtr-&gt;m_flyCount = 10; // &lt;span style=&quot;color: #ff0000;&quot;&gt;CRASH !!!&lt;/span&gt;
+}
+
+int main()
+{
+     auto_ptr&lt;aircraft&gt; myAutoPtr(new Aircraft(&quot;F-15&quot;));
+     SetFlightCountWithAutoPtr(myAutoPtr); // Invokes the copy constructor for the auto_ptr
+     myAutoPtr-&gt;m_flyCount = 10; // &lt;span style=&quot;color: #ff0000;&quot;&gt;CRASH !!!&lt;/span&gt;
+}</code></pre></div>
+
+<p>建议 – unique<em>ptr可以实现auto</em>ptr的所有功能。你应该搜索你的代码库，然后找到其中所有使用auto<em>ptr的地方，将其替换成unique</em>ptr。最后别忘了重新测试一下你的代码！</p>
+
+<h2 id="toc_28">错误#4：没有使用make<em>shared来初始化shared</em>ptr！</h2>
+
+<p>相较于使用裸指针，make_share有两个独特的优点：</p>
+
+<p>1.性能: 当你用new创建一个对象的同时创建一个shared<em>ptr时，这时会发生两次动态申请内存：一次是给使用new申请的对象本身的，而另一次则是由shared</em>ptr的构造函数引发的为资源管理对象分配的。</p>
+
+<div><pre><code class="language-C++">shared_ptr&lt;aircraft&gt; pAircraft(new Aircraft(&quot;F-16&quot;)); // Two Dynamic Memory allocations - SLOW !!!
+
+shared_ptr&lt;aircraft&gt; pAircraft(new Aircraft(&quot;F-16&quot;)); // Two Dynamic Memory allocations - SLOW !!!</code></pre></div>
+
+<p>与此相反，当你使用make_shared的时候，C++编译器只会一次性分配一个足够大的内存，用来保存这个资源管理者和这个新建对象。</p>
+
+<div><pre><code class="language-C++">shared_ptr&lt;aircraft&gt; pAircraft = make_shared&lt;aircraft&gt;(&quot;F-16&quot;); // Single allocation - FAST !
+
+shared_ptr&lt;aircraft&gt; pAircraft = make_shared&lt;aircraft&gt;(&quot;F-16&quot;); // Single allocation - FAST !</code></pre></div>
+
+<p>2、在看了MS编译器的memory头文件实现以后，我发现当内存分配失败时，这个对象就会被删除掉。这样的话使用裸指针初始化也不用担心安全问题了。</p>
+
+<p>建议- 使用make_shared而不是裸指针来初始化共享指针。</p>
+
+<h2 id="toc_29">错误#5：在创建一个对象（裸指针）时没有立即把它赋给shared_ptr。</h2>
+
+<p>一个对象应该在被创建的时候就立即被赋给shared_ptr。裸指针永远不应该被再次使用。</p>
+
+<p>看看下面则个例子：</p>
+
+<div><pre><code class="language-C++">int main()
+{
+     Aircraft* myAircraft = new Aircraft(&quot;F-16&quot;);
+
+     shared_ptr&lt;aircraft&gt; pAircraft(myAircraft);
+     cout &lt;&lt; pAircraft.use_count() &lt;&lt; endl; // ref-count is 1
+
+     shared_ptr&lt;aircraft&gt; pAircraft2(myAircraft);
+     cout &lt;&lt; pAircraft2.use_count() &lt;&lt; endl; // ref-count is 1
+
+     return 0;
+}
+
+int main()
+{
+     Aircraft* myAircraft = new Aircraft(&quot;F-16&quot;);
+ 
+     shared_ptr&lt;aircraft&gt; pAircraft(myAircraft);
+     cout &lt;&lt; pAircraft.use_count() &lt;&lt; endl; // ref-count is 1
+ 
+     shared_ptr&lt;aircraft&gt; pAircraft2(myAircraft);
+     cout &lt;&lt; pAircraft2.use_count() &lt;&lt; endl; // ref-count is 1
+ 
+     return 0;
+}</code></pre></div>
+
+<p>这将会造成ACCESS VIOLATION（译者注：非法访问）并导致程序崩溃！！！</p>
+
+<p>这样做的问题是当第一个shared<em>ptr超出作用域时，myAircraft对象就会被销毁，当第二个shared</em>ptr超出作用域时，程序就会再次尝试销毁这个已经被销毁了的对象！</p>
+
+<p>建议– 如果不使用make<em>shared创建shared</em>ptr，至少应该像下面这段代码一样创建使用智能指针管理的对象：</p>
+
+<div><pre><code class="language-C++">shared_ptr&lt;aircraft&gt; pAircraft(new Aircraft(&quot;F-16&quot;));
+
+shared_ptr&lt;aircraft&gt; pAircraft(new Aircraft(&quot;F-16&quot;));</code></pre></div>
+
+<h2 id="toc_30">错误#6：删掉被shared_ptr使用的裸指针！</h2>
+
+<p>你可以使用shared<em>ptr.get()这个api从一个shared</em>ptr获得一个裸指针的句柄。然而，这是非常冒险的，应该尽量避免这种情况。看看下面这段代码：</p>
+
+<div><pre><code class="language-C++">void StartJob()
+{
+     shared_ptr&lt;aircraft&gt; pAircraft(new Aircraft(&quot;F-16&quot;));
+     Aircraft* myAircraft = pAircraft.get(); // returns the raw pointer
+     delete myAircraft; // myAircraft is gone
+}
+void StartJob()
+{
+     shared_ptr&lt;aircraft&gt; pAircraft(new Aircraft(&quot;F-16&quot;));
+     Aircraft* myAircraft = pAircraft.get(); // returns the raw pointer
+     delete myAircraft; // myAircraft is gone
+}</code></pre></div>
+
+<p>一旦我们从这个共享指针中获取到对应的裸指针（myAircraft），我们可能会删掉它。然而，当这个函数结束后，共享指针pAircraft就会因为超出作用域而去试图删除myAircraft这个已经被删除过的对象，而这样做的结果就是我们非常熟悉的ACCESS VIOLATION（非法访问）！</p>
+
+<p>建议 – 在你从共享指针中获取对应的裸指针之前请仔细考虑清楚。你永远不知道别人什么时候会调用delete来删除这个裸指针，到那个时候你的共享指针(shared_ptr)就会出现Access Violate（非法访问）的错误。</p>
+
+<h2 id="toc_31">错误#7：当使用一个shared_ptr指向指针数组时没有使用自定义的删除方法！</h2>
+
+<p>看看下面这段代码：</p>
+
+<div><pre><code class="language-C++">void StartJob()
+{
+     shared_ptr&lt;aircraft&gt; ppAircraft(new Aircraft[3]);
+}
+
+void StartJob()
+{
+     shared_ptr&lt;aircraft&gt; ppAircraft(new Aircraft[3]);
+}</code></pre></div>
+
+<p>这个共享指针将仅仅指向Aircraft[0] —— Aircraft<a href="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_1.png">1</a>和Aircraft<a href="https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_SmartPoint_2.png">2</a>将会在智能指针超出作用域时未被删除而造成内存泄露。如果你在使用Visual Studio 2015，就会出现堆损坏（heap corruption）的错误。</p>
+
+<p>建议 – 保证在使用shared_ptr管理一组对象时总是传递给它一个自定义的删除方法。下面这段代码就修复了这个问题：</p>
+
+<div><pre><code class="language-C++">void StartJob()
+{
+     shared_ptr&lt;aircraft&gt; ppAircraft(new Aircraft[3], [](Aircraft* p) {delete[] p; });
+}
+void StartJob()
+{
+     shared_ptr&lt;aircraft&gt; ppAircraft(new Aircraft[3], [](Aircraft* p) {delete[] p; });
+}</code></pre></div>
+
+<h2 id="toc_32">错误#8：在使用共享指针时使用循环引用！</h2>
+
+<p>在很多情况下，当一个类包含了shared_ptr引用时，就有可能陷入循环引用。试想以下场景：我们想要创建两个Aircraft对象，一个由Maverick驾驶而另一个是由Iceman驾驶的（我忍不住要引用一下《壮志凌云》（TopGun）！！！）。Maverick和Iceman的僚机驾驶员（Wingman）互相指向对方。</p>
+
+<p>所以我们最初的设计会在Aircraft类中引入一个指向自己的shared_ptr。</p>
+
+<div><pre><code class="language-none">class Aircraft
+{
+private:
+     string m_model;
+public:
+     int m_flyCount;
+     shared_ptr&lt;Aircraft&gt; myWingMan;
+     ….
+
+class Aircraft
+{
+private:
+     string m_model;
+public:
+     int m_flyCount;
+     shared_ptr&lt;Aircraft&gt; myWingMan;
+     ….</code></pre></div>
+
+<p>然后在main()函数中，创建Aircraft型对象Maverick和Goose，然后给每个对象指定他们的wingman：</p>
+
+<div><pre><code class="language-C++">int main()
+{
+     shared_ptr&lt;aircraft&gt; pMaverick = make_shared&lt;aircraft&gt;(&quot;Maverick: F-14&quot;);
+     shared_ptr&lt;aircraft&gt; pIceman = make_shared&lt;aircraft&gt;(&quot;Iceman: F-14&quot;);
+
+     pMaverick-&gt;myWingMan = pIceman; // So far so good - no cycles yet
+     pIceman-&gt;myWingMan = pMaverick; // now we got a cycle - neither maverick nor goose will ever be destroyed
+
+     return 0;
+}
+
+int main()
+{
+     shared_ptr&lt;aircraft&gt; pMaverick = make_shared&lt;aircraft&gt;(&quot;Maverick: F-14&quot;);
+     shared_ptr&lt;aircraft&gt; pIceman = make_shared&lt;aircraft&gt;(&quot;Iceman: F-14&quot;);
+ 
+     pMaverick-&gt;myWingMan = pIceman; // So far so good - no cycles yet
+     pIceman-&gt;myWingMan = pMaverick; // now we got a cycle - neither maverick nor goose will ever be destroyed
+ 
+     return 0;
+}</code></pre></div>
+
+<p>当main()函数返回时，我们希望的是这两个共享指针都被销毁——但事实是它们两个都不会被删除，因为它们之间造成了循环引用。即使这两个智能指针本身被从栈上销毁，但由于它们指向的对象的引用计数都不为0而使得那两个对象永远不会被销毁。</p>
+
+<p>下面是这段程序运行的输出结果：</p>
+
+<div><pre><code class="language-none">Aircraft type Maverick: F-14 is created
+Aircraft type Iceman: F-14 is created</code></pre></div>
+
+<p>所以应该怎么修复这个Bug呢？我们应该替换Aircraft类中的shared<em>ptr为weak</em>ptr！下面是修改后的main()程序再次运行的输出结果：</p>
+
+<div><pre><code class="language-none">Aircraft type Maverick: F-14 is created
+Aircraft type Iceman: F-14 is created
+Aircraft type Iceman: F-14 is destroyed
+Aircraft type Maverick: F-14 is destroyed</code></pre></div>
+
+<p>注意到如何销毁两个Aircraft对象了吗。</p>
+
+<p>建议 – 在设计类的时候，当不需要资源的所有权，而且你不想指定这个对象的生命周期时，可以考虑使用weak<em>ptr代替shared</em>ptr。</p>
+
+<h2 id="toc_33">错误#9：没有删除通过unique_ptr.release()返回的裸指针！</h2>
+
+<p>Release()方法不会销毁unique<em>ptr指向的对象，但是调用Release后unique</em>ptr则从销毁对象的责任中解脱出来。其他人（你！）必须手动删除这个对象。</p>
+
+<p>下面这段代码会出现内存泄露，因为Aircraft对象会一直存活，即使main()已经退出。</p>
+
+<div><pre><code class="language-C++">int main()
+{
+     unique_ptr&lt;aircraft&gt; myAircraft = make_unique&lt;aircraft&gt;(&quot;F-22&quot;);
+     Aircraft* rawPtr = myAircraft.release();
+     return 0;
+}
+int main()
+{
+     unique_ptr&lt;aircraft&gt; myAircraft = make_unique&lt;aircraft&gt;(&quot;F-22&quot;);
+     Aircraft* rawPtr = myAircraft.release();
+     return 0;
+}</code></pre></div>
+
+<p>建议 – 无论何时，在对unique<em>ptr使用Release()方法后，记得一定要删除对应的裸指针。如果你是想要删掉unique</em>ptr指向的对象，可以使用unique_ptr.reset()方法。</p>
+
+<h2 id="toc_34">错误#10：在调用weak_ptr.lock()的时候没检查它的有效性！</h2>
+
+<p>在使用weak<em>ptr之前，你需要调用lock()方法来获取这个weak</em>ptr。lock()方法的本质是把这个weak<em>ptr升级为一个shared</em>ptr，这样你就可以像使用shared<em>ptr一样使用它了。然而，当weak</em>ptr指向的这个shared<em>ptr对象不再有效的时候，这个weak</em>ptr就为空了。使用一个失效的weak_ptr进行任何调用都会造成ACESS VIOLATION（非法访问）。</p>
+
+<p>举个例子，在下面这段代码中，名为“myWingMan”的weak<em>ptr指向的这个shared</em>ptr，在调用pIceman.reset()时已经被销毁。如果此时调用这个weak_ptr执行任何操作，都会造成非法访问。</p>
+
+<div><pre><code class="language-C++">int main()
+{
+     shared_ptr&lt;aircraft&gt; pMaverick = make_shared&lt;aircraft&gt;(&quot;F-22&quot;);
+     shared_ptr&lt;aircraft&gt; pIceman = make_shared&lt;aircraft&gt;(&quot;F-14&quot;);
+
+     pMaverick-&gt;myWingMan = pIceman;
+     pIceman-&gt;m_flyCount = 17;
+
+     pIceman.reset(); // destroy the object managed by pIceman
+
+     cout &lt;&lt; pMaverick-&gt;myWingMan.lock()-&gt;m_flyCount &lt;&lt; endl; // &lt;span style=&quot;color: #ff0000;&quot;&gt;ACCESS VIOLATION&lt;/span&gt;
+
+     return 0;
+}
+
+int main()
+{
+     shared_ptr&lt;aircraft&gt; pMaverick = make_shared&lt;aircraft&gt;(&quot;F-22&quot;);
+     shared_ptr&lt;aircraft&gt; pIceman = make_shared&lt;aircraft&gt;(&quot;F-14&quot;);
+ 
+     pMaverick-&gt;myWingMan = pIceman;
+     pIceman-&gt;m_flyCount = 17;
+ 
+     pIceman.reset(); // destroy the object managed by pIceman
+ 
+     cout &lt;&lt; pMaverick-&gt;myWingMan.lock()-&gt;m_flyCount &lt;&lt; endl; // &lt;span style=&quot;color: #ff0000;&quot;&gt;ACCESS VIOLATION&lt;/span&gt;
+ 
+     return 0;
+}</code></pre></div>
+
+<p>这个问题的修复方法很简单，在使用myWingMan这个weak_ptr之前进行一下有效性检查就可以了。</p>
+
+<div><pre><code class="language-C++">if (!pMaverick-&gt;myWingMan.expired())
+{
+     cout &lt;&lt; pMaverick-&gt;myWingMan.lock()-&gt;m_flyCount &lt;&lt; endl;
+}
+
+if (!pMaverick-&gt;myWingMan.expired())
+{
+     cout &lt;&lt; pMaverick-&gt;myWingMan.lock()-&gt;m_flyCount &lt;&lt; endl;
+}</code></pre></div>
+
+<p>校正：我的很多读者指出，上面这段代码不能在多线程的环境下使用 – 如今99%的软件都使用了多线程。weak<em>ptr可能会在被检查有效性之后、获取lock返回值之前失效。非常感谢我的读者们指出这个问题！我将采用Manuel Freiholz给出的解决方案：在使用shared</em>ptr之前，调用lock()函数之后再检查一下shared_ptr是否为空。</p>
+
+<div><pre><code class="language-none">C++
+shared_ptr&lt;aircraft&gt; wingMan = pMaverick-&gt;myWingMan.lock();
+if (wingMan)
+{
+     cout &lt;&lt; wingMan-&gt;m_flyCount &lt;&lt; endl;
+}
+
+shared_ptr&lt;aircraft&gt; wingMan = pMaverick-&gt;myWingMan.lock();
+if (wingMan)
+{
+     cout &lt;&lt; wingMan-&gt;m_flyCount &lt;&lt; endl;
+}</code></pre></div>
+
+<p>建议 – 一定要检查weak_ptr是否有效 — 其实就是在使用共享指针之前，检查lock()函数的返回值是否为空。</p>
+
+
+
+<script type="text/x-mathjax-config">
+(function () {
+
+MathJax.Hub.Config({
+	'showProcessingMessages': false,
+	'messageStyle': 'none'
+});
+
+if (typeof MathJaxListener !== 'undefined') {
+	MathJax.Hub.Register.StartupHook('End', function () {
+		MathJaxListener.invokeCallbackForKey_('End');
+	});
+}
+
+})();
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+</body>
+
+</html>
