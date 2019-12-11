@@ -2,6 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://woogithub.github.io/post/100%E9%81%93-numpy-%E7%BB%83%E4%B9%A0/</loc>
+    <lastmod>2019-12-11T00:14:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://woogithub.github.io/post/</loc>
+    <lastmod>2019-12-11T00:14:19+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://woogithub.github.io/tags/</loc>
+    <lastmod>2019-12-11T00:14:19+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://woogithub.github.io/</loc>
+    <lastmod>2019-12-11T00:14:19+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://woogithub.github.io/tags/numpy/</loc>
+    <lastmod>2019-12-11T00:14:19+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://woogithub.github.io/tags/jvm/</loc>
     <lastmod>2019-12-06T00:14:19+08:00</lastmod>
     <priority>0</priority>
@@ -15,12 +46,6 @@
   </url>
   
   <url>
-    <loc>https://woogithub.github.io/post/</loc>
-    <lastmod>2019-12-06T00:14:19+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://woogithub.github.io/tags/python/</loc>
     <lastmod>2019-12-06T00:14:19+08:00</lastmod>
     <priority>0</priority>
@@ -31,18 +56,6 @@
     <lastmod>2019-12-06T00:14:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://woogithub.github.io/tags/</loc>
-    <lastmod>2019-12-06T00:14:19+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://woogithub.github.io/</loc>
-    <lastmod>2019-12-06T00:14:19+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

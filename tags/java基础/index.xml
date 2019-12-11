@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Java基础 on Woo_home Blog</title>
+    <title>Java基础 on Woo_home</title>
     <link>https://woogithub.github.io/tags/java%E5%9F%BA%E7%A1%80/</link>
-    <description>Recent content in Java基础 on Woo_home Blog</description>
+    <description>Recent content in Java基础 on Woo_home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <lastBuildDate>Thu, 05 Dec 2019 00:14:19 +0800</lastBuildDate>

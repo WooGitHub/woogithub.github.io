@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>numpy on Woo_home</title>
+    <link>https://woogithub.github.io/tags/numpy/</link>
+    <description>Recent content in numpy on Woo_home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 11 Dec 2019 00:14:19 +0800</lastBuildDate>
+    
+	<atom:link href="https://woogithub.github.io/tags/numpy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>100道 numpy 练习题</title>
+      <link>https://woogithub.github.io/post/100%E9%81%93-numpy-%E7%BB%83%E4%B9%A0/</link>
+      <pubDate>Wed, 11 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/100%E9%81%93-numpy-%E7%BB%83%E4%B9%A0/</guid>
+      <description>导入numpy模块,设置别称为np (★☆☆)&amp;lsquo;) 1 import numpy as np 显示numpy的版本号和配置文件(★☆☆)&amp;lsquo;) 1 2 print(np.__version__) np.show_config() 创建</description>
+    </item>
+    
+  </channel>
+</rss>
