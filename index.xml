@@ -17,7 +17,7 @@
       <pubDate>Wed, 11 Dec 2019 00:14:19 +0800</pubDate>
       
       <guid>https://woogithub.github.io/post/100%E9%81%93-numpy-%E7%BB%83%E4%B9%A0/</guid>
-      <description>导入numpy模块,设置别称为np (★☆☆)&amp;lsquo;) 1 import numpy as np 显示numpy的版本号和配置文件(★☆☆)&amp;lsquo;) 1 2 print(np.__version__) np.show_config() 创建</description>
+      <description>1、导入numpy模块,设置别称为np (★☆☆)&amp;lsquo;) 1 import numpy as np 2、显示numpy的版本号和配置文件(★☆☆)&amp;lsquo;) 1 2</description>
     </item>
     
     <item>
