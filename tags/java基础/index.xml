@@ -2,57 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Java基础 on Woo_home Blog</title>
-    <link>http://woogithub.github.io/tags/java%E5%9F%BA%E7%A1%80/</link>
+    <link>https://woogithub.github.io/tags/java%E5%9F%BA%E7%A1%80/</link>
     <description>Recent content in Java基础 on Woo_home Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <lastBuildDate>Thu, 05 Dec 2019 00:14:19 +0800</lastBuildDate>
     
-	<atom:link href="http://woogithub.github.io/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://woogithub.github.io/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>深入理解ConcurrentHashMap</title>
-      <link>http://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-concurrenthashmap/</link>
+      <link>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-concurrenthashmap/</link>
       <pubDate>Thu, 05 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>http://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-concurrenthashmap/</guid>
+      <guid>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-concurrenthashmap/</guid>
       <description>什么是 ConCurrentHashMap？ ConCurrentHashMap 是 java1.5新引入的JUC（java.util.concurrent）包成员，是线程安全的 HashMap</description>
     </item>
     
     <item>
       <title>深入理解LinkedList</title>
-      <link>http://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</link>
+      <link>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</link>
       <pubDate>Tue, 03 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>http://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</guid>
+      <guid>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</guid>
       <description>什么是LinkedList？ LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通</description>
     </item>
     
     <item>
       <title>深入理解Vector</title>
-      <link>http://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</link>
+      <link>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</link>
       <pubDate>Tue, 03 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>http://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</guid>
+      <guid>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</guid>
       <description>什么是Vector？ Vector是一个可以实现自动增长的对象数组（简称动态数组），可以随着向量元素的增加而动态地增长，实际上是一种动态顺序表</description>
     </item>
     
     <item>
       <title>几种实现字符串反转的方式</title>
-      <link>http://woogithub.github.io/post/%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
+      <link>https://woogithub.github.io/post/%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
       <pubDate>Sat, 10 Aug 2019 00:14:19 +0800</pubDate>
       
-      <guid>http://woogithub.github.io/post/%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
+      <guid>https://woogithub.github.io/post/%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
       <description>charAt（int index） 利用 charAt 的方式，是一个能够用来检索特定索引下的字符的String实例的方法，charAt()方法返回指定索引位</description>
     </item>
     
     <item>
       <title>编写一个接口，实现代理设计模式</title>
-      <link>http://woogithub.github.io/post/%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8Fproxy/</link>
+      <link>https://woogithub.github.io/post/%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8Fproxy/</link>
       <pubDate>Sat, 10 Aug 2019 00:14:19 +0800</pubDate>
       
-      <guid>http://woogithub.github.io/post/%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8Fproxy/</guid>
+      <guid>https://woogithub.github.io/post/%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8Fproxy/</guid>
       <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 interface NetWork{ public void name(); } class Demo1 implements NetWork{ @Override public void name() { System.out.prin</description>
     </item>
     

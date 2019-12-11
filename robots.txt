@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://woogithub.github.io/sitemap.xml
+Sitemap: https://woogithub.github.io/sitemap.xml
