@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java反射机制的简单使用 - Woo_home</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="什么是Java反射机制？ Java反射机制是 Java 语言的一个重要特性，它在服务器程序和中间件程序中得到了广泛运用。在服务器端，往往需要根据客户的请" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Java反射机制的简单使用" />
+<meta property="og:description" content="什么是Java反射机制？ Java反射机制是 Java 语言的一个重要特性，它在服务器程序和中间件程序中得到了广泛运用。在服务器端，往往需要根据客户的请" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" />
+<meta property="article:published_time" content="2019-12-12T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-12-12T00:14:19+08:00" />
+<meta itemprop="name" content="Java反射机制的简单使用">
+<meta itemprop="description" content="什么是Java反射机制？ Java反射机制是 Java 语言的一个重要特性，它在服务器程序和中间件程序中得到了广泛运用。在服务器端，往往需要根据客户的请">
+
+
+<meta itemprop="datePublished" content="2019-12-12T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-12T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="4498">
+
+
+
+<meta itemprop="keywords" content="java基础," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java反射机制的简单使用"/>
+<meta name="twitter:description" content="什么是Java反射机制？ Java反射机制是 Java 语言的一个重要特性，它在服务器程序和中间件程序中得到了广泛运用。在服务器端，往往需要根据客户的请"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java反射机制的简单使用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-12 </span>
+        
+          <span class="more-meta"> 4498 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#什么是java反射机制">什么是Java反射机制？</a></li>
+<li><a href="#哪些地方用到反射机制">哪些地方用到反射机制？</a></li>
+<li><a href="#反射机制提供了哪些功能">反射机制提供了哪些功能？</a></li>
+<li><a href="#如何实现反射机制">如何实现反射机制？</a></li>
+<li><a href="#反射的三种实现方式">反射的三种实现方式</a>
+<ul>
+<li><a href="#一-通过对象的getclass-方法">一、通过对象的getClass()方法</a></li>
+<li><a href="#二-通过类的-class属性">二、通过类的.class属性</a></li>
+<li><a href="#三-通过class类的forname-方法-常用">三、通过Class类的forName()方法（常用）</a></li>
+</ul></li>
+<li><a href="#判断一个类是否为某个类的实例">判断一个类是否为某个类的实例</a>
+<ul>
+<li><a href="#1-instanceof">1、instanceof</a></li>
+<li><a href="#2-isinstance">2、isInstance</a></li>
+</ul></li>
+<li><a href="#利用反射创建对象实例">利用反射创建对象实例</a>
+<ul>
+<li><a href="#1-通过class对象的-newinstance-方法">1、通过Class对象的 newInstance() 方法</a></li>
+<li><a href="#2-通过constructor对象的-getconstructor-方法">2、通过Constructor对象的 getConstructor() 方法</a></li>
+</ul></li>
+<li><a href="#field">Field</a>
+<ul>
+<li><a href="#getfield-string-name">getField(String name)</a>
+<ul>
+<li><a href="#getfield0-string-name">getField0(String name)</a></li>
+<li><a href="#privategetdeclaredfields-boolean-publiconly">privateGetDeclaredFields(boolean publicOnly)</a></li>
+</ul></li>
+<li><a href="#getfields-string-name">getFields(String name)</a></li>
+<li><a href="#getdeclaredfield-string-name">getDeclaredField(String name)</a></li>
+<li><a href="#getdeclaredfields">getDeclaredFields()</a></li>
+</ul></li>
+<li><a href="#method">Method</a>
+<ul>
+<li><a href="#getmethod-string-name">getMethod(String name)</a></li>
+<li><a href="#getmethods">getMethods()</a></li>
+<li><a href="#getdeclaredmethod-string-name-class-parametertypes">getDeclaredMethod(String name, Class&lt;?&gt;&hellip; parameterTypes)</a></li>
+<li><a href="#getdeclaredmethods">getDeclaredMethods()</a></li>
+<li><a href="#使用invoke方法">使用invoke方法</a></li>
+</ul></li>
+<li><a href="#constructor">Constructor</a>
+<ul>
+<li><a href="#getconstructor-class-parametertypes">getConstructor(Class&lt;?&gt;&hellip; parameterTypes)</a></li>
+<li><a href="#getconstructors">getConstructors()</a></li>
+<li><a href="#getdeclaredconstructor-class-parametertypes">getDeclaredConstructor(Class&lt;?&gt;&hellip; parameterTypes)</a></li>
+<li><a href="#getdeclaredconstructors">getDeclaredConstructors()</a></li>
+<li><a href="#使用newinstance创建实例">使用newInstance创建实例</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="什么是java反射机制">什么是Java反射机制？</h1>
+
+<p>Java反射机制是 Java 语言的一个重要特性，它在服务器程序和中间件程序中得到了广泛运用。在服务器端，往往需要根据客户的请求，动态调用某一个对象的特定方法。此外，在 ORM 中间件的实现中，运用 Java 反射机制可以读取任意一个 JavaBean 的所有属性，或者给这些属性赋值</p>
+
+<p><font color="#900"><strong>通过反射机制，可以在运行的时候访问到对象的属性、方法、构造方法等等</strong></font></p>
+
+<h1 id="哪些地方用到反射机制">哪些地方用到反射机制？</h1>
+
+<p>其实我们都用过反射机制，只是并不知道它是反射机制而已。比如我们使用JDBC连接数据库的时候（Class.forName() 这个相信大家都用过），只是当时并没有在意那么多（心里想能用就行，管它呢），使用到反射机制的框架有（Spring、SpringMVC、Mybatis、Hibernate、Structs）</p>
+
+<h1 id="反射机制提供了哪些功能">反射机制提供了哪些功能？</h1>
+
+<ul>
+<li><p>在运行时判定任意一个对象所属的类</p></li>
+
+<li><p>在运行时构造任意一个类的对象</p></li>
+
+<li><p>在运行时判定任意一个类所具有的成员变量和方法</p></li>
+
+<li><p>在运行时调用任意一个对象的方法</p></li>
+
+<li><p>生成动态代理</p></li>
+</ul>
+
+<h1 id="如何实现反射机制">如何实现反射机制？</h1>
+
+<p>先来个实体类 Student</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @author Woo_home
+</span><span class="cm"> * @create by 2019/12/10
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">Student</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="nf">Student</span><span class="p">(){}</span>
+    
+    <span class="kd">public</span> <span class="nf">int</span> <span class="n">getId</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">setId</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">setName</span><span class="p">(</span><span class="n">String</span> <span class="nf">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">toString</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&#34;Student{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;id=&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+                <span class="s">&#34;, name=&#39;&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="反射的三种实现方式">反射的三种实现方式</h1>
+
+<h2 id="一-通过对象的getclass-方法">一、通过对象的getClass()方法</h2>
+
+<p>getClass()方法是Object类的方法，因为所有类都继承自Object类，所以可以直接使用getClass()方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Student</span> <span class="nf">student</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="p">();</span>
+        <span class="n">Class</span> <span class="nf">studentClass</span> <span class="o">=</span> <span class="n">student</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">studentClass</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="二-通过类的-class属性">二、通过类的.class属性</h2>
+
+<p>直接获取一个类的class</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">studentClass</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">studentClass</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="三-通过class类的forname-方法-常用">三、通过Class类的forName()方法（常用）</h2>
+
+<p>Class.forName() 是一个静态方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 使用 try、catch 处理异常
+</span><span class="c1"></span>        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">studentClass</span> <span class="o">=</span> <span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;com.example.app.demo.Student&#34;</span><span class="p">);</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">studentClass</span><span class="p">);</span>
+        <span class="p">}</span><span class="k">catch</span> <span class="p">(</span><span class="n">ClassNotFoundException</span> <span class="nf">e</span><span class="p">){</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="c1">// 使用 throws 处理异常
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">ClassNotFoundException</span><span class="p">{</span>
+            <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">studentClass</span> <span class="o">=</span> <span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;com.example.app.demo.Student&#34;</span><span class="p">);</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">studentClass</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>三种方法打印的结果都是一样的，如下图所示</p>
+
+<p><img src="https://img-blog.csdnimg.cn/20191210173153449.png" alt="在这里插入图片描述" /></p>
+
+<blockquote>
+<p><strong>注意：</strong> 这里的Class.forName()方法需要使用try、catch语句括住或者在方法或类中抛出ClassNotFoundException 异常，不然会报错</p>
+</blockquote>
+
+<p>有些人就问了，为什么需要使用try、catch语句括住呢，来看下forName方法源码：
+可以看到forName需要抛出一个 ClassNotFoundException 异常，自然而然地你使用forName()方法也自然要抛出 <strong>/</strong> 处理日常了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@CallerSensitive</span>
+<span class="kd">public</span> <span class="nf">static</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">forName</span><span class="p">(</span><span class="n">String</span> <span class="nf">className</span><span class="p">)</span>
+            <span class="kd">throws</span> <span class="nf">ClassNotFoundException</span> <span class="p">{</span>
+    <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">caller</span> <span class="o">=</span> <span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">forName0</span><span class="p">(</span><span class="n">className</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="n">ClassLoader</span><span class="p">.</span><span class="na">getClassLoader</span><span class="p">(</span><span class="n">caller</span><span class="p">),</span> <span class="n">caller</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="判断一个类是否为某个类的实例">判断一个类是否为某个类的实例</h1>
+
+<h2 id="1-instanceof">1、instanceof</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">map</span> <span class="nf">instanceof</span> <span class="n">Map</span><span class="p">){</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;HashMap is Map instance&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：HashMap is Map instance</p>
+
+<h2 id="2-isinstance">2、isInstance</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">isInstance</span><span class="p">(</span><span class="n">map</span><span class="p">)){</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;HashMap is Map Instance&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：HashMap is Map Instance</p>
+
+<h1 id="利用反射创建对象实例">利用反射创建对象实例</h1>
+
+<h2 id="1-通过class对象的-newinstance-方法">1、通过Class对象的 newInstance() 方法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">IllegalAccessException</span><span class="p">,</span> <span class="n">InstantiationException</span> <span class="p">{</span>
+        <span class="c1">// 这里的Student是使用上面一开始的Student类
+</span><span class="c1"></span>        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">studentClass</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        
+        <span class="c1">// 使用newInstance创建实例
+</span><span class="c1"></span>        <span class="n">Student</span> <span class="nf">student</span> <span class="o">=</span> <span class="p">(</span><span class="n">Student</span><span class="p">)</span><span class="n">studentClass</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+        <span class="n">student</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+        <span class="n">student</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&#34;John&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">student</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：John</p>
+
+<h2 id="2-通过constructor对象的-getconstructor-方法">2、通过Constructor对象的 getConstructor() 方法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span><span class="p">,</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span><span class="p">,</span> <span class="n">InstantiationException</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Constructor</span> <span class="nf">constructor</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getConstructor</span><span class="p">(</span><span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">List</span> <span class="nf">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">List</span><span class="p">)</span> <span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&#34;John&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：John</p>
+
+<h1 id="field">Field</h1>
+
+<p>根据字段名获取字段（只能获取public的）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchFieldException</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Field</span> <span class="nf">id</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getField</span><span class="p">(</span><span class="s">&#34;id&#34;</span><span class="p">);</span>
+        <span class="n">Field</span> <span class="nf">name</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getField</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">Student</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果
+public int com.example.app.demo.Student.id
+public java.lang.String com.example.app.demo.Student.name</p>
+</blockquote>
+
+<p>如果获取的字段是被private修饰的，那么将会抛出 NoSuchFieldException 异常</p>
+
+<blockquote>
+<p>以下为输出结果
+Exception in thread &ldquo;main&rdquo; java.lang.NoSuchFieldException: id
+at java.lang.Class.getField(Class.java:1703)
+at com.example.app.demo.ReflectDemo.main(ReflectDemo.java:12)</p>
+</blockquote>
+
+<p>为什么会这样呢？我们朝着这个问题看下源码是怎么实现的</p>
+
+<h2 id="getfield-string-name">getField(String name)</h2>
+
+<p>根据名称获取公有的（public）类成员</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@CallerSensitive</span>
+<span class="kd">public</span> <span class="nf">Field</span> <span class="n">getField</span><span class="p">(</span><span class="n">String</span> <span class="nf">name</span><span class="p">)</span>
+    <span class="kd">throws</span> <span class="nf">NoSuchFieldException</span><span class="p">,</span> <span class="n">SecurityException</span> <span class="p">{</span>
+    <span class="n">checkMemberAccess</span><span class="p">(</span><span class="n">Member</span><span class="p">.</span><span class="na">PUBLIC</span><span class="p">,</span> <span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">(),</span> <span class="kc">true</span><span class="p">);</span>
+    
+    <span class="c1">// 可以看到在getField传入的name实际是调用getField0来实现的
+</span><span class="c1"></span>    <span class="n">Field</span> <span class="nf">field</span> <span class="o">=</span> <span class="n">getField0</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">field</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NoSuchFieldException</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">field</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="getfield0-string-name">getField0(String name)</h3>
+
+<p>而getField0主要判断依据是searchFields，searchFields根据privateGetDeclaredFields判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">Field</span> <span class="n">getField0</span><span class="p">(</span><span class="n">String</span> <span class="nf">name</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchFieldException</span> <span class="p">{</span>
+       
+    <span class="n">Field</span> <span class="nf">res</span><span class="p">;</span>
+    <span class="c1">// Search declared public fields
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">((</span><span class="n">res</span> <span class="o">=</span> <span class="n">searchFields</span><span class="p">(</span><span class="n">privateGetDeclaredFields</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span> <span class="n">name</span><span class="p">))</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 省略部分代码...
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="privategetdeclaredfields-boolean-publiconly">privateGetDeclaredFields(boolean publicOnly)</h3>
+
+<p>可以看到当privateGetDeclaredFields传入的值是true的时候表示使用的是 declaredPublicFields ，也就是说是public声明的字段，当传入的值为false的时候使用的是 declaredFields（所有声明字段）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">Field</span><span class="p">[]</span> <span class="n">privateGetDeclaredFields</span><span class="p">(</span><span class="kt">boolean</span> <span class="nf">publicOnly</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">checkInitted</span><span class="p">();</span>
+    <span class="n">Field</span><span class="p">[]</span> <span class="nf">res</span><span class="p">;</span>
+    <span class="n">ReflectionData</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">rd</span> <span class="o">=</span> <span class="n">reflectionData</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rd</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 判断输入的布尔值是true还是false
+</span><span class="c1"></span>        <span class="n">res</span> <span class="o">=</span> <span class="n">publicOnly</span> <span class="o">?</span> <span class="n">rd</span><span class="p">.</span><span class="na">declaredPublicFields</span> <span class="o">:</span> <span class="n">rd</span><span class="p">.</span><span class="na">declaredFields</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">res</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 省略部分代码...
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="getfields-string-name">getFields(String name)</h2>
+
+<p>获取所有 public 修饰的字段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchFieldException</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Field</span><span class="p">[]</span> <span class="nf">allField</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getFields</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Field</span> <span class="nf">field</span> <span class="o">:</span> <span class="n">allField</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">field</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">Student</span><span class="p">{</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果
+public java.lang.String com.example.app.demo.Student.name</p>
+</blockquote>
+
+<p>可以看到我们的Student类中声明了一个private修饰的id和一个public修饰的name，根据输出结果可以知道getFields()方法只能获取public修饰的字段</p>
+
+<p>看下实现源码：</p>
+
+<p>在getFields中返回了一个copyFields方法，该方法中调用了 privateGetPublicFields 方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@CallerSensitive</span>
+<span class="kd">public</span> <span class="nf">Field</span><span class="p">[]</span> <span class="n">getFields</span><span class="p">()</span> <span class="kd">throws</span> <span class="nf">SecurityException</span> <span class="p">{</span>
+    <span class="n">checkMemberAccess</span><span class="p">(</span><span class="n">Member</span><span class="p">.</span><span class="na">PUBLIC</span><span class="p">,</span> <span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">(),</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">copyFields</span><span class="p">(</span><span class="n">privateGetPublicFields</span><span class="p">(</span><span class="kc">null</span><span class="p">));</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>来看下privateGetPublicFields方法可以知道在该方法中调用了 privateGetDeclaredFields(true) 这个方法，关于这个方法上面已经讲述过</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">Field</span><span class="p">[]</span> <span class="n">privateGetPublicFields</span><span class="p">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">traversedInterfaces</span><span class="p">)</span> <span class="p">{</span>
+    
+    <span class="c1">// Local fields
+</span><span class="c1"></span>    <span class="n">Field</span><span class="p">[]</span> <span class="nf">tmp</span> <span class="o">=</span> <span class="n">privateGetDeclaredFields</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+    <span class="n">addAll</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span>
+	
+    <span class="c1">// 省略部分代码...
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="getdeclaredfield-string-name">getDeclaredField(String name)</h2>
+
+<p>根据名称获取已声明的类成员。但不能得到其父类的类成员</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchFieldException</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Field</span> <span class="nf">allField</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">allField</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">Student</span><span class="p">{</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Class</span> <span class="nf">Student</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：可以看到==getDeclaredField()方法即可以获取public类型的字段也能获取private类型的字段==</p>
+
+<blockquote>
+<p>以下为输出结果：
+private java.lang.String com.example.app.demo.Student.name</p>
+
+<p>public java.lang.String com.example.app.demo.Student.name</p>
+</blockquote>
+
+<p>来看下源码的原理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@CallerSensitive</span>
+<span class="kd">public</span> <span class="nf">Field</span> <span class="n">getDeclaredField</span><span class="p">(</span><span class="n">String</span> <span class="nf">name</span><span class="p">)</span>
+    <span class="kd">throws</span> <span class="nf">NoSuchFieldException</span><span class="p">,</span> <span class="n">SecurityException</span> <span class="p">{</span>
+    <span class="n">checkMemberAccess</span><span class="p">(</span><span class="n">Member</span><span class="p">.</span><span class="na">DECLARED</span><span class="p">,</span> <span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">(),</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="n">Field</span> <span class="nf">field</span> <span class="o">=</span> <span class="n">searchFields</span><span class="p">(</span><span class="n">privateGetDeclaredFields</span><span class="p">(</span><span class="kc">false</span><span class="p">),</span> <span class="n">name</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">field</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NoSuchFieldException</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">field</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到 getDeclaredField() 方法调用的也是 privateGetDeclaredFields 方法，上面已经讲述过</p>
+
+<h2 id="getdeclaredfields">getDeclaredFields()</h2>
+
+<p>获取所有已声明的类成员变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Field</span><span class="p">[]</span> <span class="nf">allField</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getDeclaredFields</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Field</span> <span class="nf">field</span> <span class="o">:</span> <span class="n">allField</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">field</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">Student</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+public int com.example.app.demo.Student.id
+public java.lang.String com.example.app.demo.Student.name</p>
+</blockquote>
+
+<p>而且 getDeclaredFields 还可以获取private修饰的字段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Student</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Field</span><span class="p">[]</span> <span class="nf">allField</span> <span class="o">=</span> <span class="n">classes</span><span class="p">.</span><span class="na">getDeclaredFields</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Field</span> <span class="nf">field</span> <span class="o">:</span> <span class="n">allField</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">field</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">Student</span><span class="p">{</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+private int com.example.app.demo.Student.id
+private java.lang.String com.example.app.demo.Student.name</p>
+</blockquote>
+
+<p>来看下源码 getDeclaredFields() 方法的源码</p>
+
+<p>可以看到 getDeclaredFields() 方法中也是调用 privateGetDeclaredFields 方法的，并且这里的 privateGetDeclaredFields传入的值是 false ，也就是获取所有已声明的字段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@CallerSensitive</span>
+<span class="kd">public</span> <span class="nf">Field</span><span class="p">[]</span> <span class="n">getDeclaredFields</span><span class="p">()</span> <span class="kd">throws</span> <span class="nf">SecurityException</span> <span class="p">{</span>
+    <span class="n">checkMemberAccess</span><span class="p">(</span><span class="n">Member</span><span class="p">.</span><span class="na">DECLARED</span><span class="p">,</span> <span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">(),</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">copyFields</span><span class="p">(</span><span class="n">privateGetDeclaredFields</span><span class="p">(</span><span class="kc">false</span><span class="p">));</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="method">Method</h1>
+
+<h2 id="getmethod-string-name">getMethod(String name)</h2>
+
+<p>返回类或接口的特定方法。其中第一个参数为方法名称，后面的参数为方法参数对应 Class 的对象的方法名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
+        <span class="c1">// 传入CaseMethod的方法名
+</span><span class="c1"></span>        <span class="n">Method</span> <span class="nf">methods</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;caseOfMethod&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">methods</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">caseOfMethod</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+public void com.example.app.demo.CaseMethod.caseOfMethod()</p>
+</blockquote>
+
+<h2 id="getmethods">getMethods()</h2>
+
+<p>获取类或接口的所有 public 方法，包括其父类的 public 方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
+        <span class="c1">// 获取所有方法，使用Method数组接收
+</span><span class="c1"></span>        <span class="n">Method</span><span class="p">[]</span> <span class="nf">methods</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethods</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Method</span> <span class="nf">method</span> <span class="o">:</span> <span class="n">methods</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">method</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">caseOfMethod</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<p>可以看到输出结果中第一个就是我们自定义的CaseMethod中的方法，其余的都是Object类的方法</p>
+
+<blockquote>
+<p>以下为输出结果：</p>
+
+<p>public void com.example.app.demo.CaseMethod.caseOfMethod()
+public final void java.lang.Object.wait() throws java.lang.InterruptedException
+public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException
+public boolean java.lang.Object.equals(java.lang.Object)
+public java.lang.String java.lang.Object.toString()
+public native int java.lang.Object.hashCode()
+public final native java.lang.Class java.lang.Object.getClass()
+public final native void java.lang.Object.notify()
+public final native void java.lang.Object.notifyAll()</p>
+</blockquote>
+
+<h2 id="getdeclaredmethod-string-name-class-parametertypes">getDeclaredMethod(String name, Class&lt;?&gt;&hellip; parameterTypes)</h2>
+
+<p>获取类或接口的特定声明方法。其中第一个参数为方法名称，后面的参数为方法参数对应 Class 的对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
+        <span class="n">Method</span> <span class="nf">methods</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;caseOfMethod&#34;</span><span class="p">,</span><span class="kc">null</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">methods</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">caseOfMethod</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="nf">void</span> <span class="n">caseOf</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case1&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="getdeclaredmethods">getDeclaredMethods()</h2>
+
+<p>获取类或接口声明的所有方法，包括 public、protected、默认（包）访问和 private 方法，但不包括继承的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Method</span><span class="p">[]</span> <span class="nf">methods</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredMethods</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Method</span> <span class="nf">method</span> <span class="o">:</span> <span class="n">methods</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">method</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">caseOfMethod</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="nf">void</span> <span class="n">caseOf</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case1&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+public void com.example.app.demo.CaseMethod.caseOfMethod()
+private void com.example.app.demo.CaseMethod.caseOf()</p>
+</blockquote>
+
+<h2 id="使用invoke方法">使用invoke方法</h2>
+
+<p>当获取一个对象之后就可以使用invoke方法，invoke方法示例如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span><span class="p">,</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span> <span class="p">{</span>
+        <span class="n">Method</span> <span class="nf">methods</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;caseOfMethod&#34;</span><span class="p">);</span>
+        <span class="n">CaseMethod</span> <span class="nf">caseMethod</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CaseMethod</span><span class="p">();</span>
+        <span class="n">methods</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">caseMethod</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">caseOfMethod</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="nf">void</span> <span class="n">caseOf</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;case1&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：case</p>
+
+<p>那么invoke是如何实现的呢？来看下源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">boolean</span> <span class="nf">override</span><span class="p">;</span>
+
+<span class="nd">@CallerSensitive</span>
+<span class="kd">public</span> <span class="nf">Object</span> <span class="n">invoke</span><span class="p">(</span><span class="n">Object</span> <span class="nf">obj</span><span class="p">,</span> <span class="n">Object</span><span class="p">...</span> <span class="nf">args</span><span class="p">)</span>
+    <span class="kd">throws</span> <span class="nf">IllegalAccessException</span><span class="p">,</span> <span class="n">IllegalArgumentException</span><span class="p">,</span>
+<span class="n">InvocationTargetException</span>
+<span class="p">{</span>
+    
+    <span class="c1">// 判断override是否为true
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">override</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 判断modifiers（方法的修饰符）是否为public
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Reflection</span><span class="p">.</span><span class="na">quickCheckMemberAccess</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// 通过方法的修饰符（protected、private、）或声明类（如子类可以访问父类的protected方法）与caller之间的关系
+</span><span class="c1"></span>            <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">caller</span> <span class="o">=</span> <span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">();</span>
+            <span class="c1">// 判断caller是否有权限方法该方法
+</span><span class="c1"></span>            <span class="n">checkAccess</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">clazz</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">MethodAccessor</span> <span class="nf">ma</span> <span class="o">=</span> <span class="n">methodAccessor</span><span class="p">;</span>             <span class="c1">// read volatile
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">ma</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ma</span> <span class="o">=</span> <span class="n">acquireMethodAccessor</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ma</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><strong>注意：</strong> invoke方法如果提供了错误的参数，会抛出一个异常，所以要提供一个异常处理器。建议在有必要的时候才使用invoke方法，有如下原因：</p>
+</blockquote>
+
+<ul>
+<li>1、invoke方法的参数和返回值必须是Object类型，意味着必须进行多次类型转换</li>
+<li>2、通过反射调用方法比直接调用方法要明显慢一些</li>
+</ul>
+
+<h1 id="constructor">Constructor</h1>
+
+<h2 id="getconstructor-class-parametertypes">getConstructor(Class&lt;?&gt;&hellip; parameterTypes)</h2>
+
+<p>获取类的特定 public 构造方法。参数为方法参数对应 Class 的对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span><span class="p">,</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span> <span class="p">{</span>
+        <span class="n">Constructor</span><span class="o">&lt;</span><span class="n">CaseMethod</span><span class="o">&gt;</span> <span class="nf">constructor</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getConstructor</span><span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">constructor</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">cap</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">,</span><span class="n">String</span> <span class="nf">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="kt">int</span> <span class="nf">cap</span><span class="p">){</span>
+
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+public com.example.app.demo.CaseMethod(int,java.lang.String)</p>
+</blockquote>
+
+<h2 id="getconstructors">getConstructors()</h2>
+
+<p>获取类的所有 public 构造方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Constructor</span><span class="o">&lt;?&gt;</span><span class="p">[]</span> <span class="n">constructors</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getConstructors</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Constructor</span><span class="o">&lt;?&gt;</span> <span class="n">constructor</span> <span class="o">:</span> <span class="n">constructors</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">constructor</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">cap</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">,</span><span class="n">String</span> <span class="nf">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="kt">int</span> <span class="nf">cap</span><span class="p">){</span>
+
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+public com.example.app.demo.CaseMethod(int,java.lang.String)
+public com.example.app.demo.CaseMethod(int)</p>
+</blockquote>
+
+<h2 id="getdeclaredconstructor-class-parametertypes">getDeclaredConstructor(Class&lt;?&gt;&hellip; parameterTypes)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
+        <span class="c1">// 注意：由于private修饰的CaseMethod构造函数没有参数，所以getDeclaredConstructor()可以为空
+</span><span class="c1"></span>        <span class="c1">// 默认的getDeclaredConstructor(Class&lt;?&gt;... parameterTypes)方法是要传参数类型的
+</span><span class="c1"></span>        <span class="n">Constructor</span><span class="o">&lt;</span><span class="n">CaseMethod</span><span class="o">&gt;</span> <span class="nf">constructor</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">();</span>
+        <span class="n">Constructor</span><span class="o">&lt;</span><span class="n">CaseMethod</span><span class="o">&gt;</span> <span class="nf">declaredConstructor</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">constructor</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">declaredConstructor</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">cap</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="nf">CaseMethod</span><span class="p">(){</span>
+
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">,</span><span class="n">String</span> <span class="nf">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+private com.example.app.demo.CaseMethod()
+public com.example.app.demo.CaseMethod(int,java.lang.String)</p>
+</blockquote>
+
+<h2 id="getdeclaredconstructors">getDeclaredConstructors()</h2>
+
+<p>获取类的所有构造方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
+        <span class="n">Constructor</span><span class="o">&lt;?&gt;</span><span class="p">[]</span> <span class="n">constructors</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredConstructors</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Constructor</span><span class="o">&lt;?&gt;</span> <span class="n">constructor</span> <span class="o">:</span> <span class="n">constructors</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">constructor</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">cap</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="nf">CaseMethod</span><span class="p">(){</span>
+
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">,</span><span class="n">String</span> <span class="nf">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+
+<blockquote>
+<p>以下为输出结果：
+private com.example.app.demo.CaseMethod()
+public com.example.app.demo.CaseMethod(int,java.lang.String)</p>
+</blockquote>
+
+<h2 id="使用newinstance创建实例">使用newInstance创建实例</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReflectDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span><span class="p">,</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span><span class="p">,</span> <span class="n">InstantiationException</span> <span class="p">{</span>
+        <span class="n">Constructor</span><span class="o">&lt;</span><span class="n">CaseMethod</span><span class="o">&gt;</span> <span class="nf">constructor</span> <span class="o">=</span> <span class="n">CaseMethod</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getConstructor</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">CaseMethod</span> <span class="nf">caseMethod</span> <span class="o">=</span> <span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&#34;Lisa&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">caseMethod</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nf">CaseMethod</span><span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="nf">CaseMethod</span><span class="p">(</span><span class="n">String</span> <span class="nf">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">toString</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&#34;CaseMethod{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;name=&#39;&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：
+CaseMethod{name=&lsquo;Lisa&rsquo;}</p>
+</blockquote>
+
+<h1 id="总结">总结</h1>
+
+<p>Java获得Class对象的引用的方法中，<strong>Class.forName()</strong> 方法会自动初始化Class对象，而 <strong>.class</strong> 方法不会，<strong>.class</strong> 的初始化被延迟到静态方法或非常数静态域的首次引用</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">作者</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上一次更新</span>
+    <span class="item-content">
+        2019-12-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/100%E9%81%93-numpy-%E7%BB%83%E4%B9%A0/">
+            <span class="next-text nav-default">100道 numpy 练习题</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="javascripts;" class="iconfont icon-email" title="email"></a>
+      <a href="javascripts;" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="javascripts;" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.zhihu.com/search?type=content&amp;q=" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="javascripts;" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="https://www.bilibili.com/" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019-08 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
