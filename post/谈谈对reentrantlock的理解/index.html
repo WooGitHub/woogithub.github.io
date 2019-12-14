@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>谈谈对ReentrantLock的理解 - Woo_home</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="什么是ReentrantLock？ ReentrantLock 是 Java 的 JUC（java.util.concurrent）包中提供的一种可重入锁，是一种递归无阻塞的同步机" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/%E8%B0%88%E8%B0%88%E5%AF%B9reentrantlock%E7%9A%84%E7%90%86%E8%A7%A3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="谈谈对ReentrantLock的理解" />
+<meta property="og:description" content="什么是ReentrantLock？ ReentrantLock 是 Java 的 JUC（java.util.concurrent）包中提供的一种可重入锁，是一种递归无阻塞的同步机" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/%E8%B0%88%E8%B0%88%E5%AF%B9reentrantlock%E7%9A%84%E7%90%86%E8%A7%A3/" />
+<meta property="article:published_time" content="2019-11-29T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-11-29T00:14:19+08:00" />
+<meta itemprop="name" content="谈谈对ReentrantLock的理解">
+<meta itemprop="description" content="什么是ReentrantLock？ ReentrantLock 是 Java 的 JUC（java.util.concurrent）包中提供的一种可重入锁，是一种递归无阻塞的同步机">
+
+
+<meta itemprop="datePublished" content="2019-11-29T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-29T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="7026">
+
+
+
+<meta itemprop="keywords" content="java基础," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="谈谈对ReentrantLock的理解"/>
+<meta name="twitter:description" content="什么是ReentrantLock？ ReentrantLock 是 Java 的 JUC（java.util.concurrent）包中提供的一种可重入锁，是一种递归无阻塞的同步机"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">谈谈对ReentrantLock的理解</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-29 </span>
+        
+          <span class="more-meta"> 7026 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#什么是reentrantlock">什么是ReentrantLock？</a></li>
+<li><a href="#reentrantlock与synchronized的区别">ReentrantLock与synchronized的区别？</a></li>
+<li><a href="#什么是可重入性">什么是可重入性？</a></li>
+<li><a href="#什么是公平锁-什么是非公平锁">什么是公平锁？什么是非公平锁？</a></li>
+<li><a href="#reentrantlock实现了哪些接口">ReentrantLock实现了哪些接口？</a>
+<ul>
+<li><a href="#lock">Lock</a>
+<ul>
+<li><a href="#什么是lock">什么是Lock？</a></li>
+<li><a href="#lock有哪些方法">Lock有哪些方法？</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#reentrantlock的静态内部类-sync">ReentrantLock的静态内部类——Sync</a>
+<ul>
+<li><a href="#setexclusiveownerthread">setExclusiveOwnerThread</a></li>
+<li><a href="#getexclusiveownerthread">getExclusiveOwnerThread</a></li>
+<li><a href="#setstate">setState</a></li>
+<li><a href="#getstate">getState</a></li>
+</ul></li>
+<li><a href="#哪些类继承了sync">哪些类继承了Sync？</a>
+<ul>
+<li><a href="#fairsync">FairSync</a>
+<ul>
+<li>
+<ul>
+<li><a href="#hasqueuedpredecessors">hasQueuedPredecessors</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#nonfairsync">NonfairSync</a></li>
+<li><a href="#reentrantlock如果与aqs关联的-以非公平锁为例">ReentrantLock如果与AQS关联的？（以非公平锁为例）</a>
+<ul>
+<li>
+<ul>
+<li><a href="#加锁">加锁</a></li>
+</ul></li>
+<li><a href="#解锁">解锁</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+<li><a href="#reentrantlock简单使用方法">ReentrantLock简单使用方法</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="什么是reentrantlock">什么是ReentrantLock？</h1>
+
+<p>ReentrantLock 是 Java 的 JUC（java.util.concurrent）包中提供的一种可重入锁，是一种递归无阻塞的同步机制。ReentrantLock 等同于synchronized关键字，但是 ReentrantLock 提供了比 synchronized 更强大，更灵活的锁机制，可以减少死锁发生的概率</p>
+
+<h1 id="reentrantlock与synchronized的区别">ReentrantLock与synchronized的区别？</h1>
+
+<p>ReentrantLock 和 synchronized 在基本用法、行为、语义上都是类似的，同样具有可重入性。只不过相比原生的 synchronized，ReentrantLock 增加了一些高级的扩展功能，如公平锁、绑定多个 Condition（公平锁和Condition下面会进行讲解）。虽然 ReentrantLock 等同于 synchronized，而且性能也差不多。但是 ReentrantLock 相比 synchronized 而言功能更加丰富，而且使用起来更加方便。为了更好地理解</p>
+
+<p>画个表</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">ReentrantLock</th>
+<th align="center">synchronized</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">灵活性</td>
+<td align="center">支持响应中断，超时，尝试获取锁</td>
+<td align="center">不灵活</td>
+</tr>
+
+<tr>
+<td align="center">锁类型</td>
+<td align="center">公平锁 &amp; 非公平锁</td>
+<td align="center">非公平锁</td>
+</tr>
+
+<tr>
+<td align="center">条件队列</td>
+<td align="center">可关联多个条件队列</td>
+<td align="center">关联一个条件队列</td>
+</tr>
+
+<tr>
+<td align="center">锁实现机制</td>
+<td align="center">依赖AQS</td>
+<td align="center">监视器模式</td>
+</tr>
+
+<tr>
+<td align="center">可重入性</td>
+<td align="center">可重入</td>
+<td align="center">可重入</td>
+</tr>
+
+<tr>
+<td align="center">释放形式</td>
+<td align="center">必须显示调用unlock()方法释放锁</td>
+<td align="center">自动释放监视器</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="什么是可重入性">什么是可重入性？</h1>
+
+<p>可重入性就是说可以支持一个线程对锁的重复获取。在原生的 synchronized 就具有可重入性，比如一个 synchronized 修饰的递归方法，当线程在执行期间，它是可以反复获取到锁的，不会出现死锁的情况。ReentrantLock 也是一样，在调用lock() 方法的时候，已经获取到锁的线程，能够再次调用 lock()方法获取锁反而不会阻塞</p>
+
+<h1 id="什么是公平锁-什么是非公平锁">什么是公平锁？什么是非公平锁？</h1>
+
+<p>ReentrantLock 还提供了公平锁（fair）和非公平锁（unfair）。所谓的公平锁就是指锁的获取策略相对公平，当多个线程在获取同一个锁的时候，必须按照锁的申请时间来一次获得锁，也就是按顺序来；非公平锁就不一样了，当锁被释放的时候，等待中的线程均有机会获得锁。synchronized是非公平锁，而 ReentrantLock 也是一样。但是 ReentrantLock 可以通过构造方法接收一个可选的fair参数（默认是非公平锁），当传入的值为 true 时则表示是公平锁，源码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 使用以下代码实现公平策略
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">ReentrantLock</span><span class="p">(</span><span class="kt">boolean</span> <span class="nf">fair</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">sync</span> <span class="o">=</span> <span class="n">fair</span> <span class="o">?</span> <span class="k">new</span> <span class="n">FairSync</span><span class="p">()</span> <span class="o">:</span> <span class="k">new</span> <span class="n">NonfairSync</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>实现公平锁只需编写以下代码即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 传入布尔值true实现公平锁
+</span><span class="c1"></span><span class="n">ReentrantLock</span> <span class="nf">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>关于FairSync和NonfairSync等下会说</p>
+
+<h1 id="reentrantlock实现了哪些接口">ReentrantLock实现了哪些接口？</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">ReentrantLock</span> <span class="nf">implements</span> <span class="n">Lock</span><span class="p">,</span> <span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">Serializable</span> <span class="p">{</span>
+    
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="lock">Lock</h2>
+
+<h3 id="什么是lock">什么是Lock？</h3>
+
+<p>在jdk1.5以后，增加了juc并发包且提供了Lock接口用来实现锁的功能，它除了提供了与synchroinzed关键字类似的同步功能，还提供了比synchronized更灵活api实现</p>
+
+<h3 id="lock有哪些方法">Lock有哪些方法？</h3>
+
+<p>从源码可以看到 ReentrantLock 实现了 Lock 接口和 Serializable，Serializable是序列化接口，这个不懂得朋友可以自行查阅一下，这里不做详细介绍，我们来看下 Lock 这个接口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">interface</span> <span class="n">Lock</span> <span class="p">{</span>
+
+    <span class="cm">/**
+</span><span class="cm">      * 尝试获取锁，获取不到则阻塞等待，不响应中断
+</span><span class="cm">      */</span>
+    <span class="kt">void</span> <span class="nf">lock</span><span class="p">();</span>
+
+    <span class="cm">/**
+</span><span class="cm">      * 尝试获取锁，获取不到则阻塞等待，响应中断
+</span><span class="cm">      */</span>
+    <span class="kt">void</span> <span class="nf">lockInterruptibly</span><span class="p">()</span> <span class="kd">throws</span> <span class="nf">InterruptedException</span><span class="p">;</span>
+
+    <span class="cm">/**
+</span><span class="cm">      * 尝试获取锁，立即返回，获取成功返回true，失败则返回false
+</span><span class="cm">      */</span>
+    <span class="kt">boolean</span> <span class="nf">tryLock</span><span class="p">();</span>
+
+    <span class="cm">/**
+</span><span class="cm">      * 超时获取锁，获取到则返回，获取不到知道超时时间过，返回false
+</span><span class="cm">      */</span>
+    <span class="kt">boolean</span> <span class="nf">tryLock</span><span class="p">(</span><span class="kt">long</span> <span class="nf">time</span><span class="p">,</span> <span class="n">TimeUnit</span> <span class="nf">unit</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">InterruptedException</span><span class="p">;</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 释放锁，需要在持有锁的线程中调用，否则会抛IllegalMonitorStateException
+</span><span class="cm">     * 一般放到finally块中执行，确保在碰到任何异常，都正确能释放锁
+</span><span class="cm">     */</span>
+    <span class="kt">void</span> <span class="nf">unlock</span><span class="p">();</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 新建一个同步等待条件
+</span><span class="cm">     */</span>
+    <span class="n">Condition</span> <span class="nf">newCondition</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="reentrantlock的静态内部类-sync">ReentrantLock的静态内部类——Sync</h1>
+
+<p>从源码可以看到Sync继承了一个 AbstractQueuedSynchronizer 类（简称AQS）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">final</span> <span class="n">Sync</span> <span class="nf">sync</span><span class="p">;</span>
+
+<span class="c1">// Sync继承了AQS
+</span><span class="c1"></span><span class="kd">abstract</span> <span class="nf">static</span> <span class="kd">class</span> <span class="nf">Sync</span> <span class="kd">extends</span> <span class="nf">AbstractQueuedSynchronizer</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="nf">static</span> <span class="kd">final</span> <span class="nf">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="o">-</span><span class="n">5179523762034025860L</span><span class="p">;</span>
+
+    <span class="c1">// 主要为了子类可以尝试快速非公平的获取锁
+</span><span class="c1"></span>    <span class="kd">abstract</span> <span class="nf">void</span> <span class="n">lock</span><span class="p">();</span>
+
+    <span class="c1">// 非公平尝试获取锁，公平与非公平实现的tryLock方法都会调用这个来尝试非公平的获取一次
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">boolean</span> <span class="n">nonfairTryAcquire</span><span class="p">(</span><span class="kt">int</span> <span class="nf">acquires</span><span class="p">)</span> <span class="p">{</span>
+        
+        <span class="c1">// 获取当前线程
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="nf">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span>
+        
+        <span class="c1">//  获取状态码
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="nf">c</span> <span class="o">=</span> <span class="n">getState</span><span class="p">();</span>
+        
+        <span class="c1">// 如果当前状态为0代表锁没有被获取
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// CAS设置状态，成功后调用setExclusiveOwnerThread方法设置持有锁的线程
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">compareAndSetState</span><span class="p">(</span><span class="n">0</span><span class="p">,</span> <span class="n">acquires</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">current</span><span class="p">);</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 如果锁被占用，查看占用锁的线程是否是当前线程
+</span><span class="c1"></span>        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">==</span> <span class="n">getExclusiveOwnerThread</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// 当前线程可以再次获取锁
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="nf">nextc</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">acquires</span><span class="p">;</span>
+            
+            <span class="c1">// 如果为负值，则快速失败，抛出一个错误
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">nextc</span> <span class="o">&lt;</span> <span class="n">0</span><span class="p">)</span> <span class="c1">// overflow
+</span><span class="c1"></span>                <span class="k">throw</span> <span class="k">new</span> <span class="n">Error</span><span class="p">(</span><span class="s">&#34;Maximum lock count exceeded&#34;</span><span class="p">);</span>
+            <span class="c1">// 设置当前的状态码
+</span><span class="c1"></span>            <span class="n">setState</span><span class="p">(</span><span class="n">nextc</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 释放锁
+</span><span class="c1"></span>    <span class="kd">protected</span> <span class="nf">final</span> <span class="kt">boolean</span> <span class="nf">tryRelease</span><span class="p">(</span><span class="kt">int</span> <span class="nf">releases</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="nf">c</span> <span class="o">=</span> <span class="n">getState</span><span class="p">()</span> <span class="o">-</span> <span class="n">releases</span><span class="p">;</span>
+        
+        <span class="c1">// 释放锁的当前线程必须是只有锁的线程，否则无法释放，会抛出IllegalMonitorStateException异常
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">()</span> <span class="o">!=</span> <span class="n">getExclusiveOwnerThread</span><span class="p">())</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalMonitorStateException</span><span class="p">();</span>
+        <span class="kt">boolean</span> <span class="nf">free</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        
+        <span class="c1">// 因为是可重入锁，所以状态为0的时候才需要setExclusiveOwnerThread(null)
+</span><span class="c1"></span>        <span class="c1">// 用于清空持有锁的线程，并且返回布尔值true
+</span><span class="c1"></span>        <span class="c1">// 返回true时会在release方法触发唤醒等待锁的线程
+</span><span class="c1"></span>        <span class="c1">// 只有当前线程完全释放锁，其他的线程才可以去得到锁
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">free</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">setState</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">free</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 判断当前线程是否是持有锁的线程
+</span><span class="c1"></span>    <span class="kd">protected</span> <span class="nf">final</span> <span class="kt">boolean</span> <span class="nf">isHeldExclusively</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 虽然在一般情况下我们必须先读取所有者状态，
+</span><span class="c1"></span>	    <span class="c1">// 我们不需要检查当前线程是否为所有者
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">getExclusiveOwnerThread</span><span class="p">()</span> <span class="o">==</span> <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ConditionObject是AQS中的等待队列，类似于Object类中的wait和notify，这里暂时不介绍
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">ConditionObject</span> <span class="n">newCondition</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">ConditionObject</span><span class="p">();</span>
+    <span class="p">}</span>
+
+	<span class="c1">// 获取当前持有锁的线程
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Thread</span> <span class="n">getOwner</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">getState</span><span class="p">()</span> <span class="o">==</span> <span class="n">0</span> <span class="o">?</span> <span class="kc">null</span> <span class="o">:</span> <span class="n">getExclusiveOwnerThread</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 获取重入持有锁的次数
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">int</span> <span class="n">getHoldCount</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">isHeldExclusively</span><span class="p">()</span> <span class="o">?</span> <span class="n">getState</span><span class="p">()</span> <span class="o">:</span> <span class="n">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 判断当前线程是否被锁
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">boolean</span> <span class="n">isLocked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">getState</span><span class="p">()</span> <span class="o">!=</span> <span class="n">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 反序列化
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="nf">void</span> <span class="n">readObject</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">ObjectInputStream</span> <span class="nf">s</span><span class="p">)</span>
+        <span class="kd">throws</span> <span class="nf">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">,</span> <span class="n">ClassNotFoundException</span> <span class="p">{</span>
+        <span class="n">s</span><span class="p">.</span><span class="na">defaultReadObject</span><span class="p">();</span>
+        <span class="c1">// 需要重置锁状态为0
+</span><span class="c1"></span>        <span class="n">setState</span><span class="p">(</span><span class="n">0</span><span class="p">);</span> <span class="c1">// reset to unlocked state
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="setexclusiveownerthread">setExclusiveOwnerThread</h2>
+
+<p>setExclusiveOwnerThread方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 独占模式同步的当前所有者
+</span><span class="c1"></span><span class="kd">private</span> <span class="nf">transient</span> <span class="n">Thread</span> <span class="nf">exclusiveOwnerThread</span><span class="p">;</span>
+
+<span class="c1">// exclusiveOwnerThread属性是AQS从父类AbstractOwnableSynchronizer中继承的属性
+</span><span class="c1">// 用来保存当前占用同步状态的线程
+</span><span class="c1"></span><span class="kd">protected</span> <span class="nf">final</span> <span class="kt">void</span> <span class="nf">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">Thread</span> <span class="nf">thread</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">exclusiveOwnerThread</span> <span class="o">=</span> <span class="n">thread</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="getexclusiveownerthread">getExclusiveOwnerThread</h2>
+
+<p>方法如下：</p>
+
+<p>可以发现这个getExclusiveOwnerThread跟上面的setExclusiveOwnerThread是对应的，一个设置一个获取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 返回由setExclusiveOwnerThread方法设置的最后的一个线程
+</span><span class="c1"></span><span class="kd">protected</span> <span class="nf">final</span> <span class="n">Thread</span> <span class="nf">getExclusiveOwnerThread</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">exclusiveOwnerThread</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="setstate">setState</h2>
+
+<p>setState方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 设置一个新的状态码
+</span><span class="c1"></span><span class="kd">protected</span> <span class="nf">final</span> <span class="kt">void</span> <span class="nf">setState</span><span class="p">(</span><span class="kt">int</span> <span class="nf">newState</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">newState</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="getstate">getState</h2>
+
+<p>getState方法如下：</p>
+
+<p>可以看到这个也是跟上面的setState方法也对应的，一个设置一个获取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 获取状态码
+</span><span class="c1"></span><span class="kd">protected</span> <span class="nf">final</span> <span class="kt">int</span> <span class="nf">getState</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">state</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="哪些类继承了sync">哪些类继承了Sync？</h1>
+
+<p>在文章开头我们讲过ReentrantLock的实现有公平锁和非公平锁，我们先来看下公平锁——<strong>FairSync</strong></p>
+
+<h2 id="fairsync">FairSync</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 公平锁实现
+</span><span class="c1"></span><span class="kd">static</span> <span class="nf">final</span> <span class="kd">class</span> <span class="nf">FairSync</span> <span class="kd">extends</span> <span class="nf">Sync</span> <span class="p">{</span>
+    <span class="c1">// 序列ID
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="nf">static</span> <span class="kd">final</span> <span class="nf">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="o">-</span><span class="n">3000897897090466540L</span><span class="p">;</span>
+
+    <span class="kd">final</span> <span class="nf">void</span> <span class="n">lock</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 调用AQS的acquire方法，直接执行 AQS 的正常的同步状态获取逻辑
+</span><span class="c1"></span>        <span class="n">acquire</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 尝试公平获取锁
+</span><span class="c1"></span>    <span class="kd">protected</span> <span class="nf">final</span> <span class="kt">boolean</span> <span class="nf">tryAcquire</span><span class="p">(</span><span class="kt">int</span> <span class="nf">acquires</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 获取当前线程
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="nf">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span>
+        
+        <span class="c1">// 获取当前状态码
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="nf">c</span> <span class="o">=</span> <span class="n">getState</span><span class="p">();</span>
+        
+        <span class="c1">// 如果状态码为0则代表可以获取锁
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">0</span><span class="p">)</span> <span class="p">{</span>
+            
+            <span class="c1">// 公平锁和非公平锁的主要区别在于：
+</span><span class="c1"></span>            <span class="c1">// 检查是否队列中没有等待的线程，如果没有等待的线程才尝试CAS修改锁状态，目的是保证先来获取的一定先获			   取到
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hasQueuedPredecessors</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">compareAndSetState</span><span class="p">(</span><span class="n">0</span><span class="p">,</span> <span class="n">acquires</span><span class="p">))</span> <span class="p">{</span>
+                <span class="c1">// 成功则设置当前线程为锁持有者
+</span><span class="c1"></span>                <span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">current</span><span class="p">);</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 如果锁被占用，查看占用锁的线程是否是当前线程。如果是当前线程，可以再次获取锁
+</span><span class="c1"></span>        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">==</span> <span class="n">getExclusiveOwnerThread</span><span class="p">())</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="nf">nextc</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">acquires</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">nextc</span> <span class="o">&lt;</span> <span class="n">0</span><span class="p">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">Error</span><span class="p">(</span><span class="s">&#34;Maximum lock count exceeded&#34;</span><span class="p">);</span>
+            <span class="n">setState</span><span class="p">(</span><span class="n">nextc</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>说明：公平锁和非公平锁都调用了acquire()方法。而acquire()方法是公平锁（FairSync）与非公平锁（UnfairSync）的父类AQS中的核心方法</p>
+
+<h4 id="hasqueuedpredecessors">hasQueuedPredecessors</h4>
+
+<p>hasQueuedPredecessors 方法源码如下，该方法是位于AQS：</p>
+
+<p>在比较公平与非公平锁获取同步状态的过程，会发现两者唯一的区别在于公平锁在获取童虎状态的时候多了一个限制条件——hasQueuedPredecessors()，是否有前序节点，如果有则返回true，表示自己不是首个等待获取同步状态的节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">final</span> <span class="kt">boolean</span> <span class="nf">hasQueuedPredecessors</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// The correctness of this depends on head being initialized
+</span><span class="c1"></span>    <span class="c1">// before tail and on head.next being accurate if the current
+</span><span class="c1"></span>    <span class="c1">// thread is first in queue.
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="nf">t</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span> <span class="c1">// 尾节点
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="nf">h</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span> <span class="c1">// 头节点
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="nf">s</span><span class="p">;</span>
+    
+    <span class="c1">// 如果 头节点 ！= 尾节点
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">h</span> <span class="o">!=</span> <span class="n">t</span> <span class="o">&amp;&amp;</span>
+        <span class="c1">// 同步队列第一个节点不为null，当前线程是同步队列第一个节点
+</span><span class="c1"></span>        <span class="p">((</span><span class="n">s</span> <span class="o">=</span> <span class="n">h</span><span class="p">.</span><span class="na">next</span><span class="p">)</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">s</span><span class="p">.</span><span class="na">thread</span> <span class="o">!=</span> <span class="n">Thread</span><span class="p">.</span><span class="na">currentTh</span> <span class="nf">read</span><span class="p">());</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="nonfairsync">NonfairSync</h2>
+
+<p>既然有公平锁就有非公平锁，来看下非公平锁的实现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 非公平锁的实现
+</span><span class="c1"></span><span class="kd">static</span> <span class="nf">final</span> <span class="kd">class</span> <span class="nf">NonfairSync</span> <span class="kd">extends</span> <span class="nf">Sync</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="nf">static</span> <span class="kd">final</span> <span class="nf">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="n">7316153563782823691L</span><span class="p">;</span>
+
+    <span class="kd">final</span> <span class="nf">void</span> <span class="n">lock</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 非公平锁实现会尝试快速获取一次，获取失败则调用acquire方法
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">compareAndSetState</span><span class="p">(</span><span class="n">0</span><span class="p">,</span> <span class="n">1</span><span class="p">))</span>
+            <span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">());</span>
+        <span class="k">else</span>
+            <span class="n">acquire</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 非公平的去尝试获取锁
+</span><span class="c1"></span>    <span class="kd">protected</span> <span class="nf">final</span> <span class="kt">boolean</span> <span class="nf">tryAcquire</span><span class="p">(</span><span class="kt">int</span> <span class="nf">acquires</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 调用的nonfairTryAcquire上面讲到过，不会的朋友往上翻翻
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">nonfairTryAcquire</span><span class="p">(</span><span class="n">acquires</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>acquire方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">final</span> <span class="kt">void</span> <span class="nf">acquire</span><span class="p">(</span><span class="kt">int</span> <span class="nf">arg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tryAcquire</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+    	<span class="c1">// addWaiter(Node.EXCLUSIVE)加入等待队列
+</span><span class="c1"></span>        <span class="n">acquireQueued</span><span class="p">(</span><span class="n">addWaiter</span><span class="p">(</span><span class="n">Node</span><span class="p">.</span><span class="na">EXCLUSIVE</span><span class="p">),</span> <span class="n">arg</span><span class="p">))</span>
+        <span class="n">selfInterrupt</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>tryAcquire方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="nf">boolean</span> <span class="n">tryAcquire</span><span class="p">(</span><span class="kt">int</span> <span class="nf">arg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="n">UnsupportedOperationException</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果该方法返回了True，则说明当前线程获取锁成功，就不用往后执行了；如果获取失败，就需要加入到等待队列中。加入队列方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">Node</span> <span class="n">addWaiter</span><span class="p">(</span><span class="n">Node</span> <span class="nf">mode</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// 通过当前的线程和锁模式新建一个节点
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="nf">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">(),</span> <span class="n">mode</span><span class="p">);</span>
+    <span class="c1">// Try the fast path of enq; backup to full enq on failure
+</span><span class="c1"></span>	<span class="c1">// pred指针指向尾节点tail
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="nf">pred</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pred</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="c1">// 将Node中的prev指针指向pred
+</span><span class="c1"></span>        <span class="n">node</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">pred</span><span class="p">;</span>
+        
+        <span class="c1">// 通过compareAndSetTail方法完成尾节点的设置。这个方法主要是对tailOffset和Expect进行比较，如果tailOffset的Node节点和Expect的Node节点地址是相同的，那么设置Tail的值为修改后的值
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">compareAndSetTail</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">pred</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">enq</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>acquireQueued方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">final</span> <span class="nf">boolean</span> <span class="n">acquireQueued</span><span class="p">(</span><span class="kd">final</span> <span class="nf">Node</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="nf">arg</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// 标记是否成功拿到锁
+</span><span class="c1"></span>    <span class="kt">boolean</span> <span class="nf">failed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">{</span>
+    	<span class="c1">// 标记等待过程中是否中断过
+</span><span class="c1"></span>        <span class="kt">boolean</span> <span class="nf">interrupted</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+		<span class="c1">// 开启自旋（自旋的简单理解是要么获取锁，要么中断）
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+	
+			<span class="c1">// 获取当前节点的前驱节点
+</span><span class="c1"></span>            <span class="kd">final</span> <span class="nf">Node</span> <span class="n">p</span> <span class="o">=</span> <span class="n">node</span><span class="p">.</span><span class="na">predecessor</span><span class="p">();</span>
+
+			<span class="c1">// 如果p是头节点，则说明当前节点在真实数据队列的首部，尝试获取锁
+</span><span class="c1"></span>			<span class="c1">// （注意：头节点是虚节点）
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">head</span> <span class="o">&amp;&amp;</span> <span class="n">tryAcquire</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span> <span class="p">{</span>
+            	<span class="c1">// 成功获取锁，头指针移动到当前node
+</span><span class="c1"></span>                <span class="n">setHead</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+				<span class="c1">// 方便GC
+</span><span class="c1"></span>                <span class="n">p</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="c1">// help GC
+</span><span class="c1"></span>                <span class="n">failed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                <span class="k">return</span> <span class="n">interrupted</span><span class="p">;</span>
+            <span class="p">}</span>
+			
+			<span class="c1">// 说明p为头节点并且当前没有获取到锁（有可能是非公平锁被抢占了）或者是p不为头节点
+</span><span class="c1"></span>			<span class="c1">// 这个时候就要判断当前node是否要被阻塞（被阻塞条件：前驱节点的waitStatus为-1），防止无限循环浪费资源
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">shouldParkAfterFailedAcquire</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+                <span class="n">parkAndCheckInterrupt</span><span class="p">())</span>
+                <span class="n">interrupted</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">failed</span><span class="p">)</span>
+            <span class="n">cancelAcquire</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>setHead方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">void</span> <span class="n">setHead</span><span class="p">(</span><span class="n">Node</span> <span class="nf">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+    <span class="n">node</span><span class="p">.</span><span class="na">thread</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="n">node</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>shouldParkAfterFailedAcquire方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 靠前驱节点判断当前线程是否应该被阻塞
+</span><span class="c1"></span><span class="kd">private</span> <span class="nf">static</span> <span class="kt">boolean</span> <span class="nf">shouldParkAfterFailedAcquire</span><span class="p">(</span><span class="n">Node</span> <span class="nf">pred</span><span class="p">,</span> <span class="n">Node</span> <span class="nf">node</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="c1">// 获取头节点的节点状态
+</span><span class="c1"></span>   <span class="kt">int</span> <span class="nf">ws</span> <span class="o">=</span> <span class="n">pred</span><span class="p">.</span><span class="na">waitStatus</span><span class="p">;</span>
+	
+	<span class="c1">// 表示头节点处于唤醒状态
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">ws</span> <span class="o">==</span> <span class="n">Node</span><span class="p">.</span><span class="na">SIGNAL</span><span class="p">)</span>
+        <span class="cm">/*
+</span><span class="cm">         * This node has already set status asking a release
+</span><span class="cm">         * to signal it, so it can safely park.
+</span><span class="cm">         */</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+
+	<span class="c1">// 通过枚举值知道 waitStatus 是取消状态
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">ws</span> <span class="o">&gt;</span> <span class="n">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/*
+</span><span class="cm">         * Predecessor was cancelled. Skip over predecessors and
+</span><span class="cm">         * indicate retry.
+</span><span class="cm">         */</span>
+        <span class="k">do</span> <span class="p">{</span>
+        	<span class="c1">// 循环向前查找取消节点，把取消节点从队列中去掉
+</span><span class="c1"></span>            <span class="n">node</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">=</span> <span class="n">pred</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">pred</span><span class="p">.</span><span class="na">waitStatus</span> <span class="o">&gt;</span> <span class="n">0</span><span class="p">);</span>
+        <span class="n">pred</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/*
+</span><span class="cm">         * waitStatus must be 0 or PROPAGATE.  Indicate that we
+</span><span class="cm">         * need a signal, but don&#39;t park yet.  Caller will need to
+</span><span class="cm">         * retry to make sure it cannot acquire before parking.
+</span><span class="cm">         */</span>
+         <span class="c1">// 设置前驱节点等待状态为SIGNAL
+</span><span class="c1"></span>        <span class="n">compareAndSetWaitStatus</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">ws</span><span class="p">,</span> <span class="n">Node</span><span class="p">.</span><span class="na">SIGNAL</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>enq方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">Node</span> <span class="n">enq</span><span class="p">(</span><span class="kd">final</span> <span class="nf">Node</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+        <span class="n">Node</span> <span class="nf">t</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Must initialize
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">compareAndSetHead</span><span class="p">(</span><span class="k">new</span> <span class="n">Node</span><span class="p">()))</span>
+                <span class="n">tail</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">node</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">compareAndSetTail</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">t</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+                <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>说明：如果没有被初始化，需要进行初始化一个头结点出来。但请注意，初始化的头结点并不是当前线程节点，而是调用了无参构造函数的节点。如果经历了初始化或者并发导致队列中有元素，则与之前的方法相同。其实，addWaiter就是一个在双端链表添加尾节点的操作，需要注意的是，双端链表的头结点是一个无参构造函数的头结点</p>
+</blockquote>
+
+<p>AQS中的静态代码块</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+         <span class="n">stateOffset</span> <span class="o">=</span> <span class="n">unsafe</span><span class="p">.</span><span class="na">objectFieldOffset</span>
+             <span class="p">(</span><span class="n">AbstractQueuedSynchronizer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&#34;state&#34;</span><span class="p">));</span>
+         <span class="n">headOffset</span> <span class="o">=</span> <span class="n">unsafe</span><span class="p">.</span><span class="na">objectFieldOffset</span>
+             <span class="p">(</span><span class="n">AbstractQueuedSynchronizer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&#34;head&#34;</span><span class="p">));</span>
+         <span class="n">tailOffset</span> <span class="o">=</span> <span class="n">unsafe</span><span class="p">.</span><span class="na">objectFieldOffset</span>
+             <span class="p">(</span><span class="n">AbstractQueuedSynchronizer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&#34;tail&#34;</span><span class="p">));</span>
+         <span class="n">waitStatusOffset</span> <span class="o">=</span> <span class="n">unsafe</span><span class="p">.</span><span class="na">objectFieldOffset</span>
+             <span class="p">(</span><span class="n">Node</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&#34;waitStatus&#34;</span><span class="p">));</span>
+         <span class="n">nextOffset</span> <span class="o">=</span> <span class="n">unsafe</span><span class="p">.</span><span class="na">objectFieldOffset</span>
+             <span class="p">(</span><span class="n">Node</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&#34;next&#34;</span><span class="p">));</span>
+
+     <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="nf">ex</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">Error</span><span class="p">(</span><span class="n">ex</span><span class="p">);</span> <span class="p">}</span>
+ <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+
+<ul>
+<li>如果通过CAS设置变量State（同步状态）成功，也就是说获取锁成功，则将当前线程设置为独占线程</li>
+<li>如果通过CAS设置变量State（同步状态）失败，也就是说获取锁失败，则进入acquire()方法进行后续的处理</li>
+</ul>
+
+<blockquote>
+<p>当某个线程获取锁失败之后的后续流程有以下两个可能</p>
+</blockquote>
+
+<ul>
+<li>将当前线程获取锁的结果设置为失败，获取锁流程结束。这种设计会极大地降低系统的并发度，但是并不满足我们的实际需求。所以就需要AQS框架的处理</li>
+<li>存在某种排队等候机制的时候，线程继续等待，仍然保留获取锁的可能，获取锁的流程仍在继续</li>
+</ul>
+
+<p>示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ReentrantLock</span><span class="p">()</span> <span class="p">{</span>
+     <span class="n">sync</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NonfairSync</span><span class="p">();</span><span class="c1">//默认是非公平的
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>或者这样也可以：</p>
+
+<p>在创建 ReentrantLock 的时候通过传进参数<code>true</code>创建公平锁，如果传入的是<code>false</code>或没传参数则创建的是非公平锁</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ReentrantLock</span> <span class="nf">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="reentrantlock如果与aqs关联的-以非公平锁为例">ReentrantLock如果与AQS关联的？（以非公平锁为例）</h2>
+
+<h4 id="加锁">加锁</h4>
+
+<ul>
+<li>通过ReentrantLock的加锁方法（Lock）进行加锁的操作</li>
+<li>调用内部类Sync的Lock方法，由于Sync的lock方法是抽象的，根据ReentrantLock初始化选择的公平锁与非公平锁执行相关的内部类的Lock方法，本质上都会执行AQS中的acquire()方法</li>
+<li>AQS的acquire()方法会执行tryAcquire()方法，但是由于tryAcquire()需要自定义同步器实现，因此执行了ReentrantLock中的tryAcquire方法，由于ReentrantLock是通过公平锁与非公平锁内部类实现的tryAcquire()方法，所以会根据锁类型的不同，来执行不同的tryAcquire()方法</li>
+<li>tryAcquire是获取锁逻辑，获取失败后，会执行AQS框架的后续逻辑，与ReentrantLock自定义的同步器无关</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">加锁</th>
+<th align="center">解锁</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">API</td>
+<td align="center">lock()</td>
+<td align="center">unlock()</td>
+</tr>
+
+<tr>
+<td align="center">AQS核心方法</td>
+<td align="center">acquire</td>
+<td align="center">release</td>
+</tr>
+
+<tr>
+<td align="center">自定义同步器实现的方法</td>
+<td align="center">tryAcquire、nonfairTryAcquire</td>
+<td align="center">tryRelease</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="解锁">解锁</h3>
+
+<ul>
+<li>通过ReentrantLock的解锁方法（unlock）进行解锁</li>
+<li>unlock方法会调用内部类Sync的release方法，该方法来自于继承的AQS</li>
+<li>release中会调用tryRelease方法，tryRelease方法需要自定义同步器实现，tryRelease只在ReentrantLock中的Sync实现，因此可以看出，释放锁的过程，并不区分是否为公平锁</li>
+
+<li><p>释放成功后，所有处理都由AQS完成，与自定义同步器无关</p>
+
+<h2 id="总结">总结</h2></li>
+</ul>
+
+<p>OK，先来总结一下公平锁与非公平锁</p>
+
+<ul>
+<li><p>FairSync：lock()方法相当于少了插队的环节（简单地说就是少了CAS尝试将state从0设置为1的过程，从而获得锁的过程）</p></li>
+
+<li><p>FairSync：tryAcquire(int acquires)则多了需要判断当前线程是否在等待队列首部（简单地说就是少了再次插队的环节，但是CAS获取还是要的）</p></li>
+</ul>
+
+<blockquote>
+<p>公平锁是指当锁可用的时候 ，在锁上等待时间最长的线程将获得锁的使用权。然而非公平则是随机分配这种使用权的。与synchronized一样，默认的ReentrantLock的实现是非公平锁，因为相比公平锁，非公平锁性更更好一点。当然也不是说公平锁不好，公平锁能防止饥饿，在某些情况下情况下也是很有用的。</p>
+</blockquote>
+
+<p>说了那么多没点实战性的东西怎么理解？OK，现在就来介绍下ReentrantLock的简单使用，先来实现一下公平锁是怎样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">  <span class="kd">public</span> <span class="nf">class</span> <span class="n">DemoString</span><span class="p">{</span>
+  
+      <span class="kd">private</span> <span class="nf">static</span> <span class="kd">final</span> <span class="nf">Lock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+  
+      <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+          <span class="c1">// 创建线程
+</span><span class="c1"></span>          <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread1&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+          <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread2&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+          <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread3&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+          <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread4&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+          <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread5&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+      <span class="p">}</span>
+  
+      <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">test</span><span class="p">(){</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">try</span> <span class="p">{</span>
+                  <span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span>
+                  <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#34; 获得锁&#34;</span><span class="p">);</span>
+                  <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">2</span><span class="p">);</span>
+              <span class="p">}</span><span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="nf">e</span><span class="p">){</span>
+                  <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+              <span class="p">}</span><span class="k">finally</span> <span class="p">{</span>
+                  <span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span>
+              <span class="p">}</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这段代码相信聪明的你们应该都看得懂，上面的代码中我们开启了5个线程，让每个线程都获取释放两次。为了能够更好的观察到结果，在每次获取锁之前让线程休眠10ms。从下面的结果可以看出==线程几乎是轮流获取到了锁==</p>
+
+<p><img src="https://img-blog.csdnimg.cn/20191128152442172.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+<p>我们再来看下非公平锁的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">DemoString</span><span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">static</span> <span class="kd">final</span> <span class="nf">Lock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread1&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+        <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread2&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+        <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread3&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+        <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread4&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+        <span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="p">(),</span><span class="s">&#34;Thread5&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">test</span><span class="p">(){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#34; 获得锁&#34;</span><span class="p">);</span>
+                <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">2</span><span class="p">);</span>
+            <span class="p">}</span><span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="nf">e</span><span class="p">){</span>
+                <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+            <span class="p">}</span><span class="k">finally</span> <span class="p">{</span>
+                <span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的代码只是修改了一个布尔值而已，至于为什么贴全部代码也是为了让初学ReentrantLock的朋友更好的理解，可以看到非公平锁的线程会重复获取锁。==如果申请获取锁的线程足够多，那么可能会造成某些线程长时间得不到锁，这也就是非公平锁的饥饿问题==
+<img src="https://img-blog.csdnimg.cn/2019112815245681.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+<p>所以说在大部分情况下我们会选择使用非公平锁，因为它的性能比公平锁好很多。但是公平锁能够避免线程饥饿问题，所以某些情况下也是很有用的（看场景）</p>
+
+<h1 id="reentrantlock简单使用方法">ReentrantLock简单使用方法</h1>
+
+<p>讲了那么多都没说怎么使用，那怎么搞？不慌，现在就来使用一下：</p>
+
+<p>这里有一点需要注意的是 ：<strong>unlock必需在finally块中，以保证锁的释放；lock必需在try{}finally外面，防止未获取到锁仍然做额外的释放</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">Demo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ReentrantLock</span> <span class="nf">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="p">();</span>
+        <span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="c1">// 代码块......
+</span><span class="c1"></span>        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="nf">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+            <span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">作者</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上一次更新</span>
+    <span class="item-content">
+        2019-11-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深入理解Vector</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8python%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">
+            <span class="next-text nav-default">如何利用python制作一个解压缩软件</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="javascripts;" class="iconfont icon-email" title="email"></a>
+      <a href="javascripts;" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="javascripts;" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.zhihu.com/search?type=content&amp;q=" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="javascripts;" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="https://www.bilibili.com/" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019-08 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
