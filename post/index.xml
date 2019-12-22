@@ -6,10 +6,28 @@
     <description>Recent content in Posts on Woo_home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Thu, 12 Dec 2019 00:14:19 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 22 Dec 2019 00:14:19 +0800</lastBuildDate>
     
 	<atom:link href="https://woogithub.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java内存模型</title>
+      <link>https://woogithub.github.io/post/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Sun, 22 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</guid>
+      <description>什么是 Java 内存模型？ ​ Java 内存模型是通过各种操作来定义的，包括对变量的读 / 写操作，监视器的加锁和释放操作，以及线程的启动和合并操作。JMM 为程序</description>
+    </item>
+    
+    <item>
+      <title>深入理解 HashSet</title>
+      <link>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/</link>
+      <pubDate>Tue, 17 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/</guid>
+      <description>什么是 HashSet？ HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的</description>
+    </item>
     
     <item>
       <title>Java反射机制的简单使用</title>
@@ -57,7 +75,7 @@
     </item>
     
     <item>
-      <title>深入理解LinkedList</title>
+      <title>深入理解 LinkedList</title>
       <link>https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</link>
       <pubDate>Tue, 03 Dec 2019 00:14:19 +0800</pubDate>
       

@@ -6,10 +6,19 @@
     <description>Recent content in JVM on Woo_home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Fri, 06 Dec 2019 00:14:19 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 22 Dec 2019 00:14:19 +0800</lastBuildDate>
     
 	<atom:link href="https://woogithub.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java内存模型</title>
+      <link>https://woogithub.github.io/post/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Sun, 22 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</guid>
+      <description>什么是 Java 内存模型？ ​ Java 内存模型是通过各种操作来定义的，包括对变量的读 / 写操作，监视器的加锁和释放操作，以及线程的启动和合并操作。JMM 为程序</description>
+    </item>
     
     <item>
       <title>JVM 类加载机制</title>

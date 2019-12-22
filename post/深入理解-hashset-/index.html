@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>深入理解 HashSet - Woo_home</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="什么是 HashSet？ HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="深入理解 HashSet" />
+<meta property="og:description" content="什么是 HashSet？ HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/" />
+<meta property="article:published_time" content="2019-12-17T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-12-17T00:14:19+08:00" />
+<meta itemprop="name" content="深入理解 HashSet">
+<meta itemprop="description" content="什么是 HashSet？ HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的">
+
+
+<meta itemprop="datePublished" content="2019-12-17T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-17T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="2615">
+
+
+
+<meta itemprop="keywords" content="源码分析," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="深入理解 HashSet"/>
+<meta name="twitter:description" content="什么是 HashSet？ HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">深入理解 HashSet</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-17 </span>
+        
+          <span class="more-meta"> 2615 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#什么是-hashset">什么是 HashSet？</a></li>
+<li><a href="#hashset-的继承类与实现的接口有哪些">HashSet 的继承类与实现的接口有哪些？</a></li>
+<li><a href="#hashset-中的主要成员变量">HashSet 中的主要成员变量</a></li>
+<li><a href="#hashset中的构造函数">HashSet中的构造函数</a>
+<ul>
+<li><a href="#一-hashset">一、HashSet()</a></li>
+<li><a href="#二-hashset-collection-extends-e-c">二、HashSet(Collection&lt;? extends E&gt; c)</a></li>
+<li><a href="#三-hashset-int-initialcapacity-float-loadfactor">三、HashSet(int initialCapacity, float loadFactor)</a></li>
+<li><a href="#四-hashset-int-initialcapacity">四、HashSet(int initialCapacity)</a></li>
+<li><a href="#五-hashset-int-initialcapacity-float-loadfactor-boolean-dummy">五、HashSet(int initialCapacity, float loadFactor, boolean dummy)</a></li>
+</ul></li>
+<li><a href="#hashset-中常用的方法有哪些">HashSet 中常用的方法有哪些？</a>
+<ul>
+<li><a href="#isempty">isEmpty()</a></li>
+<li><a href="#contains-object-o">contains(Object o)</a></li>
+<li><a href="#add-e-e">add(E e)</a></li>
+<li><a href="#remove-object-o">remove(Object o)</a></li>
+<li><a href="#iterator">iterator()</a>
+<ul>
+<li><a href="#keyset">keySet()</a></li>
+</ul></li>
+<li><a href="#size">size()</a></li>
+<li><a href="#clear">clear()</a></li>
+</ul></li>
+<li><a href="#总结">总结</a>
+<ul>
+<li><a href="#为什么hashset不允许出现重复值">为什么HashSet不允许出现重复值？</a></li>
+<li><a href="#hashset-可以存储为-null-元素吗">HashSet 可以存储为 null 元素吗？</a></li>
+<li><a href="#hashset-到底是有序的还是无序的">HashSet 到底是有序的还是无序的？</a></li>
+<li><a href="#hashset-是线程安全的吗">HashSet 是线程安全的吗？</a></li>
+<li><a href="#如何从-hashset-中获取指定的元素">如何从 HashSet 中获取指定的元素？</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="什么是-hashset">什么是 HashSet？</h1>
+
+<p>HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的，底层采用 HashMap 来存储元素，关于 HashMap 的文章请看这里 <a href="https://blog.csdn.net/Woo_home/article/details/103146845">深入理解 HashMap </a></p>
+
+<h1 id="hashset-的继承类与实现的接口有哪些">HashSet 的继承类与实现的接口有哪些？</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
+    <span class="nf">extends</span> <span class="n">AbstractSet</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
+    <span class="nf">implements</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Cloneable</span><span class="p">,</span> <span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">Serializable</span> <span class="p">{</span>
+    
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>从上面的代码中可以知道 HashSet 继承了AbstractSet 类并且实现了 Set、Cloneable、Serializable 接口</p>
+
+<h1 id="hashset-中的主要成员变量">HashSet 中的主要成员变量</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 序列ID
+</span><span class="c1"></span><span class="kd">static</span> <span class="nf">final</span> <span class="kt">long</span> <span class="nf">serialVersionUID</span> <span class="o">=</span> <span class="o">-</span><span class="n">5024744406713321676L</span><span class="p">;</span>
+
+<span class="c1">// HashSet 内部使用 HashMap 存储
+</span><span class="c1"></span><span class="kd">private</span> <span class="nf">transient</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">E</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">map</span><span class="p">;</span>
+
+<span class="c1">// 虚拟对象，用来作为 value 存储到 map 中
+</span><span class="c1"></span><span class="kd">private</span> <span class="nf">static</span> <span class="kd">final</span> <span class="nf">Object</span> <span class="n">PRESENT</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="p">();</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="hashset中的构造函数">HashSet中的构造函数</h1>
+
+<h2 id="一-hashset">一、HashSet()</h2>
+
+<p>无参的 HashSet()</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 当调用该构造函数的时候，其实就是实例化了 HashMap 对象
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">HashSet</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 实例化
+</span><span class="c1"></span>    <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="二-hashset-collection-extends-e-c">二、HashSet(Collection&lt;? extends E&gt; c)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 把另一个集合的元素全部添加到当前的Set中
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">HashSet</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nf">E</span><span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 这里初始化的 Map 计算了它的初始容量
+</span><span class="c1"></span>    <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">max</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">/</span><span class="p">.</span><span class="na">75f</span><span class="p">)</span> <span class="o">+</span> <span class="n">1</span><span class="p">,</span> <span class="n">16</span><span class="p">));</span>
+    <span class="n">addAll</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="三-hashset-int-initialcapacity-float-loadfactor">三、HashSet(int initialCapacity, float loadFactor)</h2>
+
+<p>相信看过  <a href="https://blog.csdn.net/Woo_home/article/details/103146845">深入理解 HashMap </a> 朋友看到这里是不是有种似曾相识的感觉？没错，就是 HashMap 中的 initialCapacity 和 loadFactor</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 指定初始容量和加载因子
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">HashSet</span><span class="p">(</span><span class="kt">int</span> <span class="nf">initialCapacity</span><span class="p">,</span> <span class="kt">float</span> <span class="nf">loadFactor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// initialCapacity（对应HashMap中的初始容量）, loadFactor（对应HashMap中的加载因子）
+</span><span class="c1"></span>    <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">initialCapacity</span><span class="p">,</span> <span class="n">loadFactor</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="四-hashset-int-initialcapacity">四、HashSet(int initialCapacity)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 指定初始容量构造一个 HashSet
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">HashSet</span><span class="p">(</span><span class="kt">int</span> <span class="nf">initialCapacity</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// initialCapacity 对应 HashMap中的初始容量
+</span><span class="c1"></span>    <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">initialCapacity</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="五-hashset-int-initialcapacity-float-loadfactor-boolean-dummy">五、HashSet(int initialCapacity, float loadFactor, boolean dummy)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 以指定的参数构造一个新的空链接哈希集合
+</span><span class="c1">// initialCapacity：初始容量
+</span><span class="c1">// loadFactor：加载因子
+</span><span class="c1">// dummy：标记
+</span><span class="c1">// 非public修饰，主要是给 LinkedHashSet 使用的
+</span><span class="c1"></span><span class="n">HashSet</span><span class="p">(</span><span class="kt">int</span> <span class="nf">initialCapacity</span><span class="p">,</span> <span class="kt">float</span> <span class="nf">loadFactor</span><span class="p">,</span> <span class="kt">boolean</span> <span class="nf">dummy</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 底层以指定的参数化构造一个 LinkedHashMap 实例来实现
+</span><span class="c1"></span>    <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">initialCapacity</span><span class="p">,</span> <span class="n">loadFactor</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="hashset-中常用的方法有哪些">HashSet 中常用的方法有哪些？</h1>
+
+<h2 id="isempty">isEmpty()</h2>
+
+<p>如果该集合不包含任何元素，则返回 true</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 实际调用的是 HashMap 的 isEmpty 方法判断 HashSet 是否为空
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">map</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="contains-object-o">contains(Object o)</h2>
+
+<p>contains 判断 HashSet 中是否包含指定元素，有的话则返回 true</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">contains</span><span class="p">(</span><span class="n">Object</span> <span class="nf">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 底层实际调用的是 HashMap 的containsKey 来判断是否包含指定的 key，如果包含指定元素则返回 true
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">map</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="add-e-e">add(E e)</h2>
+
+<p>如果向 HashSet 中添加一个已存在的元素时，新添加的集合元素将不会被存放到 HashMap 中 ，原来的元素也不会有任何改变，也就说明了 HashSet 不能有重复元素的特性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">add</span><span class="p">(</span><span class="n">E</span> <span class="nf">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">PRESENT</span><span class="p">)</span><span class="o">==</span><span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>add() 方法中的 put 操作实际上是 HashMap的 put 操作，而 put 操作返回的是 putVal</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">V</span> <span class="n">put</span><span class="p">(</span><span class="n">K</span> <span class="nf">key</span><span class="p">,</span> <span class="n">V</span> <span class="nf">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">putVal</span><span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>关于 hash() 和 putVal() 方法的详细内容请点击这里 <a href="https://blog.csdn.net/Woo_home/article/details/103146845">深入理解 HashMap </a>，这里不再讲述</p>
+
+<p>说明：大家可以发现 HashSet 每次放入的值都会被当做key来处理，然后通过 HashMap 中的 put() 方法采用遍历单向链表的形式，对于使用相同的 key 和 相同的 key 生成的 hash值 ，那么就使用指定的值替换旧的值</p>
+
+<h2 id="remove-object-o">remove(Object o)</h2>
+
+<p>如果指定的元素存在 set 中，则移除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">remove</span><span class="p">(</span><span class="n">Object</span> <span class="nf">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">map</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">==</span><span class="n">PRESENT</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="iterator">iterator()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 获取 HashSet 的迭代器，返回元素的顺序不是特定的
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 底层调用 HashMap 的 keySet 来返回所有的 key
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">map</span><span class="p">.</span><span class="na">keySet</span><span class="p">().</span><span class="na">iterator</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>通过上面的代码可以知道 HashSet 中的元素是存放在底层的 HashMap 的 key 上的，可以发现它遍历的是 keySet，HashMap 中的 key 键重复的话就更新该值，可以保证 key 是不重复的，也就是说 HashSet 添加的值是不会重复的</p>
+
+<h3 id="keyset">keySet()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">Set</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="nf">keySet</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// AbstractMap 中的 keySet;
+</span><span class="c1"></span>    <span class="n">Set</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="nf">ks</span> <span class="o">=</span> <span class="n">keySet</span><span class="p">;</span>
+    
+    <span class="c1">// 如果key的集合为空
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">ks</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 调用 keySet 方法进行初始化
+</span><span class="c1"></span>        <span class="n">ks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KeySet</span><span class="p">();</span>
+        <span class="c1">// 赋值
+</span><span class="c1"></span>        <span class="n">keySet</span> <span class="o">=</span> <span class="n">ks</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ks</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="size">size()</h2>
+
+<p>返回集合中的元素的数量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">int</span> <span class="n">size</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">map</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="clear">clear()</h2>
+
+<p>调用 HashMap 的 clear() 方法清空 Node 中的所有节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">void</span> <span class="n">clear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">map</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="总结">总结</h1>
+
+<h2 id="为什么hashset不允许出现重复值">为什么HashSet不允许出现重复值？</h2>
+
+<p>因为 HashSet 的内部是使用  HashMap 的 key来存储元素的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;set ------- &#34;</span> <span class="o">+</span> <span class="n">set</span><span class="p">);</span>
+        
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span>
+        <span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;list ------ &#34;</span> <span class="o">+</span> <span class="n">list</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>set &mdash;&mdash; [hello]
+list &mdash;&mdash; [hello, hello]</p>
+</blockquote>
+
+<p>再举个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Random</span> <span class="nf">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        
+        <span class="c1">// 生成 100 个20以内的数字
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 添加到set中
+</span><span class="c1"></span>            <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">20</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</p>
+</blockquote>
+
+<p>根据输出内容我们可以知道100 个 20 以内的数字中没有重复的</p>
+
+<h2 id="hashset-可以存储为-null-元素吗">HashSet 可以存储为 null 元素吗？</h2>
+
+<p>可以，因为 HashSet 底层是由 HashMap实现的，HashMap 允许 key 为 null，所以 HashSet 固然也可以</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="hashset-到底是有序的还是无序的">HashSet 到底是有序的还是无序的？</h2>
+
+<p>HashSet 是无序的，因为 HashMap 的 key 是无序的，而 HashSet 的底层实现是 HashMap，所以 HashSet 是无序的</p>
+
+<blockquote>
+<p>有序跟无序怎么理解？</p>
+
+<p>答：<font color="brown">如果插入内容的顺序与输出内容的顺序一致表示是有序的，否则是无序的</font></p>
+</blockquote>
+
+<p>拿上面的例子继续探讨</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Random</span> <span class="nf">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">20</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</p>
+</blockquote>
+
+<p>谁？谁说是无序的？这不是很明显的是有序的嘛，执着的你们肯定也觉得很奇怪，metoo，OK，继续探讨</p>
+
+<p>再看下另外一个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">2</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">3</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">4</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">5</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Integer</span> <span class="nf">integer</span> <span class="o">:</span> <span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">integer</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>1 2 3 4 5</p>
+</blockquote>
+
+<p>还是有序的呀，到底怎么回事？</p>
+
+<p>故意换一下数字的位置再试试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">3</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">2</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">4</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">5</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Integer</span> <span class="nf">integer</span> <span class="o">:</span> <span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">integer</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>1 2 3 4 5</p>
+</blockquote>
+
+<p>OK，这回是无序的了，再试一个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">5</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">4</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">3</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">2</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Integer</span> <span class="nf">integer</span> <span class="o">:</span> <span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">integer</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>1 2 3 4 5</p>
+</blockquote>
+
+<p>OK，你们要的无序来了</p>
+
+<p>那么第一个例子那个是怎么回事？说明如下：</p>
+
+<blockquote>
+<p>说明：由于我们所创建的 HashSet 是 Integer 类型的，这也是最巧的一点，Integer 类型 hashCode() 的返回值就是其 int 值本身，而存储的时候元素通过一些运算后会得出自己在数组中所处的位置。由于在这一步，其本身即下标(只考虑这一步)，其实已经实现了排序功能，由于int类型范围太广，内存放不下，所以对其进行取模运算，为了减少哈希冲突，又在取模前进行了，扰动函数的计算，得到的数作为元素下标，按照 JDK8 下的 hash 算法，以及 loadFactor 及扩容机制，这就导致数据在经过 HashMap 的 hash() 运算后仍然是自己本身的值，且没有发生哈希冲突</p>
+</blockquote>
+
+<p>总结： 所以HashSet <strong>只是不保证有序</strong>， <strong>并不是保证无序</strong></p>
+
+<h2 id="hashset-是线程安全的吗">HashSet 是线程安全的吗？</h2>
+
+<p>不是，HashSet 不是线程安全的</p>
+
+<h2 id="如何从-hashset-中获取指定的元素">如何从 HashSet 中获取指定的元素？</h2>
+
+<p>通过将 Set 集合转换为 List 列表即可使用 get 操作获取指定元素</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">HashSetDemo</span> <span class="p">{</span>
+
+    <span class="c1">// 自定义一个获取变量的类型方法
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="nf">static</span> <span class="n">String</span> <span class="nf">getType</span><span class="p">(</span><span class="n">Object</span> <span class="nf">obj</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getName</span><span class="p">().</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">2</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">3</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">4</span><span class="p">);</span>
+        <span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">5</span><span class="p">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">1</span><span class="p">));</span> <span class="c1">// 获取指定元素
+</span><span class="c1"></span>        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">getType</span><span class="p">(</span><span class="n">list</span><span class="p">));</span> <span class="c1">// 打印变量类型
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>输出：</p>
+
+<p>2</p>
+
+<p>java.util.ArrayList</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">作者</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上一次更新</span>
+    <span class="item-content">
+        2019-12-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java内存模型</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">Java反射机制的简单使用</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="javascripts;" class="iconfont icon-email" title="email"></a>
+      <a href="javascripts;" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="javascripts;" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.zhihu.com/search?type=content&amp;q=" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="javascripts;" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="https://www.bilibili.com/" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019-08 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
