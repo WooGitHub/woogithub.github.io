@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JUC on Woo_home</title>
+    <link>https://woogithub.github.io/tags/juc/</link>
+    <description>Recent content in JUC on Woo_home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Mon, 23 Dec 2019 00:14:19 +0800</lastBuildDate>
+    
+	<atom:link href="https://woogithub.github.io/tags/juc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java Unsafe类详解</title>
+      <link>https://woogithub.github.io/post/juc/java-unsafe%E7%B1%BB%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Mon, 23 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/juc/java-unsafe%E7%B1%BB%E8%AF%A6%E8%A7%A3/</guid>
+      <description>什么是 Unsafe？ Unsafe 是位于 sun.misc 包下的一个类，主要提供了一些用于执行低级别、不安全操作的方法，如直接访问系统的内存资源、自主管理内存资源等，这</description>
+    </item>
+    
+    <item>
+      <title>深入浅出 CAS</title>
+      <link>https://woogithub.github.io/post/juc/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-cas/</link>
+      <pubDate>Mon, 23 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/juc/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-cas/</guid>
+      <description>什么是 CAS？ CAS全名（Compare and swap）是比较并交换的意思，是一种无锁算法。提供了原子化的读该写能力，是 Java 并发中所谓的 lock-free 机制的基</description>
+    </item>
+    
+    <item>
+      <title>深入理解 AtomicInteger</title>
+      <link>https://woogithub.github.io/post/juc/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-atomicinteger/</link>
+      <pubDate>Mon, 23 Dec 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/juc/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-atomicinteger/</guid>
+      <description>什么是 AtomicInteger ？ AtomicInteger 是 JUC（java.util.concurrent）包下的一个重要组件，是对基本类型 int 的封装。大家都知道 int 的包装类是 Intege</description>
+    </item>
+    
+  </channel>
+</rss>

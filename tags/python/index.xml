@@ -13,19 +13,19 @@
     
     <item>
       <title>Python面试题</title>
-      <link>https://woogithub.github.io/post/python%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://woogithub.github.io/post/python/python%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Fri, 06 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>https://woogithub.github.io/post/python%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://woogithub.github.io/post/python/python%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>python面试题 1、一行代码实现1—100之和 1 print(sum(range(1,101))) 2、如何在一个函数内部修改全局变量 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 定义一个全局变量，注意</description>
     </item>
     
     <item>
       <title>如何利用python制作一个解压缩软件</title>
-      <link>https://woogithub.github.io/post/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8python%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/</link>
+      <link>https://woogithub.github.io/post/python/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8python%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/</link>
       <pubDate>Tue, 12 Nov 2019 00:14:19 +0800</pubDate>
       
-      <guid>https://woogithub.github.io/post/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8python%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/</guid>
+      <guid>https://woogithub.github.io/post/python/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8python%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/</guid>
       <description>如何利用python制作一个解压缩软件 python实现解压缩的重要模块就是——zipfile，其次是os 安装zipfile模块 首先得安装zi</description>
     </item>
     

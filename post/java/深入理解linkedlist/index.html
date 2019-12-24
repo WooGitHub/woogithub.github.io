@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>深入理解 LinkedList - Woo_home</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="什么是LinkedList？ LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="深入理解 LinkedList" />
+<meta property="og:description" content="什么是LinkedList？ LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/" />
+<meta property="article:published_time" content="2019-12-03T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-12-03T00:14:19+08:00" />
+<meta itemprop="name" content="深入理解 LinkedList">
+<meta itemprop="description" content="什么是LinkedList？ LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通">
+
+
+<meta itemprop="datePublished" content="2019-12-03T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-03T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="2918">
+
+
+
+<meta itemprop="keywords" content="源码分析," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="深入理解 LinkedList"/>
+<meta name="twitter:description" content="什么是LinkedList？ LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">深入理解 LinkedList</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-03 </span>
+        
+          <span class="more-meta"> 2918 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#什么是linkedlist">什么是LinkedList？</a></li>
+<li><a href="#linkedlist与arraylist的区别">LinkedList与ArrayList的区别</a></li>
+<li><a href="#linkedlist继承了哪些类与接口">LinkedList继承了哪些类与接口？</a></li>
+<li><a href="#linkedlist中主要的成员变量">LinkedList中主要的成员变量</a></li>
+<li><a href="#linkedlist的构造方法">LinkedList的构造方法</a>
+<ul>
+<li><a href="#linkedlist">LinkedList()</a></li>
+<li><a href="#linkedlist-collection-extends-e-c">LinkedList(Collection&lt;? extends E&gt; c)</a>
+<ul>
+<li><a href="#addall-collection-extends-e-c-方法">addAll(Collection&lt;? extends E&gt; c)方法</a></li>
+<li><a href="#addall-int-index-collection-extends-e-c-方法">addAll(int index, Collection&lt;? extends E&gt; c)方法</a></li>
+<li><a href="#checkpositionindex-int-index-方法">checkPositionIndex(int index)方法</a></li>
+<li><a href="#ispositionindex-int-index-方法">isPositionIndex(int index)方法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#node节点">Node节点</a></li>
+<li><a href="#linkedlist的常用方法">LinkedList的常用方法</a>
+<ul>
+<li><a href="#add-e-e">add(E e)</a>
+<ul>
+<li><a href="#linklast-e-e">linkLast(E e)</a></li>
+</ul></li>
+<li><a href="#add-int-index-e-element">add(int index, E element)</a>
+<ul>
+<li><a href="#linkbefore">linkBefore()</a></li>
+</ul></li>
+<li><a href="#remove-object-o">remove(Object o)</a>
+<ul>
+<li><a href="#unlink">unlink()</a></li>
+</ul></li>
+<li><a href="#get-int-index">get(int index)</a>
+<ul>
+<li><a href="#node-int-index">node(int index)</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="什么是linkedlist">什么是LinkedList？</h1>
+
+<p>LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通过前驱指针和后继指针来维护关系的，而不是像数组那样通过上下标来维护节点之间的关系的。也就是说双向链表即可以从头到尾遍历，也可以从尾到头遍历</p>
+
+<h1 id="linkedlist与arraylist的区别">LinkedList与ArrayList的区别</h1>
+
+<p>大致区别如下：</p>
+
+<p>1、ArrayList是基于动态数组的数据结构，LinkedList是基于链表的数据结构</p>
+
+<p>2、对于随机访问 get() 和 set() 操作，ArrayList优于LinkedList，因为LinkedList没有继承RandomAccess，而且LinkedList要移动指针</p>
+
+<p>3、对于add（新增）操作和remove（删除）操作，LinkedList比较占优势，因为ArrayList要移动数据</p>
+
+<h1 id="linkedlist继承了哪些类与接口">LinkedList继承了哪些类与接口？</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
+    <span class="nf">extends</span> <span class="n">AbstractSequentialList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
+    <span class="nf">implements</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Deque</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Cloneable</span><span class="p">,</span> <span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">Serializable</span><span class="p">{</span>
+    
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>LinkedList 类继承了 AbstractSequentialList 类，并实现了 List、Deque、Cloneable、Serializable</p>
+
+<h1 id="linkedlist中主要的成员变量">LinkedList中主要的成员变量</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 初始化链表的长度为0
+</span><span class="c1"></span><span class="kd">transient</span> <span class="nf">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span>
+
+<span class="c1">// 指向头节点的变量
+</span><span class="c1"></span><span class="kd">transient</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">first</span><span class="p">;</span>
+
+<span class="c1">// 指向尾节点的变量
+</span><span class="c1"></span><span class="kd">transient</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">last</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="linkedlist的构造方法">LinkedList的构造方法</h1>
+
+<h2 id="linkedlist">LinkedList()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 创建一个空的构造方法
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">LinkedList</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="linkedlist-collection-extends-e-c">LinkedList(Collection&lt;? extends E&gt; c)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 创建一个指定Collection对象作为参数的构造函数，元素的顺内由这个对象迭代返回的顺序决定
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">LinkedList</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nf">E</span><span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">();</span>
+    <span class="n">addAll</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="addall-collection-extends-e-c-方法">addAll(Collection&lt;? extends E&gt; c)方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 将集合中的所有元素从指定的位置开始插入这个列表
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">addAll</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nf">E</span><span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">addAll</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="addall-int-index-collection-extends-e-c-方法">addAll(int index, Collection&lt;? extends E&gt; c)方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">addAll</span><span class="p">(</span><span class="kt">int</span> <span class="nf">index</span><span class="p">,</span> <span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nf">E</span><span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    
+    <span class="c1">// 判断下标元素是否在链表的长度范围之内
+</span><span class="c1"></span>    <span class="n">checkPositionIndex</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+
+    <span class="c1">// 将集合转换为Object数组
+</span><span class="c1"></span>    <span class="n">Object</span><span class="p">[]</span> <span class="nf">a</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="na">toArray</span><span class="p">();</span>
+    
+    <span class="c1">// 计算Object数组的长度
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="nf">numNew</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+    
+    <span class="c1">// 如果Object数组长度为0
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">numNew</span> <span class="o">==</span> <span class="n">0</span><span class="p">)</span>
+        <span class="c1">// 返回布尔值false
+</span><span class="c1"></span>        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="c1">// pred节点为succ节点的前驱
+</span><span class="c1"></span>    <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">pred</span><span class="p">,</span> <span class="n">succ</span><span class="p">;</span>
+    
+    <span class="c1">// 如果下标等于链表长度的时候
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// succ节点指向为null
+</span><span class="c1"></span>        <span class="n">succ</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="c1">// pred节点指向尾节点
+</span><span class="c1"></span>        <span class="n">pred</span> <span class="o">=</span> <span class="n">last</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 否则如果下标不等于链表长度的话，那么succ节点就是node()方法通过下标索引获得
+</span><span class="c1"></span>        <span class="n">succ</span> <span class="o">=</span> <span class="n">node</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+        <span class="c1">// 获得链表中的对应的节点对象
+</span><span class="c1"></span>        <span class="n">pred</span> <span class="o">=</span> <span class="n">succ</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 遍历要添加内容的数组
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">Object</span> <span class="nf">o</span> <span class="o">:</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span> <span class="n">E</span> <span class="nf">e</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="n">o</span><span class="p">;</span>
+        <span class="c1">// 创建新的节点，将遍历的值包装成Node节点
+</span><span class="c1"></span>        <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+        
+        <span class="c1">// 如果前驱节点为null
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+            <span class="c1">// 那么新的节点就是头节点
+</span><span class="c1"></span>            <span class="n">first</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="c1">// 否则pred指向新创建的节点
+</span><span class="c1"></span>            <span class="n">pred</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+        <span class="c1">// pred节点往后移动一位
+</span><span class="c1"></span>        <span class="n">pred</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 因为pred节点是succ节点的前驱节点，反过来也就是说succ是pred的后继节点
+</span><span class="c1"></span>    <span class="c1">// 所以如果succ为null，表示pred为尾节点
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">succ</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">pred</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/**
+</span><span class="cm">          * 否则如果succ不是尾节点，那么只要保证pred节点是succ节点的前驱节点、
+</span><span class="cm">            succ节点是pred的后继节点这种双向链表的关系就可以了
+</span><span class="cm">          */</span>
+        <span class="n">pred</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">succ</span><span class="p">;</span>
+        <span class="n">succ</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">pred</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 元素个数增加
+</span><span class="c1"></span>    <span class="n">size</span> <span class="o">+=</span> <span class="n">numNew</span><span class="p">;</span>
+    <span class="n">modCount</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="checkpositionindex-int-index-方法">checkPositionIndex(int index)方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">void</span> <span class="n">checkPositionIndex</span><span class="p">(</span><span class="kt">int</span> <span class="nf">index</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isPositionIndex</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+        <span class="c1">// 抛出 IndexOutOfBoundsException 异常
+</span><span class="c1"></span>        <span class="k">throw</span> <span class="k">new</span> <span class="n">IndexOutOfBoundsException</span><span class="p">(</span><span class="n">outOfBoundsMsg</span><span class="p">(</span><span class="n">index</span><span class="p">));</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="ispositionindex-int-index-方法">isPositionIndex(int index)方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">boolean</span> <span class="n">isPositionIndex</span><span class="p">(</span><span class="kt">int</span> <span class="nf">index</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 这个这么简单就不解释了吧
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="n">size</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="node节点">Node节点</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="nf">static</span> <span class="kd">class</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
+    
+    <span class="n">E</span> <span class="nf">item</span><span class="p">;</span>       <span class="c1">// 节点的值
+</span><span class="c1"></span>    <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">next</span><span class="p">;</span> <span class="c1">// 指向前一个节点
+</span><span class="c1"></span>    <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">prev</span><span class="p">;</span> <span class="c1">// 指向后一个节点
+</span><span class="c1"></span>
+    <span class="c1">// 初始化
+</span><span class="c1"></span>    <span class="n">Node</span><span class="p">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">prev</span><span class="p">,</span> <span class="n">E</span> <span class="nf">element</span><span class="p">,</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">next</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">item</span> <span class="o">=</span> <span class="n">element</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="linkedlist的常用方法">LinkedList的常用方法</h1>
+
+<h2 id="add-e-e">add(E e)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 使用双向链表的尾插法
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">add</span><span class="p">(</span><span class="n">E</span> <span class="nf">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 将元素插入到链表尾部
+</span><span class="c1"></span>    <span class="n">linkLast</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="linklast-e-e">linkLast(E e)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 插入的节点为尾节点
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">linkLast</span><span class="p">(</span><span class="n">E</span> <span class="nf">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 创建一个节点并初始化为尾节点
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">l</span> <span class="o">=</span> <span class="n">last</span><span class="p">;</span>
+    
+    <span class="c1">// 初始化新的节点，前驱的节点为l，后继节点为null
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    
+    <span class="c1">// 因为是在链表的尾部插入节点，所以新的节点作为尾节点（这个不难理解）
+</span><span class="c1"></span>    <span class="n">last</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    
+    <span class="c1">// l节点作为newNode节点的前驱节点，如果l为空，则说明newNode前驱节点为空
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+        <span class="c1">// 在双向链表中，前驱节点为空，那么该节点为头节点
+</span><span class="c1"></span>        <span class="n">first</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="c1">// 否则 l 的下一个节点指向该节点
+</span><span class="c1"></span>        <span class="n">l</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    
+    <span class="c1">// 链表长度+1
+</span><span class="c1"></span>    <span class="n">size</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">modCount</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="add-int-index-e-element">add(int index, E element)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 指定位置插入元素
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">void</span> <span class="n">add</span><span class="p">(</span><span class="kt">int</span> <span class="nf">index</span><span class="p">,</span> <span class="n">E</span> <span class="nf">element</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 判断下标索引是否在链表长度范围内（上述讲到过）
+</span><span class="c1"></span>    <span class="n">checkPositionIndex</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+
+    <span class="c1">// 如果下标索引等于链表长度
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="n">size</span><span class="p">)</span>
+        <span class="c1">// 则采用尾插法（刚刚讲到过）
+</span><span class="c1"></span>        <span class="n">linkLast</span><span class="p">(</span><span class="n">element</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="c1">// 否则采用头插法
+</span><span class="c1"></span>        <span class="n">linkBefore</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">node</span><span class="p">(</span><span class="n">index</span><span class="p">));</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="linkbefore">linkBefore()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 插入的节点为头节点，在节点succ之前插入元素e
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">linkBefore</span><span class="p">(</span><span class="n">E</span> <span class="nf">e</span><span class="p">,</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">succ</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// assert succ != null;
+</span><span class="c1"></span>    <span class="c1">// succ节点的前驱节点为pred
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">pred</span> <span class="o">=</span> <span class="n">succ</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+    
+    <span class="c1">// 初始化新的前驱节点为pred，后继节点为succ（简单地说就是在pred和succ节点之间插入元素）
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">succ</span><span class="p">);</span>
+    
+    <span class="c1">// 后继节点为succ，succ的前驱节点为newNode
+</span><span class="c1"></span>    <span class="n">succ</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    
+    <span class="c1">// 如果pred为null
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+        <span class="c1">// 则newNode为头节点
+</span><span class="c1"></span>        <span class="n">first</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="c1">// 否则pred的下一个节点指向newNode
+</span><span class="c1"></span>        <span class="n">pred</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+    <span class="c1">// 链表长度+1
+</span><span class="c1"></span>    <span class="n">size</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">modCount</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="remove-object-o">remove(Object o)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 删除元素
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">boolean</span> <span class="n">remove</span><span class="p">(</span><span class="n">Object</span> <span class="nf">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/** 通过双向链表的前后关系，遍历双向链表。
+</span><span class="cm">     *  判断是否存在元素和要删除的元素相同。
+</span><span class="cm">     *  如果遍历到了，那么就删除元素，并且返回true
+</span><span class="cm">     */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">x</span> <span class="o">=</span> <span class="n">first</span><span class="p">;</span> <span class="n">x</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">item</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">unlink</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">x</span> <span class="o">=</span> <span class="n">first</span><span class="p">;</span> <span class="n">x</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">item</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">unlink</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// 如果没遍历到，那么就返回false
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="unlink">unlink()</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 删除非空节点
+</span><span class="c1"></span><span class="n">E</span> <span class="nf">unlink</span><span class="p">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// assert x != null;
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">E</span> <span class="n">element</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">item</span><span class="p">;</span>
+    
+    <span class="c1">// 获取该元素的后继节点
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">next</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+    
+    <span class="c1">// 获取该元素的前驱节点
+</span><span class="c1"></span>    <span class="kd">final</span> <span class="nf">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">prev</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+
+    <span class="c1">// 如果前驱节点pred为null
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">prev</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 表示当前要删除的节点为头节点，让pred的后继节点作为头节点
+</span><span class="c1"></span>        <span class="n">first</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 否则直接使用双向链表删除节点
+</span><span class="c1"></span>        <span class="n">prev</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+        <span class="c1">// 将删除节点x的前驱节点设置为null
+</span><span class="c1"></span>        <span class="n">x</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 如果后继节点为null
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">next</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 表示当前删除的节点为尾节点，将前驱节点作为尾节点
+</span><span class="c1"></span>        <span class="n">last</span> <span class="o">=</span> <span class="n">prev</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 否则如果后继节点不为null，使用双向链表删除节点
+</span><span class="c1"></span>        <span class="n">next</span><span class="p">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="p">;</span>
+        <span class="c1">// 将删除节点x的后继节点设置为null
+</span><span class="c1"></span>        <span class="n">x</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 将删除节点的值设置为null，方便垃圾回收
+</span><span class="c1"></span>    <span class="n">x</span><span class="p">.</span><span class="na">item</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    
+    <span class="c1">// 链表长度-1
+</span><span class="c1"></span>    <span class="n">size</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">modCount</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">element</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="get-int-index">get(int index)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 获取下标元素
+</span><span class="c1"></span><span class="kd">public</span> <span class="nf">E</span> <span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="nf">index</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 判断下标是否在链表长度范围内（上述讲到过）
+</span><span class="c1"></span>    <span class="n">checkElementIndex</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+    <span class="c1">// 获取下标节点，返回节点的值
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">node</span><span class="p">(</span><span class="n">index</span><span class="p">).</span><span class="na">item</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="node-int-index">node(int index)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 获取下标节点
+</span><span class="c1"></span><span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">node</span><span class="p">(</span><span class="kt">int</span> <span class="nf">index</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// assert isElementIndex(index);
+</span><span class="c1"></span>
+    <span class="c1">// 判断下标索引是靠近头节点还是尾节点
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">size</span> <span class="o">&gt;&gt;</span> <span class="n">1</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// 获取头节点
+</span><span class="c1"></span>        <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">x</span> <span class="o">=</span> <span class="n">first</span><span class="p">;</span>
+        
+        <span class="c1">// 遍历index的节点
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">index</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 获取尾节点
+</span><span class="c1"></span>        <span class="n">Node</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">x</span> <span class="o">=</span> <span class="n">last</span><span class="p">;</span>
+        
+        <span class="c1">// 遍历index的节点
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">size</span> <span class="o">-</span> <span class="n">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">index</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="总结">总结</h1>
+
+<p>1、LinkedList 添加的元素在取的时候与添加的时候的顺序一致。因为向双向链表的尾部添加元素，然后按照头节点顺序遍历获取，所以一致</p>
+
+<p>2、LinkedList 允许添加重复元素</p>
+
+<p>3、LinkedList 不是线程安全的集合</p>
+
+<p>4、LinkedList 允许添加 null 元素</p>
+
+<p>5、add 方法插入元素是在双向链表的尾部插入</p>
+
+<p>6、get 方法遍历双向链表，先判断下标靠近头节点还是尾节点，这样会减少多余的循环</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">作者</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上一次更新</span>
+    <span class="item-content">
+        2019-12-03
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/juc/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-concurrenthashmap/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深入理解ConcurrentHashMap</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/">
+            <span class="next-text nav-default">深入理解Vector</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="javascripts;" class="iconfont icon-email" title="email"></a>
+      <a href="javascripts;" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="javascripts;" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.zhihu.com/search?type=content&amp;q=" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="javascripts;" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="https://www.bilibili.com/" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019-08 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,2858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Python面试题 - Woo_home</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="python面试题 1、一行代码实现1—100之和 1 print(sum(range(1,101))) 2、如何在一个函数内部修改全局变量 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 定义一个全局变量，注意" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/python/python%E9%9D%A2%E8%AF%95%E9%A2%98/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Python面试题" />
+<meta property="og:description" content="python面试题 1、一行代码实现1—100之和 1 print(sum(range(1,101))) 2、如何在一个函数内部修改全局变量 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 定义一个全局变量，注意" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/python/python%E9%9D%A2%E8%AF%95%E9%A2%98/" />
+<meta property="article:published_time" content="2019-12-06T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-12-06T00:14:19+08:00" />
+<meta itemprop="name" content="Python面试题">
+<meta itemprop="description" content="python面试题 1、一行代码实现1—100之和 1 print(sum(range(1,101))) 2、如何在一个函数内部修改全局变量 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 定义一个全局变量，注意">
+
+
+<meta itemprop="datePublished" content="2019-12-06T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-06T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="18786">
+
+
+
+<meta itemprop="keywords" content="Python," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python面试题"/>
+<meta name="twitter:description" content="python面试题 1、一行代码实现1—100之和 1 print(sum(range(1,101))) 2、如何在一个函数内部修改全局变量 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 定义一个全局变量，注意"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Python面试题</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-06 </span>
+        
+          <span class="more-meta"> 18786 字 </span>
+          <span class="more-meta"> 预计阅读 38 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#python面试题">python面试题</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="python面试题">python面试题</h1>
+
+<p>1、一行代码实现1—100之和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">)))</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>2、如何在一个函数内部修改全局变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 定义一个全局变量，注意它的位置 和 命名格式</span>
+<span class="n">gl_name</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+
+<span class="k">def</span> <span class="nf">change_name</span><span class="p">():</span>
+    <span class="c1"># 对全局变量进行修改</span>
+    <span class="k">global</span> <span class="n">gl_name</span>
+    <span class="n">gl_name</span> <span class="o">=</span> <span class="s2">&#34;world&#34;</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">gl_name</span><span class="p">)</span>
+    <span class="n">change_name</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">gl_name</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>3、列出5个python标准库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">这个比较简单了吧，脱口而出：</span>
+
+<span class="n">os</span><span class="err">：提供了不少与操作系统相关联的函数</span>
+
+<span class="n">sys</span><span class="err">：通常于命令行参数</span>
+
+<span class="n">re</span><span class="err">：正则匹配</span>
+
+<span class="n">math</span><span class="err">：数学运算</span>
+
+<span class="n">datetime</span><span class="err">：处理日期时间</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>4、字典如何删除键和合并两个字典</p>
+
+<p>举例：字典dic1={&lsquo;name&rsquo;:&lsquo;Lisa&rsquo;,&lsquo;age&rsquo;:18}，dic2={&lsquo;name&rsquo;:&lsquo;xiaohua&rsquo;}，删除dic1中键名为&rsquo;name&rsquo;的键，并合并dic1和dic2</p>
+
+<p>删除key为name的键</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dic1</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Lisa&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">:</span><span class="mi">18</span><span class="p">}</span>
+<span class="k">del</span> <span class="n">dic1</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dic1</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>合并两个字典，使用字典的成员方法update()</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dic2</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dic1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dic2</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>5、谈下python的GIL</p>
+
+<p>​        GIL 是python的全局解释器锁，同一进程中假如有多个线程运行，一个线程在运行python程序的时候会霸占python解释器（加了一把锁即GIL），使该进程内的其他线程无法运行，等该线程运行完后其他线程才能运行。如果线程运行过程中遇到耗时操作，则解释器锁解开，使其他线程运行。所以在多线程中，线程的运行仍是有先后顺序的，并不是同时进行 。</p>
+
+<p>​       多进程中因为每个进程都能被系统分配资源，相当于每个进程有了一个python解释器，所以多进程可以实现多个进程的同时运行，缺点是进程系统资源开销大</p>
+
+<p>6、python实现列表去重的方法</p>
+
+<p>方法一：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="n">li</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="c1">#[1, 2, 3, 4]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>方法二：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="c1">#[1, 2, 3, 4]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>7、fun(* args,** kwargs)中的 * args,** kwargs什么意思？</p>
+
+<p>*args是用来发送一个键值对可变数量的参数列表给一个函数，意思就是没有key值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">farg</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;farg:&#34;</span><span class="p">,</span><span class="n">farg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;arg:&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">hello</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># farg: 1</span>
+<span class="c1"># arg: 2</span>
+<span class="c1"># arg: 3</span>
+<span class="c1"># arg: 4</span>
+<span class="c1"># arg: 5</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>**kwargs将不定长度的键值对，作为参数传递给一个函数。意思就是有key值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;arg:&#34;</span><span class="p">,</span><span class="n">arg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">print</span> <span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+<span class="n">hello</span><span class="p">(</span><span class="n">arg</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">arg2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">arg3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># arg: 1</span>
+<span class="c1"># arg2: 2</span>
+<span class="c1"># arg3: 3</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>8、python2和python3的range（100）的区别</p>
+
+<p>python2中的range返回的是一个列表</p>
+
+<p>python3中的range返回的是一个迭代值</p>
+
+<p>9、一句话解释什么样的语言能够用装饰器?</p>
+
+<p>函数可以作为参数传递的语言，可以使用装饰器</p>
+
+<p>10、python内建数据类型有哪些</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">整型</span><span class="o">--</span><span class="nb">int</span>
+
+<span class="err">布尔型</span><span class="o">--</span><span class="nb">bool</span>
+
+<span class="err">字符串</span><span class="o">--</span><span class="nb">str</span>
+
+<span class="err">列表</span><span class="o">--</span><span class="nb">list</span>
+
+<span class="err">元组</span><span class="o">--</span><span class="nb">tuple</span>
+
+<span class="err">字典</span><span class="o">--</span><span class="nb">dict</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>11、简述面向对象中<strong>new</strong>和<strong>init</strong>区别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">__new__方法</span><span class="err">：类级别的方法</span>
+
+<span class="n">__init__方法</span><span class="err">：实例级别的方法</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>12、简述with方法打开处理文件帮我我们做了什么？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;./1.txt&#34;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;hello word&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># 打开文件在进行读写的时候可能会出现一些异常状况，如果按照常规的f.open写法，我们需要try,except,finally，做异常判断，并且文件最终不管遇到什么情况，都要执行finally f.close()关闭文件，with方法帮我们实现了finally中f.close</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>13、列表[1,2,3,4,5],请使用map()函数输出[1,4,9,16,25]，并使用列表推导式提取出大于10的数，最终输出[16,25]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># map()函数第一个参数是fun，第二个参数是一般是list，第三个参数可以写list，也可以不写，根据需求</span>
+
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span><span class="nb">list</span><span class="p">)</span>
+<span class="n">res</span>  <span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span><span class="mi">10</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="c1"># 输出结果：[16, 25]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>14、python中生成随机整数、随机小数、0—1之间小数方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 随机整数：random.randint(a,b),生成区间内的整数</span>
+<span class="c1"># 随机小数：习惯用numpy库，利用np.random.randn(5)生成5个随机小数</span>
+<span class="c1"># 0-1随机小数：random.random(),括号中不传参</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;正整数&#34;</span><span class="p">,</span><span class="n">result</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;五个随机小数&#34;</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;0-1小数&#34;</span><span class="p">,</span><span class="n">ret</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>15、避免转义给字符串加哪个字母表示原始字符串？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"> <span class="n">r</span> <span class="p">,</span> <span class="err">表示需要原始字符串，不转义特殊字符</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p>16、<div class="nam">中国</div>，用正则匹配出标签里面的内容（“中国”），其中class的类名是不确定的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 使用正则表达式</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&#34;nam&#34;&gt;中国&lt;/div&gt;&#39;</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;div class=&#34;.*&#34;&gt;(.*)&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;div class=&#34;.*&#34;&gt;(.*)&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>17、python中断言方法举例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;断言成功，程序继续进行&#34;</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">7</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;断言失败，程序报错&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>18、数据表student有id,name,score,city字段，其中name中的名字可有重复，需要消除重复行,请写sql语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">select</span> <span class="k">distinct</span> <span class="n">name</span> <span class="k">from</span> <span class="n">student</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>19、10个Linux常用命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">ls</span>       <span class="c1"># 显示指定工作目录下之内容（列出目前工作目录所含之文件及子目录)</span>
+<span class="n">pwd</span>      <span class="c1"># 用于显示工作目录</span>
+<span class="n">cd</span>       <span class="c1"># 用于切换当前工作目录至 dirName(目录参数)</span>
+<span class="n">touch</span>    <span class="c1"># 用于修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件       </span>
+<span class="n">mkdir</span>    <span class="c1"># 用于建立名称为 dirName 之子目录</span>
+<span class="n">tree</span>     <span class="c1"># 用于以树状图列出目录的内容</span>
+<span class="n">cp</span>       <span class="c1"># 用于复制文件或目录</span>
+<span class="n">mv</span>       <span class="c1"># 用来为文件或目录改名、或将文件或目录移入其它位置</span>
+<span class="n">cat</span>      <span class="c1"># 用于连接文件并打印到标准输出设备上</span>
+<span class="n">more</span>     <span class="c1"># 命令类似 cat ，不过会以一页一页的形式显示，更方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b 键就会往回（back）一页显示，而且还有搜寻字串的功能（与 vi 相似），使用中的说明文件，请按 h</span>
+<span class="n">grep</span>     <span class="c1"># 用于在文件中执行关键词搜索，并显示匹配的效果</span>
+<span class="n">echo</span>     <span class="c1"># 用于打印信息</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>20、python2和python3区别？列举5个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、不等于</span><span class="o">&lt;&gt;</span><span class="err">比较运算符，</span><span class="n">python3不识别</span><span class="err">，</span><span class="n">pyhon2</span><span class="o">.</span><span class="mi">7</span><span class="err">中</span><span class="o">!=</span><span class="err">和</span><span class="o">&lt;&gt;</span><span class="err">都能运行。</span>
+
+<span class="mi">2</span><span class="err">、</span><span class="n">print函数的使用</span><span class="err">，</span><span class="n">python3必须加括号</span><span class="err">，</span><span class="n">python2加不加都行</span><span class="err">。</span>
+
+<span class="mi">3</span><span class="err">、</span><span class="n">py2</span> <span class="err">的默认编码是</span><span class="n">ASCII</span><span class="err">，</span><span class="n">py3的默认编码是UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">。</span>
+
+<span class="mi">4</span><span class="err">、</span><span class="n">py3字符串解码后会在内存里自动转换成Unicode</span><span class="err">，而</span><span class="n">py2不会</span><span class="err">。如果在文件头指定了解码编码，</span><span class="n">py2和py3都会按指定解码</span><span class="err">，所有系统都支持</span><span class="n">Unicode</span><span class="err">，所以</span><span class="n">py3只要指定对了解码编码</span><span class="err">，在哪个系统上都可以正常显示，</span><span class="n">py2如果不是gbk编码的</span><span class="err">，解码后</span><span class="n">windous就会是乱码</span><span class="err">。</span>
+
+<span class="mi">5</span><span class="err">、</span><span class="n">py2中有Unicode数据类型</span><span class="err">，</span><span class="n">py3中没有</span><span class="err">，字符串都是</span><span class="n">Unicode格式的str数据类型</span><span class="err">。</span>
+
+<span class="mi">6</span><span class="err">、</span><span class="n">py2中bytes可以是二进制</span><span class="err">，也可以是</span><span class="nb">str</span><span class="err">，</span><span class="n">py3中bytes只是十六进制表示的二进制</span><span class="err">。</span>
+
+<span class="mi">7</span><span class="err">、</span><span class="n">py2中有long类型数据</span><span class="err">，</span><span class="n">py3中没有</span><span class="err">，</span><span class="n">py2中int最大值是</span><span class="o">-</span><span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="o">~</span><span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="o">-</span><span class="mi">1</span><span class="err">超过在后面加</span><span class="n">L转换为long型</span><span class="err">。（直接运算会显示</span><span class="n">long型</span><span class="err">，因为</span><span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="err">会先运算，是</span><span class="n">long型</span><span class="err">）</span>
+
+<span class="mi">8</span><span class="err">、用户输入不同，</span><span class="n">py3中只有input</span><span class="p">()</span><span class="err">输出都是</span><span class="n">str和py2中的raw_input</span><span class="p">()</span><span class="err">一样，而</span><span class="n">py2中也有input</span><span class="p">()</span><span class="err">，输入字符串要带引号，数字输出相应的数字类型</span>
+
+<span class="mi">9</span><span class="err">、</span><span class="n">Py2以前没有布尔型</span><span class="err">，</span><span class="mi">0</span><span class="err">表示</span><span class="bp">False</span><span class="err">，用</span><span class="mi">1</span><span class="err">表示</span><span class="bp">True</span><span class="err">；</span><span class="n">Python3</span> <span class="err">把</span> <span class="bp">True</span> <span class="err">和</span> <span class="bp">False</span> <span class="err">定义成关键字，它们的值还是</span> <span class="mi">1</span> <span class="err">和</span> <span class="mi">0</span><span class="err">，可以和数字运算。</span>
+
+<span class="mi">10</span><span class="err">、</span><span class="n">py2中range</span><span class="p">()</span><span class="err">直接生成列表（量大占内存死机），</span><span class="n">py3中只有range</span><span class="p">()</span><span class="err">和</span><span class="n">py2中还有的xrang</span><span class="p">()</span><span class="err">都只生成一个生成器</span><span class="p">(</span><span class="err">一个计算方法，不占内存</span><span class="p">)</span><span class="err">。</span>
+
+<span class="mi">11</span><span class="err">、</span><span class="n">py2的除法中不是浮点数则只返回商</span><span class="err">，</span><span class="n">py3除法返回值正常</span><span class="err">。</span>
+
+<span class="mi">12</span><span class="err">、</span><span class="n">py3运行程序可以识别相同目录下普通文件夹中的模块</span><span class="err">，</span><span class="n">py2只能识别文件夹标识后的包中的模块</span><span class="err">。</span>
+
+<span class="mi">13</span><span class="err">、创建类时，</span><span class="n">py2分为经典类和新式类</span><span class="err">，新式类就是继承</span><span class="n">object的类</span><span class="err">，经典类是没有继承的类，而</span><span class="n">py3中全部是新式类</span><span class="err">，默认继承</span><span class="nb">object</span><span class="err">。在属性查找时，经典类查找方式为深度优先，新式类是广度优先。仅</span><span class="n">py3中有类的mro函数方法</span><span class="err">，输出继承父类的顺序列表。</span>
+
+<span class="mi">14</span><span class="err">、重用父类属性的</span><span class="nb">super</span><span class="p">()</span><span class="err">使用方法不同，</span><span class="n">py2中super</span><span class="p">()</span><span class="err">需要输入本身类名和自身作为参数，而</span><span class="n">py3中不用输入参数</span><span class="err">，可以直接使用替代上一级父类。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>21、列出python中可变数据类型和不可变数据类型，并简述原理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">可变类型（</span><span class="n">mutable</span><span class="err">）：变量进行</span><span class="n">append</span><span class="err">、</span><span class="o">+=</span><span class="err">等这种操作后</span> <span class="o">==</span> <span class="err">改变了变量的值，而不会新建一个对象，变量引用的对象的地址也不会变化，不过对于相同的值的不同对象，在内存中则会存在不同的对象，即每个对象都有自己的地址，相当于内存中对于同值的对象保存了多份，这里不存在引用计数，是实实在在的对象。如：</span>
+<span class="nb">list</span>
+<span class="nb">dict</span>
+<span class="nb">set</span>
+<span class="nb">bytearray</span>
+<span class="n">user</span><span class="o">-</span><span class="n">defined</span> <span class="n">classes</span> <span class="p">(</span><span class="err">除非是特别定义的不可变</span><span class="p">)</span>
+
+
+<span class="err">不可变类型（</span><span class="n">immutable</span><span class="err">）：改变了变量的值</span> <span class="o">==</span> <span class="err">新建了一个对象，而对于相同的值的对象，在内存中则只有一个对象（一个地址）</span><span class="p">,</span> <span class="n">python的id</span><span class="p">()</span> <span class="err">方法让你明白。如：</span>
+<span class="nb">int</span>
+<span class="nb">float</span>
+<span class="n">decimal</span>
+<span class="nb">complex</span>
+<span class="nb">bool</span>
+<span class="n">string</span>
+<span class="nb">tuple</span>
+<span class="nb">range</span>
+<span class="nb">frozenset</span>
+<span class="nb">bytes</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>22、s = “ajldjlajfdljfddd”，去重并从小到大排序输出”adfjl”</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;ajldjlajfdljfddd&#34;</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">s2</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">res</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> 
+<span class="c1"># adfjl　</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>23、用lambda函数实现两个数相乘</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span><span class="n">a</span><span class="o">*</span><span class="n">b</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="c1"># 10</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>24、字典根据键从小到大排序dict={“name”:”zs”,”age”:18,”city”:”深圳”,”tel”:”1362626627”}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;zs&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="s2">&#34;city&#34;</span><span class="p">:</span><span class="s2">&#34;深圳&#34;</span><span class="p">,</span><span class="s2">&#34;tel&#34;</span><span class="p">:</span><span class="s2">&#34;1362626627&#34;</span><span class="p">}</span>
+<span class="n">li</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;根据键排序：&#39;</span><span class="p">,</span><span class="n">li</span><span class="p">)</span>   <span class="c1"># [(&#39;age&#39;, 18), (&#39;city&#39;, &#39;深圳&#39;), (&#39;name&#39;, &#39;zs&#39;), (&#39;tel&#39;, &#39;1362626627&#39;)]</span>
+<span class="n">new_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">new_dic</span><span class="p">)</span>            <span class="c1"># {&#39;age&#39;: 18, &#39;city&#39;: &#39;深圳&#39;, &#39;name&#39;: &#39;zs&#39;, &#39;tel&#39;: &#39;1362626627&#39;}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>25、利用collections库的Counter方法统计字符串每个单词出现的次数”kjalfj;ldsjafl;hdsllfdhg;lahfbl;hl;ahlf;h”</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">a</span>  <span class="o">=</span> <span class="s2">&#34;kjalfj;ldsjafl;hdsllfdhg;lahfbl;hl;ahlf;h&#34;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1"># Counter({&#39;l&#39;: 9, &#39;;&#39;: 6, &#39;h&#39;: 6, &#39;f&#39;: 5, &#39;a&#39;: 4, &#39;j&#39;: 3, &#39;d&#39;: 3, &#39;s&#39;: 2, &#39;k&#39;: 1, &#39;g&#39;: 1, &#39;b&#39;: 1})</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>26、字符串a = “not 404 found 张三 99 深圳”，每个词中间是空格，用正则过滤掉英文和数字，最终输出”张三  深圳”</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&#34;not 404 found 张三 99 深圳&#34;</span>
+<span class="n">li</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>                            <span class="c1"># [&#39;not&#39;, &#39;404&#39;, &#39;found&#39;, &#39;张三&#39;, &#39;99&#39;, &#39;深圳&#39;]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;\d+|[a-zA-Z]+&#39;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>    <span class="c1"># \d匹配数字，|[]中匹配单词，+连接多个匹配方式</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">li</span><span class="p">:</span>
+        <span class="n">li</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">new_str</span> <span class="o">=</span> <span class="s2">&#34; &#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>                           <span class="c1"># [&#39;not&#39;, &#39;404&#39;, &#39;found&#39;, &#39;99&#39;]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">new_str</span><span class="p">)</span>                       <span class="c1"># 张三 深圳</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>27、filter方法求出列表所有奇数并构造新列表，a =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">li</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="n">newli</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>        <span class="c1"># 等价于 newli = [i for i in newli]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">newli</span><span class="p">)</span>      
+<span class="c1"># [1, 3, 5, 7, 9]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>28、列表推导式求列表所有奇数并构造新列表，a =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1"># [1, 3, 5, 7, 9]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>29、正则re.complie作用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">compile是将正则表达式编译成一个对象</span><span class="err">，加快速度，并重复使用</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>30、a=（1，）b=(1)，c=(“1”) 分别是什么类型的数据？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&#34;1&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+<span class="c1"># &lt;class &#39;tuple&#39;&gt; &lt;class &#39;int&#39;&gt; &lt;class &#39;str&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>31、两个列表[1,5,7,9]和[2,2,6,8]合并为[1,2,2,3,6,7,8,9]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">li1</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="n">li2</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">li1</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">li2</span><span class="p">)</span>                 <span class="c1">#合并添加</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li1</span><span class="p">)</span>          <span class="c1"># [1, 5, 7, 9, 2, 2, 6, 8]</span>
+<span class="n">li1</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>                          <span class="c1">#排序</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li1</span><span class="p">)</span>          <span class="c1"># [1, 2, 2, 5, 6, 7, 8, 9]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>32、用python删除文件和用linux命令删除文件方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">python</span><span class="err">：</span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="err">文件名</span><span class="p">)</span>
+<span class="n">linux</span><span class="p">:</span> <span class="n">rm</span> <span class="err">文件名</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>33、log日志中，我们需要用时间戳记录error,warning等的发生时间，请用datetime模块打印当前时间戳 “2018-04-01 11:38:54”</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="n">a</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;星期:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoweekday</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>    <span class="c1"># 2018-07-30 15:20:13星期:1</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>34、数据库优化查询方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"> <span class="err">外键、索引、联合查询、选择特定字段等等</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p>35、请列出你会的任意一种统计图（条形图、折线图等）绘制的开源库，第三方也行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pychart</span><span class="err">、</span><span class="n">matplotlib</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>36、写一段自定义异常代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#自定义异常用raise抛出异常</span>
+<span class="k">def</span> <span class="nf">fn</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;数字大于2了&#34;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ret</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+<span class="n">fn</span><span class="p">()</span>            <span class="c1"># 数字大于2了</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>37、正则表达式匹配中，（.）和（.?）匹配区别？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#（.*）是贪婪匹配，会把满足正则的尽可能多的往后匹配</span>
+<span class="c1">#（.*?）是非贪婪匹配，会把满足正则的尽可能少匹配</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;&lt;a&gt;哈哈&lt;/a&gt;&lt;a&gt;呵呵&lt;/a&gt;&#34;</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">res1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;&lt;a&gt;(.*)&lt;/a&gt;&#34;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;贪婪匹配&#34;</span><span class="p">,</span> <span class="n">res1</span><span class="p">)</span>
+<span class="n">res2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;&lt;a&gt;(.*?)&lt;/a&gt;&#34;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;非贪婪匹配&#34;</span><span class="p">,</span> <span class="n">res2</span><span class="p">)</span>
+ 
+<span class="c1"># result:</span>
+<span class="c1"># 贪婪匹配 [&#39;哈哈&lt;/a&gt;&lt;a&gt;呵呵&#39;]</span>
+<span class="c1"># 非贪婪匹配 [&#39;哈哈&#39;, &#39;呵呵&#39;]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>38、简述Django的orm</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">ORM</span><span class="err">，全拼</span><span class="n">Object</span><span class="o">-</span><span class="n">Relation</span> <span class="n">Mapping</span><span class="err">，意为对象</span><span class="o">-</span><span class="err">关系映射</span>
+<span class="err">实现了数据模型与数据库的解耦，通过简单的配置就可以轻松更换数据库，而不需要修改代码只需要面向对象编程</span><span class="p">,</span><span class="n">orm操作本质上会根据对接的数据库引擎</span><span class="err">，翻译成对应的</span><span class="n">sql语句</span><span class="p">,</span><span class="err">所有使用</span><span class="n">Django开发的项目无需关心程序底层使用的是MySQL</span><span class="err">、</span><span class="n">Oracle</span><span class="err">、</span><span class="n">sqlite</span><span class="o">....</span><span class="err">，如果数据库迁移，只需要更换</span><span class="n">Django的数据库引擎即可</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>39、[[1,2],[3,4],[5,6]]一行代码展开该列表，得出[1,2,3,4,5,6]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 第一种</span>
+<span class="c1"># 利用推导式运行过程：for i in a ,每个i是【1,2】，【3,4】，【5,6】，for j in i，每个j就是1,2,3,4,5,6,合并后就是结果</span>
+ 
+<span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>    <span class="c1"># 这个的解析过程是 从a中取出每一个值付给i，然后从i中取出每一个 值复制给j 然后输出j的结果</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>       <span class="c1"># [1, 2, 3, 4, 5, 6]</span>
+ 
+<span class="c1"># 第二种</span>
+<span class="c1"># 将列表转成numpy矩阵，通过numpy的flatten（）方法</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="mi">3</span><span class="err">）</span><span class="c1">#j for i in a for j in i等于：</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>  <span class="n">a</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+        <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>40、x=”abc”,y=”def”,z=[“d”,”e”,”f”],分别求出x.join(y)和x.join(z)返回的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#join()括号里面的是可迭代对象，x插入可迭代对象中间，形成字符串，结果一致</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s2">&#34;abc&#34;</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s2">&#34;def&#34;</span>
+<span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;d&#34;</span><span class="p">,</span><span class="s2">&#34;e&#34;</span><span class="p">,</span><span class="s2">&#34;f&#34;</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c1"># dabceabcf</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>41、举例说明异常模块中try except else finally的相关意义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">try</span><span class="o">..</span><span class="k">except</span><span class="o">..</span><span class="n">else没有捕获到异常</span><span class="err">，执行</span><span class="n">else语句</span>
+
+<span class="k">try</span><span class="o">..</span><span class="k">except</span><span class="o">..</span><span class="n">finally不管是否捕获到异常</span><span class="err">，都执行</span><span class="n">finally语句</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>42、python中交换两个数值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span><span class="n">a</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="c1"># 2 1</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>43、举例说明zip（）函数用法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># zip()函数在运算时，会以一个或多个序列（可迭代对象）做为参数，返回一个元组的列表。同时将这些序列中并排的元素配对。</span>
+<span class="c1"># zip()参数可以接受任何类型的序列，同时也可以有两个以上的参数;当传入参数的长度不同时，zip能自动以最短序列长度为准进行截取，获得元组‘’’</span>
+<span class="c1">#列表</span>
+<span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">res</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>         <span class="c1"># [(1, 3), (2, 4)]</span>
+
+<span class="c1">#元组</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">res</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span> <span class="p">)</span>        <span class="c1"># [(1, 3), (2, 4)]</span>
+
+<span class="c1">#字符串</span>
+<span class="n">a</span><span class="o">=</span><span class="s2">&#34;ab&#34;</span>
+<span class="n">b</span><span class="o">=</span><span class="s2">&#34;xyz&#34;</span>
+<span class="n">res</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span> <span class="p">)</span>        <span class="c1"># [(&#39;a&#39;, &#39;x&#39;), (&#39;b&#39;, &#39;y&#39;)]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>44、a=”张明 98分”，用re.sub，将98替换为100</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&#34;张明 98分&#34;</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;\d+&#34;</span><span class="p">,</span><span class="s2">&#34;100&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p>45、写5条常用sql语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="err">选择：</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table1</span> <span class="k">where</span> <span class="err">范围</span>
+<span class="err">插入：</span><span class="k">insert</span> <span class="k">into</span> <span class="n">table1</span><span class="p">(</span><span class="n">field1</span><span class="p">,</span><span class="n">field2</span><span class="p">)</span> <span class="k">values</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">value2</span><span class="p">)</span>
+<span class="err">删除：</span><span class="k">delete</span> <span class="k">from</span> <span class="n">table1</span> <span class="k">where</span> <span class="err">范围</span>
+<span class="err">更新：</span><span class="k">update</span> <span class="n">table1</span> <span class="k">set</span> <span class="n">field1</span><span class="o">=</span><span class="n">value1</span> <span class="k">where</span> <span class="err">范围</span>
+<span class="err">查找：</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table1</span> <span class="k">where</span> <span class="n">field1</span> <span class="k">like</span> <span class="err">’</span><span class="o">%</span><span class="n">value1</span><span class="o">%</span><span class="err">’</span>
+<span class="err">排序：</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table1</span> <span class="k">order</span> <span class="k">by</span> <span class="n">field1</span><span class="p">,</span><span class="n">field2</span> <span class="p">[</span><span class="k">desc</span><span class="p">]</span>
+<span class="err">总数：</span><span class="k">select</span> <span class="k">count</span> <span class="k">as</span> <span class="n">totalcount</span> <span class="k">from</span> <span class="n">table1</span>
+<span class="err">求和：</span><span class="k">select</span> <span class="k">sum</span><span class="p">(</span><span class="n">field1</span><span class="p">)</span> <span class="k">as</span> <span class="n">sumvalue</span> <span class="k">from</span> <span class="n">table1</span>
+<span class="err">平均：</span><span class="k">select</span> <span class="k">avg</span><span class="p">(</span><span class="n">field1</span><span class="p">)</span> <span class="k">as</span> <span class="n">avgvalue</span> <span class="k">from</span> <span class="n">table1</span>
+<span class="err">最大：</span><span class="k">select</span> <span class="k">max</span><span class="p">(</span><span class="n">field1</span><span class="p">)</span> <span class="k">as</span> <span class="k">maxvalue</span> <span class="k">from</span> <span class="n">table1</span>
+<span class="err">最小：</span><span class="k">select</span> <span class="k">min</span><span class="p">(</span><span class="n">field1</span><span class="p">)</span> <span class="k">as</span> <span class="k">minvalue</span> <span class="k">from</span> <span class="n">table1</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>46、a=”hello”和b=”你好”编码成bytes类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;hello&#34;</span>            <span class="c1"># 直接指定这个hello是bytes类型</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&#34;你好&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># b&#39;hello&#39; b&#39;\xe4\xbd\xa0\xe5\xa5\xbd&#39;</span>
+<span class="c1"># &lt;class &#39;bytes&#39;&gt; &lt;class &#39;bytes&#39;&gt;</span>
+
+<span class="c1"># 对于bytes，我们只要知道在Python3中某些场合下强制使用，以及它和字符串类型之间的互相转换，其它的基本照抄字符串。</span>
+<span class="c1"># 简单的省事模式：</span>
+<span class="n">string</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;xxxxxx&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="c1"># 直接以默认的utf-8编码解码bytes成string</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>         <span class="c1"># 直接以默认的utf-8编码string为bytes</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>47、[1,2,3]+[4,5,6]的结果是多少？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>        
+<span class="c1"># [1, 2, 3, 4, 5, 6]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>48、提高python运行效率的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、使用生成器，因为可以节约大量内存</span>
+
+<span class="mi">2</span><span class="err">、循环代码优化，避免过多重复代码的执行</span>
+
+<span class="mi">3</span><span class="err">、核心模块用</span><span class="n">Cython</span>  <span class="n">PyPy等</span><span class="err">，提高效率</span>
+
+<span class="mi">4</span><span class="err">、多进程、多线程、协程</span>
+
+<span class="mi">5</span><span class="err">、多个</span><span class="k">if</span> <span class="n">elif条件判断</span><span class="err">，可以把最有可能先发生的条件放到前面写，这样可以减少程序判断的次数，提高效率</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>49、简述mysql和redis区别</p>
+
+<p>redis： 内存型非关系数据库，数据保存在内存中，速度快</p>
+
+<p>mysql：关系型数据库，数据保存在磁盘中，检索的话，会有一定的Io操作，访问速度相对慢</p>
+
+<p>50、遇到bug如何处理</p>
+
+<p>（1）细节上的错误，通过print（）打印，能执行到print（）说明一般上面的代码没有问题，分段检测程序是否有问题，如果是js的话可以alert或console.log</p>
+
+<p>（2）如果涉及一些第三方框架，会去查官方文档或者一些技术博客。</p>
+
+<p>（3）对于bug的管理与归类总结，一般测试将测试出的bug用teambin等bug管理工具进行记录，然后我们会一条一条进行修改，修改的过程也是理解业务逻辑和提高自己编程逻辑缜密性的方法，我也都会收藏做一些笔记记录。</p>
+
+<p>（4）导包问题、城市定位多音字造成的显示错误问题</p>
+
+<p>51、1、正则匹配，匹配日期2018-03-20
+url=’<a href="https://sycm.taobao.com/bda/tradinganaly/overview/get_summary.json?dateRange=2018-03-20%7C2018-03-20&amp;dateType=recent1&amp;device=1&amp;token=ff25b109b&amp;_=1521595613462‘">https://sycm.taobao.com/bda/tradinganaly/overview/get_summary.json?dateRange=2018-03-20%7C2018-03-20&amp;dateType=recent1&amp;device=1&amp;token=ff25b109b&amp;_=1521595613462‘</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://sycm.taobao.com/bda/tradinganaly/overview/get_summary.json?dateRange=2018-03-20%7C2018-03-20&amp;dateType=recent1&amp;device=1&amp;token=ff25b109b&amp;_=1521595613462&#39;</span>
+<span class="n">result</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;dateRange=(.*?)&amp;&#39;</span><span class="p">,</span><span class="n">url</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># [&#39;2018-03-20%7C2018-03-20&#39;]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>52、list=[2,3,5,4,9,6]，从小到大排序，不许用sort，输出[2,3,4,5,6,9]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#利用min()方法求出最小值，原列表删除最小值，新列表加入最小值，递归调用获取最小值的函数，反复操作</span>
+<span class="n">li</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">new_li</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">def</span> <span class="nf">get_min</span><span class="p">(</span><span class="n">li</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+    <span class="n">li</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">new_li</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">get_min</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_li</span>
+<span class="n">new_li</span><span class="o">=</span><span class="n">get_min</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">new_li</span><span class="p">)</span>          
+<span class="c1"># [2, 3, 4, 5, 6, 9]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>53、写一个单列模式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#（因为创建对象时__new__方法执行，并且必须return 返回实例化出来的对象所cls.__instance是否存在，不存在的话就创建对象，存在的话就返回该对象，来保证只有一个实例对象存在（单列），打印ID，值一样，说明对象同一个）</span>
+<span class="k">class</span> <span class="nc">Singleton</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="n">__instance</span> <span class="o">=</span> <span class="bp">None</span>
+  <span class="k">def</span>  <span class="fm">__new__</span>  <span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span>  <span class="n">name</span> <span class="p">):</span>
+  <span class="c1"># 如果类属性__instance的值为None,</span>
+  <span class="c1"># 那么就创建一个对象，并且赋值为这个对象的引用，保证下次调用这个方法时能够知道之前已经创建过对象了，这样就保证了只有1个对象</span>
+     <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__instance</span><span class="p">:</span>
+         <span class="bp">cls</span><span class="o">.</span><span class="n">__instance</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span> <span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+     <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__instance</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="s2">&#34;dongGe&#34;</span> <span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&#34;dongGe&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">a</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">19</span>            <span class="c1"># 给a指向的对象添加一个属性</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span> <span class="n">age</span><span class="p">)</span>       <span class="c1"># 获取b指向的对象的age属性</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>54、保留两位小数
+题目本身只有a=”%.03f”%1.3335,让计算a的结果，为了扩充保留小数的思路，提供round方法（数值，保留位数）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#为了扩充保留小数的思路，提供round方法（数值，保留位数）</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">%.03f</span><span class="s2">&#34;</span><span class="o">%</span><span class="mf">1.3335</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># 1.333 &lt;class &#39;str&#39;&gt;</span>
+<span class="c1"># 1.3</span>
+<span class="c1"># 1.33</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>55、求三个方法打印结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># {fn(&#34;one&#34;,1）直接将键值对传给字典；fn(&#34;two&#34;,2)因为字典在内存中是可变数据类型，所以指向同一个地址，传了新的参数后，会相当于给字典增加键值对；fn(&#34;three&#34;,3,{})因为传了一个新字典，所以不再是原先默认参数的字典}</span>
+ 
+<span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">dic</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="n">dic</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+<span class="n">fn</span><span class="p">(</span><span class="s2">&#34;one&#34;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fn</span><span class="p">(</span><span class="s2">&#34;two&#34;</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fn</span><span class="p">(</span><span class="s2">&#34;three&#34;</span><span class="p">,</span><span class="mi">3</span><span class="p">,{})</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># {&#39;one&#39;: 1}</span>
+<span class="c1"># {&#39;one&#39;: 1, &#39;two&#39;: 2}</span>
+<span class="c1"># {&#39;three&#39;: 3}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>56、列出常见的状态码和意义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">200</span> <span class="n">OK</span> 
+<span class="err">请求正常处理完毕</span>
+
+<span class="mi">204</span> <span class="n">No</span> <span class="n">Content</span> 
+<span class="err">请求成功处理，没有实体的主体返回</span>
+
+<span class="mi">206</span> <span class="n">Partial</span> <span class="n">Content</span> 
+<span class="n">GET范围请求已成功处理</span>
+
+<span class="mi">301</span> <span class="n">Moved</span> <span class="n">Permanently</span> 
+<span class="err">永久重定向，资源已永久分配新</span><span class="n">URI</span>
+
+<span class="mi">302</span> <span class="n">Found</span> 
+<span class="err">临时重定向，资源已临时分配新</span><span class="n">URI</span>
+
+<span class="mi">303</span> <span class="n">See</span> <span class="n">Other</span> 
+<span class="err">临时重定向，期望使用</span><span class="n">GET定向获取</span>
+
+<span class="mi">304</span> <span class="n">Not</span> <span class="n">Modified</span> 
+<span class="err">发送的附带条件请求未满足</span>
+
+<span class="mi">307</span> <span class="n">Temporary</span> <span class="n">Redirect</span> 
+<span class="err">临时重定向，</span><span class="n">POST不会变成GET</span>
+
+<span class="mi">400</span> <span class="n">Bad</span> <span class="n">Request</span> 
+<span class="err">请求报文语法错误或参数错误</span>
+
+<span class="mi">401</span> <span class="n">Unauthorized</span> 
+<span class="err">需要通过</span><span class="n">HTTP认证</span><span class="err">，或认证失败</span>
+
+<span class="mi">403</span> <span class="n">Forbidden</span> 
+<span class="err">请求资源被拒绝</span>
+
+<span class="mi">404</span> <span class="n">Not</span> <span class="n">Found</span> 
+<span class="err">无法找到请求资源（服务器无理由拒绝）</span>
+
+<span class="mi">500</span> <span class="n">Internal</span> <span class="n">Server</span> <span class="n">Error</span> 
+<span class="err">服务器故障或</span><span class="n">Web应用故障</span>
+
+<span class="mi">503</span> <span class="n">Service</span> <span class="n">Unavailable</span> 
+<span class="err">服务器超负载或停机维护</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>57、分别从前端、后端、数据库阐述web项目的性能优化</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">前端优化：</span>
+<span class="mi">1</span><span class="err">、减少</span><span class="n">http请求</span><span class="err">、例如制作精灵图</span>
+<span class="mi">2</span><span class="err">、</span><span class="n">html和CSS放在页面上部</span><span class="err">，</span><span class="n">javascript放在页面下面</span><span class="err">，因为</span><span class="n">js加载比HTML和Css加载慢</span><span class="err">，所以要优先加载</span><span class="n">html和css</span><span class="p">,</span><span class="err">以防页面显示不全，性能差，也影响用户体验差</span>
+<span class="err">后端优化：</span>
+<span class="mi">1</span><span class="err">、缓存存储读写次数高，变化少的数据，比如网站首页的信息、商品的信息等。应用程序读取数据时，一般是先从缓存中读取，如果读取不到或数据已失效，再访问磁盘数据库，并将数据再次写入缓存。</span>
+<span class="mi">2</span><span class="err">、异步方式，如果有耗时操作，可以采用异步，比如</span><span class="n">celery</span>
+<span class="mi">3</span><span class="err">、代码优化，避免循环和判断次数太多，如果多个</span><span class="k">if</span> <span class="n">else判断</span><span class="err">，优先判断最有可能先发生的情况</span>
+<span class="err">数据库优化：</span>
+<span class="mi">1</span><span class="err">、如有条件，数据可以存放于</span><span class="n">redis</span><span class="err">，读取速度快</span>
+<span class="mi">2</span><span class="err">、建立索引、外键等</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>58、使用pop和del删除字典中的”name”字段，dic={“name”:”zs”,”age”:18}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># pop（）</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;zs&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span> <span class="p">:</span><span class="mi">18</span><span class="p">}</span>
+<span class="n">dic</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&#34;name&#34;</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+
+<span class="c1"># del</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;zs&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span> <span class="p">:</span><span class="mi">18</span><span class="p">}</span>
+<span class="k">del</span> <span class="n">dic</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+ 
+<span class="c1"># 均输出：</span>
+<span class="c1"># {&#39;age&#39;: 18}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>59、列出常见MYSQL数据存储引擎</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">InnoDB</span><span class="err">：支持事务处理，支持外键，支持崩溃修复能力和并发控制。如果需要对事务的完整性要求比较高（比如银行），要求实现并发控制（比如售票），那选择</span><span class="n">InnoDB有很大的优势</span><span class="err">。如果需要频繁的更新、删除操作的数据库，也可以选择</span><span class="n">InnoDB</span><span class="err">，因为支持事务的提交（</span><span class="n">commit</span><span class="err">）和回滚（</span><span class="n">rollback</span><span class="err">）。</span>
+
+<span class="n">MyISAM</span><span class="err">：插入数据快，空间和内存使用比较低。如果表主要是用于插入新记录和读出记录，那么选择</span><span class="n">MyISAM能实现处理高效率</span><span class="err">。如果应用的完整性、并发性要求比</span> <span class="err">较低，也可以使用。</span>
+
+<span class="n">MEMORY</span><span class="err">：所有的数据都在内存中，数据的处理速度快，但是安全性不高。如果需要很快的读写速度，对数据的安全性要求较低，可以选择</span><span class="n">MEMOEY</span><span class="err">。它对表的大小有要求，不能建立太大的表。所以，这类数据库只使用在相对较小的数据库表。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>60、计算代码运行结果，zip函数历史文章已经说了，得出[(“a”,1),(“b”,2)，(“c”,3),(“d”,4),(“e”,5)]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">A</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">((</span><span class="s2">&#34;a&#34;</span><span class="p">,</span><span class="s2">&#34;b&#34;</span><span class="p">,</span><span class="s2">&#34;c&#34;</span><span class="p">,</span><span class="s2">&#34;d&#34;</span><span class="p">,</span><span class="s2">&#34;e&#34;</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">A0</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">A1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">A1</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">A0</span><span class="p">]</span>
+<span class="n">A3</span> <span class="o">=</span> <span class="p">[</span><span class="n">A0</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">A0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;A0&#39;</span><span class="p">,</span><span class="n">A0</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">((</span><span class="s2">&#34;a&#34;</span><span class="p">,</span><span class="s2">&#34;b&#34;</span><span class="p">,</span><span class="s2">&#34;c&#34;</span><span class="p">,</span><span class="s2">&#34;d&#34;</span><span class="p">,</span><span class="s2">&#34;e&#34;</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">A2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">A3</span><span class="p">)</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># A0 {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3, &#39;d&#39;: 4, &#39;e&#39;: 5}</span>
+<span class="c1"># [(&#39;a&#39;, 1), (&#39;b&#39;, 2), (&#39;c&#39;, 3), (&#39;d&#39;, 4), (&#39;e&#39;, 5)]</span>
+<span class="c1"># []</span>
+<span class="c1"># [1, 2, 3, 4, 5]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>61、简述同源策略</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">同源策略需要同时满足以下三点要求：</span>
+<span class="mi">1</span><span class="err">）协议相同</span>
+<span class="mi">2</span><span class="err">）域名相同</span>
+<span class="mi">3</span><span class="err">）端口相同</span>
+ <span class="n">http</span><span class="p">:</span><span class="n">www</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">com与https</span><span class="p">:</span><span class="n">www</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">com</span> <span class="err">不同源——协议不同</span>
+ <span class="n">http</span><span class="p">:</span><span class="n">www</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">com与http</span><span class="p">:</span><span class="n">www</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">com</span> <span class="err">不同源——域名不同</span>
+ <span class="n">http</span><span class="p">:</span><span class="n">www</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">com与http</span><span class="p">:</span><span class="n">www</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">8081</span> <span class="err">不同源——端口不同</span>
+ <span class="err">只要不满足其中任意一个要求，就不符合同源策略，就会出现“跨域”</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>62、简述cookie和session的区别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、</span><span class="n">session</span> <span class="err">在服务器端，</span><span class="n">cookie</span> <span class="err">在客户端（浏览器）</span>
+<span class="mi">2</span><span class="err">、</span><span class="n">session</span> <span class="err">的运行依赖</span> <span class="n">session</span> <span class="nb">id</span><span class="err">，而</span> <span class="n">session</span> <span class="nb">id</span> <span class="err">是存在</span> <span class="n">cookie</span> <span class="err">中的，也就是说，如果浏览器禁用了</span> <span class="n">cookie</span> <span class="err">，同时</span> <span class="n">session</span> <span class="err">也会失效，存储</span><span class="n">Session时</span><span class="err">，键与</span><span class="n">Cookie中的sessionid相同</span><span class="err">，值是开发人员设置的键值对信息，进行了</span><span class="n">base64编码</span><span class="err">，过期时间由开发人员设置</span>
+<span class="mi">3</span><span class="err">、</span><span class="n">cookie安全性比session差</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>63、简述多线程、多进程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">进程：</span>
+<span class="mi">1</span><span class="err">、操作系统进行资源分配和调度的基本单位，多个进程之间相互独立</span>
+<span class="mi">2</span><span class="err">、稳定性好，如果一个进程崩溃，不影响其他进程，但是进程消耗资源大，开启的进程数量有限制</span>
+
+<span class="err">线程：</span>
+<span class="mi">1</span><span class="err">、</span><span class="n">CPU进行资源分配和调度的基本单位</span><span class="err">，线程是进程的一部分，是比进程更小的能独立运行的基本单位，一个进程下的多个线程可以共享该进程的所有资源</span>
+<span class="mi">2</span><span class="err">、如果</span><span class="n">IO操作密集</span><span class="err">，则可以多线程运行效率高，缺点是如果一个线程崩溃，都会造成进程的崩溃</span>
+
+<span class="err">应用：</span>
+<span class="n">IO密集的用多线程</span><span class="err">，在用户输入，</span><span class="n">sleep</span> <span class="err">时候，可以切换到其他线程执行，减少等待的时间</span>
+<span class="n">CPU密集的用多进程</span><span class="err">，因为假如</span><span class="n">IO操作少</span><span class="err">，用多线程的话，因为线程共享一个全局解释器锁，当前运行的线程会霸占</span><span class="n">GIL</span><span class="err">，其他线程没有</span><span class="n">GIL</span><span class="err">，就不能充分利用多核</span><span class="n">CPU的优势</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>64、简述any()和all()方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">any</span><span class="p">():</span><span class="err">只要迭代器中有一个元素为真就为真</span>
+<span class="nb">all</span><span class="p">():</span><span class="err">迭代器中所有的判断项返回都是真，结果才为真</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>65、IOError、AttributeError、ImportError、IndentationError、IndexError、KeyError、SyntaxError、NameError分别代表什么异常</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="ne">IOError</span><span class="err">：输入输出异常</span>
+<span class="ne">AttributeError</span><span class="err">：试图访问一个对象没有的属性</span>
+<span class="ne">ImportError</span><span class="err">：无法引入模块或包，基本是路径问题</span>
+<span class="ne">IndentationError</span><span class="err">：语法错误，代码没有正确的对齐</span>
+<span class="ne">IndexError</span><span class="err">：下标索引超出序列边界</span>
+<span class="ne">KeyError</span><span class="p">:</span><span class="err">试图访问你字典里不存在的键</span>
+<span class="ne">SyntaxError</span><span class="p">:</span><span class="n">Python代码逻辑语法出错</span><span class="err">，不能执行</span>
+<span class="ne">NameError</span><span class="p">:</span><span class="err">使用一个还未赋予对象的变量</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>66、python中copy和deepcopy区别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、复制不可变数据类型，不管</span><span class="n">copy还是deepcopy</span><span class="p">,</span><span class="err">都是同一个地址当浅复制的值是不可变对象（数值，字符串，元组）时和</span><span class="o">=</span><span class="err">“赋值”的情况一样，对象的</span><span class="n">id值与浅复制原来的值相同</span><span class="err">。</span>
+<span class="mi">2</span><span class="err">、复制的值是可变对象（列表和字典）</span>
+
+<span class="err">浅拷贝</span><span class="n">copy有两种情况</span><span class="err">：</span>
+<span class="err">第一种情况：复制的</span> <span class="err">对象中无</span> <span class="err">复杂</span> <span class="err">子对象，原来值的改变并不会影响浅复制的值，同时浅复制的值改变也并不会影响原来的值。原来值的</span><span class="n">id值与浅复制原来的值不同</span><span class="err">。</span>
+<span class="err">第二种情况：复制的对象中有</span> <span class="err">复杂</span> <span class="err">子对象</span> <span class="err">（例如列表中的一个子元素是一个列表），</span> <span class="err">改变原来的值</span> <span class="err">中的复杂子对象的值</span>  <span class="err">，会影响浅复制的值。</span>
+<span class="err">深拷贝</span><span class="n">deepcopy</span><span class="err">：完全复制独立，包括内层列表和字典</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>67、列出几种魔法方法并简要介绍用途</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="fm">__init__</span><span class="p">:</span><span class="err">对象初始化方法</span>
+ 
+<span class="fm">__new__</span><span class="p">:</span><span class="err">创建对象时候执行的方法，单列模式会用到</span>
+ 
+<span class="fm">__str__</span><span class="p">:</span><span class="err">当使用</span><span class="n">print输出对象的时候</span><span class="err">，只要自己定义了</span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="err">方法，那么就会打印从在这个方法中</span><span class="n">return的数据</span>
+ 
+<span class="fm">__del__</span><span class="p">:</span><span class="err">删除对象执行的方法</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>68、C:\Users\ry-wu.junya\Desktop&gt;python 1.py 11 12命令行启动程序并传参，print(sys.argv)会输出什么数据？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="p">[</span><span class="s1">&#39;1.py&#39;</span><span class="p">,</span><span class="s1">&#39;11&#39;</span><span class="p">,</span><span class="s1">&#39;12&#39;</span><span class="p">]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>69、请将[i for i in range(3)]改成生成器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">生成器是特殊的迭代器，</span>
+<span class="mi">1</span><span class="err">、列表表达式的</span><span class="p">[]</span><span class="err">改为（）即可变成生成器</span>
+<span class="mi">2</span><span class="err">、函数在返回值得时候出现</span><span class="n">yield就变成生成器</span><span class="err">，而不是函数了；中括号换成小括号即可</span>
+ 
+<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>            
+<span class="c1"># &lt;class &#39;generator&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>70、a = “  hehheh  “,去除收尾空格</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="s2">&#34;  hehheh  &#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+ 
+<span class="c1"># hehheh</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>71、举例sort和sorted对列表排序，list=[0,-1,3,-10,5,9]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="n">li</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>                <span class="c1"># [-10, -1, 0, 3, 5, 9]</span>
+ 
+ 
+<span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>                <span class="c1"># [0, -1, 3, -10, 5, 9]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>               <span class="c1"># [-10, -1, 0, 3, 5, 9]</span>
+ 
+<span class="p">{</span><span class="n">sort</span><span class="p">()</span><span class="err">与</span><span class="nb">sorted</span><span class="p">()</span><span class="err">的不同在于，</span><span class="n">sort是在原位重新排列列表</span><span class="err">，而</span><span class="nb">sorted</span><span class="p">()</span><span class="err">是产生一个新的列表。</span><span class="nb">sorted</span><span class="p">(</span><span class="n">L</span><span class="p">)</span><span class="err">返回一个排序后的</span><span class="n">L</span><span class="err">，不改变原始的</span><span class="n">L</span><span class="err">；</span><span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span><span class="err">是对原始的</span><span class="n">L进行操作</span><span class="err">，调用后原始的</span><span class="n">L会改变</span><span class="err">，没有返回值。【所以</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span><span class="err">是错的啦！</span><span class="n">a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="err">才对！</span>
+<span class="nb">sorted</span><span class="p">()</span><span class="err">适用于任何可迭代容器，</span><span class="nb">list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span><span class="err">仅支持</span><span class="nb">list</span><span class="err">（本身就是</span><span class="n">list的一个方法</span><span class="err">）</span>
+<span class="err">基于以上两点，</span><span class="n">sorted使用频率比list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span><span class="err">更高些，所以</span><span class="n">Python中更高级的排序技巧便通过sorted</span><span class="p">()</span><span class="err">来演示。</span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>72、对list排序foo = [-5,8,0,4,9,-4,-20,-2,8,2,-4],使用lambda函数从小到大排序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">foo</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">)</span>      
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>             
+<span class="c1"># [-20, -5, -4, -4, -2, 0, 2, 4, 8, 8, 9]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>73、使用lambda函数对list排序foo = [-5,8,0,4,9,-4,-20,-2,8,2,-4]，输出结果为
+[0,2,4,8,8,9,-2,-4,-4,-5,-20]，正数从小到大，负数从大到小</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">foo</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>      <span class="c1">#abs()函数返回绝对值,传两个条件，x&lt;0和abs(x)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>      
+<span class="c1"># [0, 2, 4, 8, 8, 9, -2, -4, -4, -5, -20]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>74、列表嵌套字典的排序，分别根据年龄和姓名排序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">foo</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;ww&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span><span class="p">:</span><span class="mi">19</span><span class="p">},{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;ll&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span><span class="p">:</span><span class="mi">54</span><span class="p">},{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;wa&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span><span class="p">:</span><span class="mi">17</span><span class="p">},{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;df&#34;</span><span class="p">,</span><span class="s2">&#34;age&#34;</span><span class="p">:</span><span class="mi">23</span><span class="p">}]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>            <span class="c1">#年龄从大到小</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>                        <span class="c1">#姓名从小到大</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># [{&#39;name&#39;: &#39;ll&#39;, &#39;age&#39;: 54}, {&#39;name&#39;: &#39;df&#39;, &#39;age&#39;: 23}, {&#39;name&#39;: &#39;ww&#39;, &#39;age&#39;: 19}, {&#39;name&#39;: &#39;wa&#39;, &#39;age&#39;: 17}]</span>
+<span class="c1"># [{&#39;name&#39;: &#39;df&#39;, &#39;age&#39;: 23}, {&#39;name&#39;: &#39;ll&#39;, &#39;age&#39;: 54}, {&#39;name&#39;: &#39;wa&#39;, &#39;age&#39;: 17}, {&#39;name&#39;: &#39;ww&#39;, &#39;age&#39;: 19}]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>75、列表嵌套元组，分别按字母和数字排序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">foo</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&#34;ww&#34;</span><span class="p">,</span> <span class="mi">19</span><span class="p">),</span> <span class="p">(</span><span class="s2">&#34;ll&#34;</span><span class="p">,</span> <span class="mi">54</span><span class="p">),(</span><span class="s2">&#34;wa&#34;</span><span class="p">,</span><span class="mi">17</span><span class="p">),</span> <span class="p">(</span><span class="s2">&#34;df&#34;</span><span class="p">,</span> <span class="mi">23</span><span class="p">)]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span> <span class="p">)</span>  <span class="c1"># 按数字由大到小</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>                   <span class="c1"># 按字母由小到大</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># [(&#39;ll&#39;, 54), (&#39;df&#39;, 23), (&#39;ww&#39;, 19), (&#39;wa&#39;, 17)]</span>
+<span class="c1"># [(&#39;df&#39;, 23), (&#39;ll&#39;, 54), (&#39;wa&#39;, 17), (&#39;ww&#39;, 19)]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>76、列表嵌套列表排序，年龄数字相同怎么办？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">foo</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&#34;ww&#34;</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;ll&#34;</span><span class="p">,</span> <span class="mi">54</span><span class="p">],[</span><span class="s2">&#34;wa&#34;</span><span class="p">,</span><span class="mi">23</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;df&#34;</span><span class="p">,</span> <span class="mi">23</span><span class="p">],[</span><span class="s2">&#34;xf&#34;</span><span class="p">,</span><span class="mi">23</span><span class="p">]]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="p">)</span>  <span class="c1">#年龄相同，添加参数按字母排序</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>                   <span class="c1">#按字母由小到大</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># [[&#39;ww&#39;, 19], [&#39;df&#39;, 23], [&#39;wa&#39;, 23], [&#39;xf&#39;, 23], [&#39;ll&#39;, 54]]</span>
+<span class="c1"># [[&#39;df&#39;, 23], [&#39;ll&#39;, 54], [&#39;wa&#39;, 23], [&#39;xf&#39;, 23], [&#39;ww&#39;, 19]]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>77、根据键对字典排序（方法一，zip函数）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;ww&#34;</span><span class="p">,</span><span class="s2">&#34;sex&#34;</span><span class="p">:</span><span class="s2">&#34;man&#34;</span> <span class="p">,</span><span class="s2">&#34;city&#34;</span><span class="p">:</span><span class="s2">&#34;bj&#34;</span><span class="p">}</span>
+<span class="n">foo</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">dic</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>      <span class="c1">#字典转列表嵌套元组</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">foo</span> <span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;字典转成列表嵌套元组&#34;</span><span class="p">,</span><span class="n">foo</span><span class="p">)</span>
+<span class="n">b</span><span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>        <span class="c1">#字典嵌套元组排序</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;根据键排序&#34;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">new_dic</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">}</span>         <span class="c1">#排序完构造新字典</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;字典推导式构造新字典&#34;</span><span class="p">,</span><span class="n">new_dic</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># 字典转成列表嵌套元组 [(&#39;name&#39;, &#39;ww&#39;), (&#39;sex&#39;, &#39;man&#39;), (&#39;city&#39;, &#39;bj&#39;)]</span>
+<span class="c1"># 根据键排序 [(&#39;city&#39;, &#39;bj&#39;), (&#39;name&#39;, &#39;ww&#39;), (&#39;sex&#39;, &#39;man&#39;)]</span>
+<span class="c1"># 字典推导式构造新字典 {&#39;city&#39;: &#39;bj&#39;, &#39;name&#39;: &#39;ww&#39;, &#39;sex&#39;: &#39;man&#39;}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>78、根据键对字典排序（方法二,不用zip)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;ww&#34;</span><span class="p">,</span><span class="s2">&#34;sex&#34;</span><span class="p">:</span><span class="s2">&#34;man&#34;</span> <span class="p">,</span><span class="s2">&#34;city&#34;</span><span class="p">:</span><span class="s2">&#34;bj&#34;</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">b</span><span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span><span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;根据键排序&#34;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">new_dic</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;字典推导式构造新字典&#34;</span><span class="p">,</span><span class="n">new_dic</span><span class="p">)</span>
+
+<span class="c1"># 输出：</span>
+<span class="c1"># dict_items([(&#39;name&#39;, &#39;ww&#39;), (&#39;sex&#39;, &#39;man&#39;), (&#39;city&#39;, &#39;bj&#39;)])</span>
+<span class="c1"># 根据键排序 [(&#39;city&#39;, &#39;bj&#39;), (&#39;name&#39;, &#39;ww&#39;), (&#39;sex&#39;, &#39;man&#39;)]</span>
+<span class="c1"># 字典推导式构造新字典 {&#39;city&#39;: &#39;bj&#39;, &#39;name&#39;: &#39;ww&#39;, &#39;sex&#39;: &#39;man&#39;}</span>
+ 
+<span class="p">{</span><span class="n">dic</span><span class="o">.</span><span class="n">items和zip</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">dic</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="err">都是为了构造列表嵌套字典的结构，方便后面用</span><span class="nb">sorted</span><span class="p">()</span><span class="err">构造排序规则</span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>79、列表推导式、字典推导式、生成器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">td_list</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;列表推导式&#34;</span><span class="p">,</span> <span class="n">td_list</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">td_list</span><span class="p">))</span>
+<span class="n">ge_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;生成器&#34;</span><span class="p">,</span> <span class="n">ge_list</span><span class="p">)</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">,</span> <span class="s2">&#34;c&#34;</span><span class="p">,</span> <span class="s2">&#34;d&#34;</span><span class="p">]}</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;字典推导式&#34;</span><span class="p">,</span><span class="n">dic</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">dic</span><span class="p">))</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># 列表推导式 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] &lt;class &#39;list&#39;&gt;</span>
+<span class="c1"># 生成器 &lt;generator object &lt;genexpr&gt; at 0x000000E284F78AF0&gt;</span>
+<span class="c1"># 字典推导式 {&#39;a&#39;: 4, &#39;b&#39;: 8, &#39;c&#39;: 7, &#39;d&#39;: 9} &lt;class &#39;dict&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>80、最后出一道检验题目，根据字符串长度排序，看排序是否灵活运用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#根据字符串长度排序</span>
+<span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;djkj&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>      <span class="c1">#sorted有返回值，不改变a本身</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>                      <span class="c1">#sort无返回值，在a自身修改</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># [&#39;ab&#39;, &#39;abc&#39;, &#39;a&#39;, &#39;djkj&#39;] [&#39;a&#39;, &#39;ab&#39;, &#39;abc&#39;, &#39;djkj&#39;]</span>
+<span class="c1"># [&#39;a&#39;, &#39;ab&#39;, &#39;abc&#39;, &#39;djkj&#39;]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>81、举例说明SQL注入和解决办法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#当以字符串格式化书写方式的时候，如果用户输入的有;+SQL语句，后面的SQL语句会执行，比如例子中的SQL注入会删除数据库demo</span>
+<span class="n">input_name</span> <span class="o">=</span> <span class="s2">&#34; zs&#34;</span>
+<span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;select * from demo where name=&#34;</span><span class="si">%s</span><span class="s1">&#34;&#39;</span><span class="o">%</span> <span class="n">input_name</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;正常sql语句&#34;</span> <span class="p">,</span> <span class="n">sql</span><span class="p">)</span>
+<span class="n">input_name</span> <span class="o">=</span> <span class="s2">&#34; zs;drop database demo&#34;</span>
+<span class="n">sql</span><span class="o">=</span><span class="s1">&#39;select * from  demo where name= &#34;</span><span class="si">%s</span><span class="s1">&#34;&#39;</span> <span class="o">%</span> <span class="n">input_name</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;SQL注入语句&#34;</span> <span class="p">,</span><span class="n">sql</span><span class="p">)</span>
+<span class="err">输出：</span>
+<span class="err">正常</span><span class="n">sql语句</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">demo</span> <span class="nn">where</span> <span class="nn">name</span> <span class="o">=</span> <span class="s2">&#34; zs&#34;</span>
+<span class="n">SQL注入语句</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span>  <span class="nn">demo</span> <span class="nn">where</span> <span class="nn">name</span> <span class="o">=</span> <span class="s2">&#34; zs;drop database demo&#34;</span>
+ 
+<span class="c1"># 解决方式：通过传参数方式解决SQL注入</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_name</span><span class="p">]</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">csl</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;select from goods where name=</span><span class="si">%s</span><span class="s1"> &#39;</span> <span class="p">,</span> <span class="n">params</span> <span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>82、s=”info:xiaoZhang 33 shenzhen”,用正则切分字符串输出[‘info’, ‘xiaoZhang’, ‘33’, ‘shenzhen’]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;info:xiaoZhang 33 shenzhen&#34;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;:| &#34;</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>          <span class="c1">#|表示或，根据冒号或者空格切分</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># [&#39;info&#39;, &#39;xiaoZhang&#39;, &#39;33&#39;, &#39;shenzhen&#39;]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>83、正则匹配以163.com结尾的邮箱</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">email_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;xiaoWang@163.com&#34;</span><span class="p">,</span><span class="s2">&#34;xiaoWang@163.comheihei&#34;</span><span class="p">,</span> <span class="s2">&#34;.com.xiaowang@qq.com&#34;</span> <span class="p">]</span>
+<span class="k">for</span> <span class="n">email</span> <span class="ow">in</span> <span class="n">email_list</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;[\w]{4,20}@163\.com$&#34;</span><span class="p">,</span><span class="n">email</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> 是符合规定的邮件地址，匹配后结果是:</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">email</span><span class="p">,</span><span class="n">ret</span><span class="o">.</span><span class="n">group</span><span class="p">()))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> 不符合要求&#34;</span> <span class="o">%</span> <span class="n">email</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># xiaoWang@163.com 是符合规定的邮件地址，匹配后结果是:xiaoWang@163.com</span>
+<span class="c1"># xiaoWang@163.comheihei 不符合要求</span>
+<span class="c1"># .com.xiaowang@qq.com 不符合要求</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>84、递归求和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#递归完成1+2+3...+10的和</span>
+<span class="k">def</span> <span class="nf">get_sum</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">=</span><span class="n">num</span><span class="o">+</span><span class="n">get_sum</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">return</span> <span class="n">res</span>
+<span class="n">res</span><span class="o">=</span><span class="n">get_sum</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>  
+<span class="c1"># 55</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>85、python字典和json字符串相互转化方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#json.dumps()字典转json字符串，json.loads()json转字典</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;zs&#34;</span><span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># {&#34;name&#34;: &#34;zs&#34;} &lt;class &#39;str&#39;&gt;</span>
+<span class="c1"># {&#39;name&#39;: &#39;zs&#39;} &lt;class &#39;dict&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>86、MyISAM 与 InnoDB 区别：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、</span><span class="n">InnoDB</span> <span class="err">支持事务，</span><span class="n">MyISAM</span> <span class="err">不支持，这一点是非常之重要。事务是一种高</span>
+<span class="err">级的处理方式，如在一些列增删改中只要哪个出错还可以回滚还原，而</span> <span class="n">MyISAM</span>
+<span class="err">就不可以了；</span>
+
+<span class="mi">2</span><span class="err">、</span><span class="n">MyISAM</span> <span class="err">适合查询以及插入为主的应用，</span><span class="n">InnoDB</span> <span class="err">适合频繁修改以及涉及到</span>
+<span class="err">安全性较高的应用；</span>
+
+<span class="mi">3</span><span class="err">、</span><span class="n">InnoDB</span> <span class="err">支持外键，</span><span class="n">MyISAM</span> <span class="err">不支持；</span>
+
+<span class="mi">4</span><span class="err">、对于自增长的字段，</span><span class="n">InnoDB</span> <span class="err">中必须包含只有该字段的索引，但是在</span> <span class="n">MyISAM</span>
+<span class="err">表中可以和其他字段一起建立联合索引；</span>
+
+<span class="mi">5</span><span class="err">、清空整个表时，</span><span class="n">InnoDB</span> <span class="err">是一行一行的删除，效率非常慢。</span><span class="n">MyISAM</span> <span class="err">则会重</span>
+<span class="err">建表；</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>87、统计字符串中某字符出现次数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">str</span><span class="o">=</span><span class="s2">&#34;张三 哈哈 张三 呵呵 张三&#34;</span>
+<span class="n">res</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&#34;张三&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> 
+<span class="c1"># 3</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>88、字符串转化大小写</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">str</span><span class="o">=</span><span class="s2">&#34;HHaa&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># HHAA</span>
+<span class="c1"># hhaa</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>89、用两种方法去空格</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">str</span><span class="o">=</span><span class="s2">&#34;hello world ha ha&#34;</span>
+<span class="n">res</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+ 
+<span class="nb">list</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)</span>
+<span class="n">res</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+ 
+<span class="c1"># 均输出：</span>
+<span class="c1"># helloworldhaha</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>90、正则匹配不是以4和7结尾的手机号</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">tels</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;13100001234&#34;</span><span class="p">,</span><span class="s2">&#34;18912344321&#34;</span><span class="p">,</span><span class="s2">&#34;10086&#34;</span><span class="p">,</span><span class="s2">&#34;18800007777&#34;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">tel</span> <span class="ow">in</span> <span class="n">tels</span><span class="p">:</span>
+    <span class="n">ret</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;1\d{9}[0-3,5-6,8-9]&#34;</span><span class="p">,</span><span class="n">tel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;结果是：&#34;</span><span class="p">,</span><span class="n">ret</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2">不是想要的手机号&#34;</span> <span class="o">%</span> <span class="n">tel</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># 13100001234不是想要的手机号</span>
+<span class="c1"># 结果是： 18912344321</span>
+<span class="c1"># 10086不是想要的手机号</span>
+<span class="c1"># 18800007777不是想要的手机号</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>91、简述python引用计数机制</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">python垃圾回收主要以引用计数为主</span><span class="err">，标记</span><span class="o">-</span><span class="err">清除和分代清除为辅的机制，其中标记</span><span class="o">-</span><span class="err">清除和分代回收主要是为了处理循环引用的难题。</span>
+<span class="err">引用计数算法</span>
+<span class="err">当有</span><span class="mi">1</span><span class="err">个变量保存了对象的引用时，此对象的引用计数就会加</span><span class="mi">1</span>
+<span class="err">当使用</span><span class="n">del删除变量指向的对象时</span><span class="err">，如果对象的引用计数不为</span><span class="mi">1</span><span class="err">，比如</span><span class="mi">3</span><span class="err">，那么此时只会让这个引用计数减</span><span class="mi">1</span><span class="err">，即变为</span><span class="mi">2</span><span class="err">，当再次调用</span><span class="n">del时</span><span class="err">，变为</span><span class="mi">1</span><span class="err">，如果再调用</span><span class="mi">1</span><span class="err">次</span><span class="k">del</span><span class="err">，此时会真的把对象进行删除</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>92、int(“1.4”),int(1.4)输出结果？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s2">&#34;1.4&#34;</span><span class="p">))</span>      <span class="c1"># 报错ValueError</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1.4</span><span class="p">))</span>        <span class="c1"># 1</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>93、列举3条以上PEP8编码规范</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、顶级定义之间空两行，比如函数或者类定义。</span>
+<span class="mi">2</span><span class="err">、方法定义、类定义与第一个方法之间，都应该空一行</span>
+<span class="mi">3</span><span class="err">、三引号进行注释</span>
+<span class="mi">4</span><span class="err">、使用</span><span class="n">Pycharm</span><span class="err">、</span><span class="n">Eclipse一般使用4个空格来缩进代码</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>94、正则表达式匹配第一个URL</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">findall结果无需加group</span><span class="p">(),</span><span class="n">search需要加group</span><span class="p">()</span><span class="err">提取</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>95、正则匹配中文</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">title</span><span class="o">=</span><span class="s2">&#34;你好，hello，世界&#34;</span>
+<span class="n">res</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\u4e00-\u9fa5]+&#39;</span><span class="p">)</span>
+<span class="n">result</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+ 
+<span class="c1"># 输出：</span>
+<span class="c1"># [&#39;你好&#39;, &#39;世界&#39;]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>96、简述乐观锁和悲观锁</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">悲观锁</span><span class="p">,</span> <span class="err">就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会</span><span class="n">block直到它拿到锁</span><span class="err">。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。</span>
+
+<span class="err">乐观锁，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制，乐观锁适用于多读的应用类型，这样可以提高吞吐量</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>97、r、r+、rb、rb+文件打开模式区别</p>
+
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>r</td>
+<td align="center">以只读方式打开文件。文件的指针将会放在文件的开头。这是默认模式</td>
+</tr>
+
+<tr>
+<td>r+</td>
+<td align="center">打开文件用于读写。文件指针将会放在文件的开头</td>
+</tr>
+
+<tr>
+<td>rb</td>
+<td align="center">以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认的模式。一般用于非文本文件如图片等</td>
+</tr>
+
+<tr>
+<td>rb+</td>
+<td align="center">以二进制的格式打开一个文件用于读写。文件指针会放在文件的开头。一般用于非文本文件如图片等</td>
+</tr>
+
+<tr>
+<td>w</td>
+<td align="center">打开一个文件只用于写入。如果该文件已存在则打开文件，并从头开始编辑，即原有的内容会被删除。如果该文件不存在，则创建新文件</td>
+</tr>
+
+<tr>
+<td>wb</td>
+<td align="center">以二进制的格式打开一个文件只用于写入。如果该文件已存在则打开文件，并从头开始编辑，即原有的内容会被删除。如果该文件不存在，则创建新的文件，一般用于非文本文件如图片等</td>
+</tr>
+
+<tr>
+<td>w+</td>
+<td align="center">打开一个文件用于读写。如果该文件已存在则打开文件，并从头开始编辑，即原有的内容会被删除。如果该文件不存在，则创建新的文件</td>
+</tr>
+
+<tr>
+<td>wb+</td>
+<td align="center">以二进制的格式打开一个文件用于读写。如果该文件已存在则打开文件，并从头开始编辑，即原有的内容会被删除。如果该文件不存在，创建新的文件，一般用于非文本文件如图片等</td>
+</tr>
+
+<tr>
+<td>a</td>
+<td align="center">打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容会被写入到也有内容以后，如果该文件不存在，则创建新的文件并写入</td>
+</tr>
+
+<tr>
+<td>ab</td>
+<td align="center">以二进制的形式打开一个文件用于追加内容。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容会被写入到也有内容以后，如果该文件不存在，则创建新的文件并写入</td>
+</tr>
+
+<tr>
+<td>a+</td>
+<td align="center">打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会以追加的模式。如果该文件不存在，则创建新的文件用于读写</td>
+</tr>
+
+<tr>
+<td>ab+</td>
+<td align="center">以二进制的形式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，则创建新的文件用于读写</td>
+</tr>
+</tbody>
+</table>
+
+<p>98、Linux命令重定向 &gt; 和 &gt;&gt;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Linux</span> <span class="err">允许将命令执行结果</span> <span class="err">重定向到一个</span> <span class="err">文件</span>
+<span class="err">将本应显示在终端上的内容</span> <span class="err">输出／追加</span> <span class="err">到指定文件中</span>
+<span class="o">&gt;</span> <span class="err">表示输出，会覆盖文件原有的内容</span>
+<span class="o">&gt;&gt;</span> <span class="err">表示追加，会将内容追加到已有文件的末尾</span>
+<span class="err">用法示例：</span>
+<span class="err">将</span> <span class="n">echo</span> <span class="err">输出的信息保存到</span> <span class="mf">1.</span><span class="n">txt</span> <span class="err">里</span><span class="n">echo</span> <span class="n">Hello</span> <span class="n">Python</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="n">txt</span>
+<span class="err">将</span> <span class="n">tree</span> <span class="err">输出的信息追加到</span> <span class="mf">1.</span><span class="n">txt</span> <span class="err">文件的末尾</span><span class="n">tree</span> <span class="o">&gt;&gt;</span> <span class="mf">1.</span><span class="n">txt</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>99、正则表达式匹配出 <html><h1>www.itcast.cn</h1></html></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 前面的&lt;&gt;和后面的&lt;&gt;是对应的，可以用此方法</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;&lt;html&gt;&lt;h1&gt;www.itcast.cn&lt;/h1&gt;&lt;/html&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&lt;html&gt;&lt;h1&gt;www.itcast.cn&lt;/h2&gt;&lt;/html&gt;&#34;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;&lt;(\w*)&gt;&lt;(\w*)&gt;.*?&lt;/\2&gt;&lt;/\1&gt;&#34;</span><span class="p">,</span><span class="n">label</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2">是符合要求的标签&#34;</span><span class="o">%</span><span class="n">ret</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2">不符合要求&#34;</span><span class="o">%</span><span class="n">label</span><span class="p">)</span>
+<span class="c1"># 输出：</span>
+<span class="c1"># &lt;html&gt;&lt;h1&gt;www.itcast.cn&lt;/h1&gt;&lt;/html&gt;是符合要求的标签</span>
+<span class="c1"># &lt;html&gt;&lt;h1&gt;www.itcast.cn&lt;/h2&gt;&lt;/html&gt;不符合要求</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>100、python传参数是传值还是传址？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python中函数参数是引用传递</span><span class="err">（注意不是值传递）。对于不可变类型（数值型、字符串、元组），因变量不能修改，所以运算不会影响到变量自身；而对于可变类型（列表字典）来说，函数体运算可能会更改传入的参数变量。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>101、求两个列表的交集、差集、并集</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">b</span><span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">jj1</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">]</span>   <span class="c1">#在a中的i，并且也在b中，就是交集</span>
+<span class="n">jj2</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
+<span class="n">bj1</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
+<span class="n">cj1</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
+<span class="n">cj2</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;交集&#34;</span> <span class="p">,</span><span class="n">jj1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;交集&#34;</span><span class="p">,</span><span class="n">jj2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;并集&#34;</span><span class="p">,</span><span class="n">bj1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;差集&#34;</span> <span class="p">,</span><span class="n">cj1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;差集&#34;</span> <span class="p">,</span><span class="n">cj2</span><span class="p">)</span>
+
+<span class="c1"># 输出：</span>
+<span class="c1"># 交集 [3, 4]</span>
+<span class="c1"># 交集 [3, 4]</span>
+<span class="c1"># 并集 [1, 2, 3, 4, 5, 6]</span>
+<span class="c1"># 差集 [5, 6]</span>
+<span class="c1"># 差集 [1, 2]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>102、生成0-100的随机数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">res1</span><span class="o">=</span><span class="mi">100</span><span class="o">*</span> <span class="n">random</span><span class="o">.</span> <span class="n">random</span><span class="p">(</span> <span class="p">)</span>   <span class="c1">#随机小数 random.random()生成0-1之间的随机小数，所以乘以100</span>
+<span class="n">res2</span><span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">101</span><span class="p">))</span>   <span class="c1">#随机整数</span>
+<span class="n">res3</span><span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>          <span class="c1">#随机整数</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res3</span><span class="p">)</span>
+
+<span class="c1"># 输出：</span>
+<span class="c1"># 70.52071953376354# 21</span>
+<span class="c1"># 13</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>103、lambda匿名函数好处</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">精简代码，</span><span class="n">lambda省去了定义函数</span><span class="err">，</span><span class="n">map省去了写for循环过程</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>104、常见的网络传输协议</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">UDP</span><span class="p">:</span><span class="n">User</span> <span class="n">Datagram</span> <span class="n">Protocol</span><span class="p">,</span><span class="err">用户数据报协议</span><span class="o">.</span>
+<span class="err">主要作用：将网络数据压缩成数据包的形式。</span>
+<span class="err">数据包：一个二进制数据的传输单位</span>
+<span class="err">工作机制：蛮干型。它想传送时就简单地去抓取来自应用程序的数据，并尽可能快地把它扔到网络上。因此，在发送端，</span><span class="n">UDP传送数据的速度仅仅是受应用程序生成数据的速度</span><span class="err">、计算机的能力和传输带宽的限制；在接收端，</span><span class="n">UDP把每个消息段放在队列中</span><span class="err">，应用程序每次从队列中读一个消息段。</span>
+<span class="err">优势：速度快，较安全。劣势：可靠性差。</span>
+<span class="n">TCP</span><span class="p">:</span><span class="n">Transmission</span> <span class="n">Control</span> <span class="n">Protocol</span> <span class="err">传输控制协议</span>
+<span class="err">主要作用：把数据流分割成适当长度的报文段之后</span>
+<span class="err">工作机制：紧小细微型。面向连接意味着两个使用</span><span class="n">TCP的应用</span><span class="err">（通常是一个客户和一个服务器）在彼此交换数据包之前必须先建立一个</span><span class="n">TCP连接</span><span class="err">。这一过程与打电话很相似，先拨号振铃，等待对方摘机说“喂”，然后才说明是谁。在一个</span><span class="n">TCP连接中</span><span class="err">，仅有两方进行彼此通信。而</span><span class="n">UDP更像是发短信</span><span class="err">，将发送方所有的信息，将所有信息一股脑儿全扔到网络中。</span>
+<span class="err">优势：可靠性好</span>  <span class="err">劣势：速度慢，占用系统资源高，易被攻击</span>
+<span class="n">FTP</span><span class="err">：文件传输协议</span>
+<span class="n">HTTP</span><span class="err">：超文本传输协议</span>
+<span class="n">SMTP</span><span class="err">：简单邮件传输协议</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>105、单引号、双引号、三引号用法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、单引号和双引号没有什么区别，不过单引号不用按</span><span class="n">shift</span><span class="err">，打字稍微快一点。表示字符串的时候，单引号里面可以用双引号，而不用转义字符</span><span class="p">,</span><span class="err">反之亦然。</span>
+
+<span class="s1">&#39;She said:&#34;Yes.&#34; &#39;</span> <span class="ow">or</span>  <span class="s2">&#34;She said: &#39;Yes.&#39; &#34;</span>
+<span class="mi">2</span><span class="err">、但是如果直接用单引号扩住单引号，则需要转义，像这样：</span>
+ <span class="s1">&#39; She said:</span><span class="se">\&#39;</span><span class="s1">Yes.</span><span class="se">\&#39;</span><span class="s1"> &#39;</span>
+    
+<span class="mi">3</span><span class="err">、三引号可以直接书写多行，通常用于大段，大篇幅的字符串</span>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">hello
+</span><span class="s2">world
+</span><span class="s2">&#34;&#34;&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>106、python垃圾回收机制</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、</span> <span class="err">引用计数</span>
+<span class="err">引用计数也是一种垃圾回收机制，而且是一种最直观，最简单的垃圾回收技术。</span>
+<span class="err">在</span><span class="n">Python中每一个对象的核心就是一个结构体PyObject</span><span class="err">，它的内部有一个引用计数</span> <span class="n">ob_refcnt</span><span class="err">，当</span><span class="n">python的某个对象引用计数为0</span><span class="err">。就说明没有任何引用指向该对象，该对象就成为要被回收的垃圾了。</span>
+
+<span class="err">举个栗子</span><span class="p">:</span> <span class="err">当一个对象被创建出来，他的引用计数就会</span><span class="o">+</span><span class="mi">1</span><span class="err">，当对象被引用的时候，计数继续增加，当引用它的对象被删除的时候，它的引用计数就会减少。直到变为</span><span class="mi">0</span><span class="err">，此时垃圾回收机制就会把它回收。但是一旦出现循环引用，我们就得采取新的办法了。</span>
+
+<span class="mi">1</span><span class="err">、标记清除</span>
+<span class="err">标记清除用来解决循环引用产生的问题，循环引用只有在容器对象才会产生，比如字典，元祖，列表等。首先为了追踪对象，需要每个容器对象维护两个额外的指针，用来将容器对象组成一个链表，指针分别指向前后两个容器对象，这样可以将对象的循环引用摘除，就可以得出两个对象的有效计数。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>107、HTTP请求中get和post区别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mi">1</span><span class="err">、</span><span class="n">GET请求是通过URL直接请求数据</span><span class="err">，数据信息可以在</span><span class="n">URL中直接看到</span><span class="err">，比如浏览器访问；而</span><span class="n">POST请求是放在请求头中的</span><span class="err">，我们是无法直接看到的；</span>
+
+<span class="mi">2</span><span class="err">、</span><span class="n">GET提交有数据大小的限制</span><span class="err">，一般是不超过</span><span class="mi">1024</span><span class="err">个字节，而这种说法也不完全准确，</span><span class="n">HTTP协议并没有设定URL字节长度的上限</span><span class="err">，而是浏览器做了些处理，所以长度依据浏览器的不同有所不同；</span><span class="n">POST请求在HTTP协议中也没有做说明</span><span class="err">，一般来说是没有设置限制的，但是实际上浏览器也有默认值。总体来说，少量的数据使用</span><span class="n">GET</span><span class="err">，大量的数据使用</span><span class="n">POST</span><span class="err">。</span>
+
+<span class="mi">3</span><span class="err">、</span><span class="n">GET请求因为数据参数是暴露在URL中的</span><span class="err">，所以安全性比较低，比如密码是不能暴露的，就不能使用</span><span class="n">GET请求</span><span class="err">；</span><span class="n">POST请求中</span><span class="err">，请求参数信息是放在请求头的，所以安全性较高，可以使用。在实际中，涉及到登录操作的时候，尽量使用</span><span class="n">HTTPS请求</span><span class="err">，安全性更好。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>108、python中读取Excel文件的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pandas库</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>109、简述多线程、多进程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">进程：</span>
+<span class="mi">1</span><span class="err">、操作系统进行资源分配和调度的基本单位，多个进程之间相互独立</span>
+<span class="mi">2</span><span class="err">、稳定性好，如果一个进程崩溃，不影响其他进程，但是进程消耗资源大，开启的进程数量有限制</span>
+
+<span class="err">线程：</span>
+<span class="mi">1</span><span class="err">、</span><span class="n">CPU进行资源分配和调度的基本单位</span><span class="err">，线程是进程的一部分，是比进程更小的能独立运行的基本单位，一个进程下的多个线程可以共享该进程的所有资源</span>
+<span class="mi">2</span><span class="err">、如果</span><span class="n">IO操作密集</span><span class="err">，则可以多线程运行效率高，缺点是如果一个线程崩溃，都会造成进程的崩溃</span>
+
+<span class="err">应用：</span>
+<span class="n">IO密集的用多线程</span><span class="err">，在用户输入，</span><span class="n">sleep</span> <span class="err">时候，可以切换到其他线程执行，减少等待的时间</span>
+<span class="n">CPU密集的用多进程</span><span class="err">，因为假如</span><span class="n">IO操作少</span><span class="err">，用多线程的话，因为线程共享一个全局解释器锁，当前运行的线程会霸占</span><span class="n">GIL</span><span class="err">，其他线程没有</span><span class="n">GIL</span><span class="err">，就不能充分利用多核</span><span class="n">CPU的优势</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">作者</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上一次更新</span>
+    <span class="item-content">
+        2019-12-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/python/">Python</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/java/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">JVM 类加载机制</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/juc/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-concurrenthashmap/">
+            <span class="next-text nav-default">深入理解ConcurrentHashMap</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="javascripts;" class="iconfont icon-email" title="email"></a>
+      <a href="javascripts;" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="javascripts;" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.zhihu.com/search?type=content&amp;q=" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="javascripts;" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="https://www.bilibili.com/" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019-08 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

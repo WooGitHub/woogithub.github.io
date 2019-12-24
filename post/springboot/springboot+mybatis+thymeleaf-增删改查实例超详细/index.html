@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SpringBoot&#43;MyBatis&#43;thymeleaf实现增删改查（超详细） - Woo_home</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Woo_home" /><meta name="description" content="导语： 刚学springboot几天，做了个小例子，感觉springboot很好用。相比ssm，springboot除去了很多的繁杂的配置，使" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with theme even" />
+
+
+<link rel="canonical" href="https://woogithub.github.io/post/springboot/springboot&#43;mybatis&#43;thymeleaf-%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B%E8%B6%85%E8%AF%A6%E7%BB%86/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="SpringBoot&#43;MyBatis&#43;thymeleaf实现增删改查（超详细）" />
+<meta property="og:description" content="导语： 刚学springboot几天，做了个小例子，感觉springboot很好用。相比ssm，springboot除去了很多的繁杂的配置，使" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogithub.github.io/post/springboot/springboot&#43;mybatis&#43;thymeleaf-%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B%E8%B6%85%E8%AF%A6%E7%BB%86/" />
+<meta property="article:published_time" content="2019-08-14T00:14:19+08:00" />
+<meta property="article:modified_time" content="2019-08-14T00:14:19+08:00" />
+<meta itemprop="name" content="SpringBoot&#43;MyBatis&#43;thymeleaf实现增删改查（超详细）">
+<meta itemprop="description" content="导语： 刚学springboot几天，做了个小例子，感觉springboot很好用。相比ssm，springboot除去了很多的繁杂的配置，使">
+
+
+<meta itemprop="datePublished" content="2019-08-14T00:14:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-14T00:14:19&#43;08:00" />
+<meta itemprop="wordCount" content="4618">
+
+
+
+<meta itemprop="keywords" content="springboot," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SpringBoot&#43;MyBatis&#43;thymeleaf实现增删改查（超详细）"/>
+<meta name="twitter:description" content="导语： 刚学springboot几天，做了个小例子，感觉springboot很好用。相比ssm，springboot除去了很多的繁杂的配置，使"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Woo_home</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="https://blog.csdn.net/Woo_home">
+        <li class="mobile-menu-item">CSDN</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Woo_home</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://blog.csdn.net/Woo_home">CSDN</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SpringBoot&#43;MyBatis&#43;thymeleaf实现增删改查（超详细）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-14 </span>
+        
+          <span class="more-meta"> 4618 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> 阅读数 <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#导语">导语：</a></li>
+<li><a href="#项目开发环境">项目开发环境</a></li>
+<li><a href="#项目搭建">项目搭建</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#一-数据库设计">一、数据库设计</a></li>
+<li><a href="#二-导入项目所需的依赖">二、导入项目所需的依赖</a></li>
+<li><a href="#三-项目目录结构">三、项目目录结构</a></li>
+<li><a href="#四-前端代码实现">四、前端代码实现</a></li>
+<li><a href="#五-后端代码实现">五、后端代码实现</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h5 id="导语">导语：</h5>
+
+<p>刚学springboot几天，做了个小例子，感觉springboot很好用。相比ssm，springboot除去了很多的繁杂的配置，使用起来非常方便。而且springboot内置了tomcat、jetty这两个web服务器，也不需要你再去配置web服务器，方便刚学springboot或者想学springboot的朋友，下面就带你一步一步做成一个小例子</p>
+
+<h5 id="项目开发环境">项目开发环境</h5>
+
+<p>开发工具：IDEA 2019.2
+框架：springboot、mybatis、bootstrap
+模板引擎：thymeleaf
+数据库：MySQL
+构建工具：Maven
+可视化工具：Navicat for MySQL</p>
+
+<h5 id="项目搭建">项目搭建</h5>
+
+<p>项目的创建这里就不详细写了，不会的朋友可以看这里
+<a href="https://blog.csdn.net/Woo_home/article/details/98860135">https://blog.csdn.net/Woo_home/article/details/98860135</a></p>
+
+<h3 id="一-数据库设计">一、数据库设计</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">stus</span><span class="o">`</span> <span class="p">(</span>
+  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">username</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">password</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="nb">CHARACTER</span> <span class="k">SET</span> <span class="n">utf8mb4</span> <span class="k">COLLATE</span> <span class="n">utf8mb4_0900_ai_ci</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">42</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span> <span class="k">COLLATE</span><span class="o">=</span><span class="n">utf8mb4_0900_ai_ci</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>创建好数据库之后随便插入几条数据就可以了</p>
+
+<p>在resource中创建application.yml配置文件，有两种文件，一种是properties的一种是yml的，这里使用的是yml的，<strong>yml的编写格式很重要，就是冒号后面一定要给一个空格，而且不能按tab键缩进，必须手动缩进</strong>，下面是对数据库连接的配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml">spring<span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="c">#数据库配置</span><span class="w">
+</span><span class="w">  </span>datasource<span class="p">:</span><span class="w">
+</span><span class="w">    </span>url<span class="p">:</span><span class="w"> </span>jdbc<span class="p">:</span>mysql<span class="p">:</span>//localhost<span class="p">:</span><span class="m">3306</span>/数据库名<span class="p">?</span>useSSL=<span class="kc">false</span><span class="w">
+</span><span class="w">    </span>driver-class-name<span class="p">:</span><span class="w"> </span>com.mysql.jdbc.Driver<span class="w">
+</span><span class="w">    </span>username<span class="p">:</span><span class="w"> </span>用户名<span class="w">
+</span><span class="w">    </span>password<span class="p">:</span><span class="w"> </span>密码<span class="w">
+</span><span class="w">    </span>initial-size<span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">    </span>max-active<span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">    </span>max-idle<span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span><span class="w">    </span>min-idle<span class="p">:</span><span class="w"> </span><span class="m">8</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="二-导入项目所需的依赖">二、导入项目所需的依赖</h3>
+
+<p>pom.xml依赖
+&gt;##### 注意
+&gt;* 在pom.xml文件这里有几点需要注意的，就是导入springboot和mybatis的整合包的时候不需要再导入mybatis包，会冲突
+&gt;* 添加junit测试包的时候不用添加scope，不然无法在controller中使用测试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+  <span class="nt">&lt;groupId&gt;</span>com.java.springboot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>springboot-demo<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
+
+  <span class="c">&lt;!-- Spingboot相关jar包版本 --&gt;</span>
+  <span class="nt">&lt;parent&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.0.5.RELEASE<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;/parent&gt;</span>
+
+  <span class="nt">&lt;dependencies&gt;</span>
+	
+	<span class="c">&lt;!-- Springboot核心jar包 --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    
+    <span class="c">&lt;!-- web开发包：包含Tomcat和Springmvc --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!-- thymeleaf --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+	<span class="c">&lt;!--mysql驱动包--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+	<span class="c">&lt;!--springboot与JDBC整合包--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-jdbc<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+	<span class="c">&lt;!--springboot与mybatis的整合包--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.3.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+	<span class="c">&lt;!--junit测试包--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span> 
+    <span class="nt">&lt;/dependency&gt;</span>
+
+  <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="三-项目目录结构">三、项目目录结构</h3>
+
+<blockquote>
+<ul>
+<li>com.java.springboot
+
+<ul>
+<li>controller（包）</li>
+<li>UserController.java</li>
+<li>bean（包）</li>
+<li>User.java</li>
+<li>mapper（包）</li>
+<li>UserMapper.java</li>
+<li>service（包）</li>
+<li>UserService.java</li>
+<li>App.java</li>
+</ul></li>
+</ul>
+</blockquote>
+
+<p><img src="https://img-blog.csdnimg.cn/20190814192849214.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+<h3 id="四-前端代码实现">四、前端代码实现</h3>
+
+<p>个人不是很会前端哈，如果写的丑希望大佬们不轻点喷，多给建议
+&gt;在resource目录下新建两=个文件夹，分别是<strong>templates</strong>、<strong>static</strong>
+<strong>templates</strong>用于存放html页面
+<strong>static</strong>用于存放静态资源文件，如（js、img、css）</p>
+
+<p>在application.yml配置对应的信息，接着数据库后面添加就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="w">  </span><span class="c">#静态资源配置</span><span class="w">
+</span><span class="w">  </span>resources<span class="p">:</span><span class="w">
+</span><span class="w">    </span>static-locations<span class="p">:</span><span class="w"> </span>classpath<span class="p">:</span>static/<span class="w">
+</span><span class="w">
+</span><span class="w"> </span><span class="c">#thymeleaf模板引擎配置</span><span class="w">
+</span><span class="w">  </span>thymeleaf<span class="p">:</span><span class="w">
+</span><span class="w">    </span>prefix<span class="p">:</span><span class="w"> </span>classpath<span class="p">:</span>/templates/<span class="w">
+</span><span class="w">    </span>suffix<span class="p">:</span><span class="w"> </span>.html<span class="w">
+</span><span class="w">    </span>mode<span class="p">:</span><span class="w"> </span>HTML5<span class="w">
+</span><span class="w">    </span>encoding<span class="p">:</span><span class="w"> </span>UTF<span class="m">-8</span><span class="w">
+</span><span class="w">    </span>content-type<span class="p">:</span><span class="w"> </span>text/html<span class="w">
+</span><span class="w">    </span>cache<span class="p">:</span><span class="w"> </span><span class="kc">false</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在templates文件夹中新建一个html页面，命名为userList.html，如果需要使用样式框架的话加在static里面的文件夹就可以了
+&gt;##### 注意
+&gt;* 在html中导入bootstrap样式的时候路径要注意，就是如果你在application.yml配置了访问的是static目录下的资源的时候，在html导入的静态资源是不需要在前面加static了
+&gt;* 比如这里的bootstrap.css样式是放在static/css目录下的，在html中就直接写css/bootstrap.css就可以了，如果在前面加了static就无法访问样式了，这里踩了很多坑，要注意
+&gt;* 使用thymeleaf模板引擎的时候一定添加 xmlns:th=&ldquo;<a href="http://www.thymeleaf.org&quot;在html标签中">http://www.thymeleaf.org&quot;在html标签中</a>
+&gt;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&#34;http://www.thymeleaf.org&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>用户列表<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/css/bootstrap.css&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+    <span class="nt">a</span><span class="p">{</span>
+        <span class="k">color</span><span class="p">:</span><span class="mh">#fff</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-primary form-control&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;height:50px&#34;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&#34;@{&#39;/insertPage&#39;}&#34;</span><span class="p">&gt;</span>添加用户<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;table table-striped table-bordered table-hover text-center&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">tr</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;text-align:center&#34;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Id<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Username<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Password<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>操作<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+           <span class="p">&lt;</span><span class="nt">tr</span> <span class="na">th:each</span><span class="o">=</span><span class="s">&#34;users:${users}&#34;</span><span class="p">&gt;</span>
+               <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&#34;${users.id}&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+               <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&#34;${users.username}&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+               <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&#34;${users.password}&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+               <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+                   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-primary&#34;</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&#34;@{&#39;/updatePage/&#39;+${users.id}}&#34;</span><span class="p">&gt;</span>更改<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-danger&#34;</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&#34;@{&#39;/delete/&#39;+${users.id}}&#34;</span><span class="p">&gt;</span>删除<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+               <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+           <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>页面效果预览
+<img src="https://img-blog.csdnimg.cn/20190814145127176.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+在templates文件中新建 insertPage.html</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&#34;http://www.thymeleaf.org&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>添加用户<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/css/bootstrap.css&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width:800px;height:100%;margin-left:270px;&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;/insert&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span><span class="p">&gt;</span>
+            用户名：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&#34;${username}&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;username&#34;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            密 码：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&#34;${password}&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;password&#34;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-primary btn-lg btn-block&#34;</span><span class="p">&gt;</span>保存<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>页面效果预览
+<img src="https://img-blog.csdnimg.cn/20190814145312643.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+在templates文件中新建 updatePage.html 文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&#34;http://www.thymeleaf.org&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>修改用户<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/css/bootstrap.css&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width:800px;height:100%;margin-left:270px;&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;/update&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span><span class="p">&gt;</span>
+            ID：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;id&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&#34;${user.id}&#34;</span> <span class="na">readonly</span><span class="o">=</span><span class="s">&#34;readonly&#34;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            用户名：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&#34;${user.username}&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;username&#34;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            密 码：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&#34;${user.password}&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;password&#34;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;btn btn-primary btn-lg btn-block&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span><span class="p">&gt;</span>提交<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>页面效果预览
+<img src="https://img-blog.csdnimg.cn/20190814145500263.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+<h3 id="五-后端代码实现">五、后端代码实现</h3>
+
+<p>有了前端代码之后我们就可以实现前端页面的功能了，这里主要是实现用户的增删改查，而且这里没有使用到ajax交互，纯后端</p>
+
+<p>在com.java.springboot.bean包中新建一个类，命名为User.java（实体类）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">bean</span><span class="p">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @author Woo_home
+</span><span class="cm"> * @create by 2019/8/12
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">User</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">id</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">username</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">password</span><span class="p">;</span>
+
+    <span class="c1">//此处省略setter、getter、toString方法，自行添加即可
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在com.java.springboot.mapper包中新建一个类，编写mapper接口（UserMapper.java）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">mapper</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">bean</span><span class="p">.</span><span class="na">User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">stereotype</span><span class="p">.</span><span class="na">Repository</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nf">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">List</span><span class="p">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @author Woo_home
+</span><span class="cm"> * @create by 2019/8/12
+</span><span class="cm"> */</span>
+<span class="nd">@Repository</span>
+<span class="kd">public</span> <span class="nf">interface</span> <span class="n">UserMapper</span> <span class="p">{</span>
+    <span class="cm">/*
+</span><span class="cm">     * 查询所有用户
+</span><span class="cm">     */</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">userList</span><span class="p">();</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 增加保存用户
+</span><span class="cm">     */</span>
+    <span class="kt">void</span> <span class="nf">save</span><span class="p">(</span><span class="n">User</span> <span class="nf">user</span><span class="p">);</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 根据id删除用户
+</span><span class="cm">     */</span>
+    <span class="kt">int</span> <span class="nf">delete</span><span class="p">(</span><span class="n">Integer</span> <span class="nf">id</span><span class="p">);</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 根据id查找用户
+</span><span class="cm">     */</span>
+    <span class="n">User</span> <span class="nf">findUserById</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">);</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 更改用户信息
+</span><span class="cm">     */</span>
+    <span class="kt">int</span> <span class="nf">update</span><span class="p">(</span><span class="n">User</span> <span class="nf">user</span><span class="p">);</span>
+
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>写了接口之后在resource下新建一个mapping文件夹，用于存放映射文件新建usermapper.xml文件，写入以下代码即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">&#34;com.java.springboot.mapper.UserMapper&#34;</span><span class="nt">&gt;</span>
+	
+	<span class="c">&lt;!--查询所有用户--&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">&#34;userList&#34;</span> <span class="na">resultType=</span><span class="s">&#34;com.java.springboot.bean.User&#34;</span><span class="nt">&gt;</span>
+        select * from stus
+    <span class="nt">&lt;/select&gt;</span>
+
+	<span class="c">&lt;!--添加用户--&gt;</span>
+    <span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">&#34;save&#34;</span> <span class="na">parameterType=</span><span class="s">&#34;string&#34;</span><span class="nt">&gt;</span>
+        INSERT INTO stus VALUES(null,#{username},#{password})
+    <span class="nt">&lt;/insert&gt;</span>
+
+	<span class="c">&lt;!--删除用户--&gt;</span>
+    <span class="nt">&lt;delete</span> <span class="na">id=</span><span class="s">&#34;delete&#34;</span> <span class="na">parameterType=</span><span class="s">&#34;int&#34;</span><span class="nt">&gt;</span>
+        delete from stus where id = #{id}
+    <span class="nt">&lt;/delete&gt;</span>
+
+	<span class="c">&lt;!--根据id查询用户--&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">&#34;findUserById&#34;</span> <span class="na">resultType=</span><span class="s">&#34;com.java.springboot.bean.User&#34;</span><span class="nt">&gt;</span>
+        select * from stus where id = #{id}
+    <span class="nt">&lt;/select&gt;</span>
+
+	<span class="c">&lt;!--更改用户信息--&gt;</span>
+    <span class="nt">&lt;update</span> <span class="na">id=</span><span class="s">&#34;update&#34;</span> <span class="na">parameterType=</span><span class="s">&#34;user&#34;</span><span class="nt">&gt;</span>
+        update stus set username=#{username},password=#{password} where id=#{id}
+    <span class="nt">&lt;/update&gt;</span>
+
+<span class="nt">&lt;/mapper&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>还要在application.yml中添加配置扫描映射文件和实体类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml">mybatis<span class="p">:</span><span class="w">
+</span><span class="w">  </span>mapper-locations<span class="p">:</span><span class="w"> </span>classpath<span class="p">:</span>mapping/<span class="cp">*.xml</span><span class="w">
+</span><span class="w">  </span>type-aliases-package<span class="p">:</span><span class="w"> </span>com.java.springboot.bean</code></pre></td></tr></table>
+</div>
+</div>
+<p>在com.java.springboot.service包中新建一个UserService类，接下来就是编写业务层了（UserService.java）
+这里为了快速实现一个增删改查，就不新建UserServiceImpl类来实现UserService接口了，直接在新建UserService类来写业务了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">server</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">bean</span><span class="p">.</span><span class="na">User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">mapper</span><span class="p">.</span><span class="na">UserMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">beans</span><span class="p">.</span><span class="na">factory</span><span class="p">.</span><span class="na">annotation</span><span class="p">.</span><span class="na">Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">stereotype</span><span class="p">.</span><span class="na">Service</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">List</span><span class="p">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @author Woo_home
+</span><span class="cm"> * @create by 2019/8/12
+</span><span class="cm"> */</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">UserService</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nf">UserMapper</span> <span class="n">userMapper</span><span class="p">;</span> <span class="c1">//注入UserMapper
+</span><span class="c1"></span>
+    <span class="cm">/*
+</span><span class="cm">     * 查询所有用户
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">userList</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">userList</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 增加保存用户
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">save</span><span class="p">(</span><span class="n">User</span> <span class="nf">user</span><span class="p">){</span>
+        <span class="n">userMapper</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 根据id删除用户
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">int</span> <span class="n">delete</span><span class="p">(</span><span class="n">Integer</span> <span class="nf">id</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 根据id查找用户
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">User</span> <span class="n">findUserById</span><span class="p">(</span><span class="kt">int</span> <span class="nf">id</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">findUserById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/*
+</span><span class="cm">     * 更改用户信息
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">int</span> <span class="n">update</span><span class="p">(</span><span class="n">User</span> <span class="nf">user</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>编写完业务之后就是编写控制器了
+在com.java.springboot.controller包中新建一个UserController.java</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">controller</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">bean</span><span class="p">.</span><span class="na">User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">.</span><span class="na">server</span><span class="p">.</span><span class="na">UserService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">beans</span><span class="p">.</span><span class="na">factory</span><span class="p">.</span><span class="na">annotation</span><span class="p">.</span><span class="na">Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">stereotype</span><span class="p">.</span><span class="na">Controller</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">ui</span><span class="p">.</span><span class="na">Model</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">web</span><span class="p">.</span><span class="na">bind</span><span class="p">.</span><span class="na">annotation</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">javax</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">http</span><span class="p">.</span><span class="na">HttpServletRequest</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">List</span><span class="p">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @author Woo_home
+</span><span class="cm"> * @create by 2019/8/12
+</span><span class="cm"> */</span>
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">UserController</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nf">UserService</span> <span class="n">userService</span><span class="p">;</span> <span class="c1">//注入UserService
+</span><span class="c1"></span>
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;/insertPage&#34;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">index</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="s">&#34;insertPage&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;select/{id}&#34;</span><span class="p">)</span>
+    <span class="nd">@ResponseBody</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">save</span><span class="p">(</span><span class="nd">@PathVariable</span> <span class="kt">int</span> <span class="nf">id</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="p">.</span><span class="na">select</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;/userList&#34;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">userList</span><span class="p">(</span><span class="n">Model</span> <span class="nf">model</span><span class="p">){</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">users</span> <span class="o">=</span> <span class="n">userService</span><span class="p">.</span><span class="na">userList</span><span class="p">();</span>
+        <span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="n">users</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s">&#34;userList&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;/insert&#34;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">save</span><span class="p">(</span><span class="n">User</span> <span class="nf">user</span><span class="p">){</span>
+        <span class="n">userService</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s">&#34;redirect:/userList&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/delete/{id}&#34;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">delete</span><span class="p">(</span><span class="nd">@PathVariable</span> <span class="n">Integer</span> <span class="nf">id</span><span class="p">){</span>
+        <span class="n">userService</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s">&#34;redirect:/userList&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/updatePage/{id}&#34;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">updatePage</span><span class="p">(</span><span class="n">Model</span> <span class="nf">model</span><span class="p">,</span><span class="nd">@PathVariable</span> <span class="kt">int</span> <span class="nf">id</span><span class="p">){</span>
+        <span class="n">User</span> <span class="nf">user</span> <span class="o">=</span> <span class="n">userService</span><span class="p">.</span><span class="na">findUserById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&#34;user&#34;</span><span class="p">,</span><span class="n">user</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s">&#34;updatePage&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&#34;/update&#34;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="nf">String</span> <span class="n">updateUser</span><span class="p">(</span><span class="n">Model</span> <span class="nf">model</span><span class="p">,</span><span class="n">User</span> <span class="nf">user</span><span class="p">,</span><span class="n">HttpServletRequest</span> <span class="nf">request</span><span class="p">){</span>
+        <span class="n">String</span> <span class="nf">id</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&#34;id&#34;</span><span class="p">);</span>
+        <span class="n">User</span> <span class="nf">userById</span> <span class="o">=</span> <span class="n">userService</span><span class="p">.</span><span class="na">findUserById</span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+        <span class="n">userService</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="k">return</span> <span class="s">&#34;redirect:/userList&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>App.java 项目启动类
+需要在启动类中添加mapper接口的扫描
+@MapperScan(basePackages = &ldquo;com.java.springboot.mapper&rdquo;)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nf">com</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">springboot</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">mybatis</span><span class="p">.</span><span class="na">spring</span><span class="p">.</span><span class="na">annotation</span><span class="p">.</span><span class="na">MapperScan</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="p">.</span><span class="na">SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nf">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="p">.</span><span class="na">autoconfigure</span><span class="p">.</span><span class="na">SpringBootApplication</span><span class="p">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&#34;com.java.springboot.mapper&#34;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">App</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>application.yml全部配置，再强调一次，一定要注意yml的编写格式，不然会出各种错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml">server<span class="p">:</span><span class="w">
+</span><span class="w">  </span>port<span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>spring<span class="p">:</span><span class="w">
+</span><span class="w">  </span>datasource<span class="p">:</span><span class="w">
+</span><span class="w">    </span>url<span class="p">:</span><span class="w"> </span>jdbc<span class="p">:</span>mysql<span class="p">:</span>//localhost<span class="p">:</span><span class="m">3306</span>/数据库名<span class="p">?</span>useSSL=<span class="kc">false</span><span class="w">
+</span><span class="w">    </span>driver-class-name<span class="p">:</span><span class="w"> </span>com.mysql.jdbc.Driver<span class="w">
+</span><span class="w">    </span>username<span class="p">:</span><span class="w"> </span>用户名<span class="w">
+</span><span class="w">    </span>password<span class="p">:</span><span class="w"> </span>密码<span class="w">
+</span><span class="w">    </span>initial-size<span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">    </span>max-active<span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">    </span>max-idle<span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span><span class="w">    </span>min-idle<span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span>resources<span class="p">:</span><span class="w">
+</span><span class="w">    </span>static-locations<span class="p">:</span><span class="w"> </span>classpath<span class="p">:</span>static/<span class="w">
+</span><span class="w">
+</span><span class="w">  </span>thymeleaf<span class="p">:</span><span class="w">
+</span><span class="w">    </span>prefix<span class="p">:</span><span class="w"> </span>classpath<span class="p">:</span>/templates/<span class="w">
+</span><span class="w">    </span>suffix<span class="p">:</span><span class="w"> </span>.html<span class="w">
+</span><span class="w">    </span>mode<span class="p">:</span><span class="w"> </span>HTML5<span class="w">
+</span><span class="w">    </span>encoding<span class="p">:</span><span class="w"> </span>UTF<span class="m">-8</span><span class="w">
+</span><span class="w">    </span>content-type<span class="p">:</span><span class="w"> </span>text/html<span class="w">
+</span><span class="w">    </span>cache<span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>mybatis<span class="p">:</span><span class="w">
+</span><span class="w">  </span>mapper-locations<span class="p">:</span><span class="w"> </span>classpath<span class="p">:</span>mapping/<span class="cp">*.xml</span><span class="w">
+</span><span class="w">  </span>type-aliases-package<span class="p">:</span><span class="w"> </span>com.java.springboot.bean<span class="w">
+</span><span class="w">
+</span><span class="w"></span>logging<span class="p">:</span><span class="w">
+</span><span class="w">  </span>level<span class="p">:</span><span class="w">
+</span><span class="w">    </span>com<span class="p">:</span><span class="w">
+</span><span class="w">      </span>example<span class="p">:</span><span class="w">
+</span><span class="w">        </span>mapper<span class="w"> </span><span class="p">:</span><span class="w"> </span>debug</code></pre></td></tr></table>
+</div>
+</div>
+<p>到这里就可以运行我们的项目了，可以看到spring的字样
+<img src="https://img-blog.csdnimg.cn/20190814191251301.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+这个是我们项目的进程
+<img src="https://img-blog.csdnimg.cn/20190814191329106.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+这些是可以访问的路径
+<img src="https://img-blog.csdnimg.cn/20190814191439116.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+我们依次在浏览器输入这些路径看看是否正确
+这是添加用户页面
+<img src="https://img-blog.csdnimg.cn/20190814191638699.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+这是删除页面，即用户列表页面，因为没涉及到 ajax 和 jQuery 那些
+<img src="https://img-blog.csdnimg.cn/20190814191734701.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+这是更改用户信息页面
+<img src="https://img-blog.csdnimg.cn/20190814191841241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dvb19ob21l,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">作者</span>
+    <span class="item-content">Woo_home</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上一次更新</span>
+    <span class="item-content">
+        2019-08-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/springboot/">springboot</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/python/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8python%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">如何利用python制作一个解压缩软件</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E5%89%8D%E7%AB%AF/ajax%E7%9A%84get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
+            <span class="next-text nav-default">Ajax的GET和POST请求</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="javascripts;" class="iconfont icon-email" title="email"></a>
+      <a href="javascripts;" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/WooGitHub" class="iconfont icon-github" title="github"></a>
+      <a href="javascripts;" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.zhihu.com/search?type=content&amp;q=" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="javascripts;" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="https://www.bilibili.com/" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://woogithub.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 网站总访问量: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019-08 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Woo_home</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
