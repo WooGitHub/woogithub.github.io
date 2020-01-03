@@ -13,10 +13,10 @@
     
     <item>
       <title>深入理解 HashSet</title>
-      <link>https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/</link>
+      <link>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/</link>
       <pubDate>Tue, 17 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/</guid>
+      <guid>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashset-/</guid>
       <description>什么是 HashSet？ HashSet 是存在 java.util 包中的类，是 Java 中常用的一个集合类，是 Set 接口的实现类，该容器中不能存储重复的对象。对于 HashSet 来说，它是基于 HashMap 实现的</description>
     </item>
     
@@ -31,29 +31,47 @@
     
     <item>
       <title>深入理解 LinkedList</title>
-      <link>https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</link>
+      <link>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</link>
       <pubDate>Tue, 03 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</guid>
+      <guid>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3linkedlist/</guid>
       <description>什么是LinkedList？ LinkedList是一种双向链表。那什么是双向链表？根据双向链表的特点就是会有头节点和尾节点，并且节点之间是通</description>
     </item>
     
     <item>
       <title>深入理解Vector</title>
-      <link>https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</link>
+      <link>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</link>
       <pubDate>Tue, 03 Dec 2019 00:14:19 +0800</pubDate>
       
-      <guid>https://woogithub.github.io/post/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</guid>
+      <guid>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3vector/</guid>
       <description>什么是Vector？ Vector是一个可以实现自动增长的对象数组（简称动态数组），可以随着向量元素的增加而动态地增长，实际上是一种动态顺序表</description>
     </item>
     
     <item>
       <title>谈谈对ReentrantLock的理解</title>
-      <link>https://woogithub.github.io/post/java/%E8%B0%88%E8%B0%88%E5%AF%B9reentrantlock%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+      <link>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E8%B0%88%E8%B0%88%E5%AF%B9reentrantlock%E7%9A%84%E7%90%86%E8%A7%A3/</link>
       <pubDate>Fri, 29 Nov 2019 00:14:19 +0800</pubDate>
       
-      <guid>https://woogithub.github.io/post/java/%E8%B0%88%E8%B0%88%E5%AF%B9reentrantlock%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+      <guid>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E8%B0%88%E8%B0%88%E5%AF%B9reentrantlock%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
       <description>什么是ReentrantLock？ ReentrantLock 是 Java 的 JUC（java.util.concurrent）包中提供的一种可重入锁，是一种递归无阻塞的同步机</description>
+    </item>
+    
+    <item>
+      <title>深入理解 ArrayList</title>
+      <link>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3arraylist/</link>
+      <pubDate>Thu, 21 Nov 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3arraylist/</guid>
+      <description>什么是ArrayList？ ArrayList的实现原理其实就是数组（动态数组），ArrayList的介绍及简单使用方法 动态数组与一般数组有什</description>
+    </item>
+    
+    <item>
+      <title>深入理解 HashMap</title>
+      <link>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashmap/</link>
+      <pubDate>Wed, 20 Nov 2019 00:14:19 +0800</pubDate>
+      
+      <guid>https://woogithub.github.io/post/java/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-hashmap/</guid>
+      <description>什么是 HashMap？ ​ HashMap 是基于哈希表的 Map 接口是实现的。此实现提供所有可选操作，并允许使用 null 做为值（key）和键（value）。HashMa</description>
     </item>
     
   </channel>
